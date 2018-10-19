@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import Test from '@/components/Test'
-import TestDetail from '@/components/TestDetail'
+import Main from '@/views/Main'
+
+// Containers
+import Full from '@/containers/Full'
 
 Vue.use(Router)
 
@@ -11,18 +12,16 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
-    },
-    {
-      path: '/test',
-      name: 'test',
-      component: Test
-    },
-    {
-      path: '/test/:id',
-      name: 'detail',
-      component: TestDetail
+      redirect: '/main',
+      name: 'Home',
+      component: Full,
+      children: [
+        {
+          path: 'main',
+          name: 'Main',
+          component: Main
+        }
+      ]
     }
   ]
 })

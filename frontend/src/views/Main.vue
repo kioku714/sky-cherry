@@ -4,9 +4,7 @@
     <div v-for="movie in movies" class="movie" :key="movie.id">
       <img v-bind:src="movie.poster" class="poster" fluid>
       <div>
-        <router-link :to="{ name: 'detail', params: { id: movie.id }}">
-          <strong>{{ movie.name }}</strong>
-        </router-link>
+        <strong>{{ movie.name }}</strong>
       </div>
     </div>
   </div>
