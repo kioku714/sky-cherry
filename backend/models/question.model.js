@@ -109,7 +109,7 @@ QuestionSchema.statics = {
   
     /**
      * Get question
-     * @param {ObjectId} no - The objectId of question.
+     * @param {Number} no - The Number of question.
      * @returns {Promise<Question, APIError>}
      */
     get(no) {
