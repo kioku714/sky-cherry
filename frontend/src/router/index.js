@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Main from '@/views/Main'
+import QuestionList from '@/views/QuestionList'
 
 // Containers
 import Full from '@/containers/Full'
@@ -20,6 +21,11 @@ export default new Router({
           path: 'main',
           name: 'Main',
           component: Main
+        },
+        {
+          path: 'questionList',
+          name: '질문',
+          component: QuestionList
         }
       ]
     }
