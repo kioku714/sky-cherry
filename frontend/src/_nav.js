@@ -2,7 +2,7 @@ export default {
   items: [
     {
       name: '체리카드',
-      url: '/news/pick',
+      url: '/news',
       icon: 'fa fa-newspaper-o',
       children: [
         {
@@ -33,7 +33,7 @@ export default {
     },
     {
       name: '질문하기',
-      url: '/question?sort=like',
+      url: '/question',
       icon: 'fa fa-quora',
       children: [
         {
