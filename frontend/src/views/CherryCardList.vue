@@ -23,14 +23,24 @@
 <script>
 export default {
   created () {
-    this.$http.get('/api/cherryCard')
-      .then((response) => {
-        this.cherryCardList = response.data
-      })
+    this.fetchCardList(this.$route.params.category)
   },
   data () {
     return {
       cherryCardList: []
+    }
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.fetchCardList(to.params.category)
+    next()
+  },
+  methods: {
+    fetchCardList (category) {
+      this.cherryCardList = []
+      this.$http.get('/api/cherryCard/' + category)
+        .then((response) => {
+          this.cherryCardList = response.data
+        })
     }
   }
 }

@@ -24,12 +24,12 @@ export default new Router({
           component: Main
         },
         {
-          path: 'cherryCard',
+          path: 'cherryCard/:category',
           name: '체리카드',
           component: CherryCardList
         },
         {
-          path: 'cherryCard/:id',
+          path: 'cherryCard/:category/:id',
           name: '체리카드 상세',
           component: CherryCardDetail
         }
