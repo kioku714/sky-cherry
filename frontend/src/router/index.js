@@ -29,7 +29,7 @@ export default new Router({
           component: CherryCardList
         },
         {
-          path: 'cherryCardDetail/:id',
+          path: 'cherryCard/:id',
           name: '체리카드 상세',
           component: CherryCardDetail
         }

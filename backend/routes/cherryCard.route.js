@@ -8,7 +8,7 @@ router.get('/', function (req, res, next) {
 
 router.get('/:id', function (req, res, next) {
   var id = parseInt(req.params.id, 10)
-  var cherryCardDetail = cherryCard.filter(function (cherryCard) {
+  var cherryCardDetail = cherryCard.find(function (cherryCard) {
     return cherryCard.id === id
   });
   res.send(cherryCardDetail)
