@@ -6,6 +6,7 @@ a {
     text-decoration-color: initial;
     border: none;
     color: #1a1a1a;
+    background: #ffffff;
 }
 
 ul {
@@ -21,6 +22,14 @@ li {
 
 .list_p1 .bundle .tit {
     height: 60px;
+}
+
+.list_p1 .bundle a {
+    padding-bottom: 37px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #1a1a1a;
 }
 
 .list_p1 .bundle .tit {
