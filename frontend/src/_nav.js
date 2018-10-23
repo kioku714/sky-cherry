@@ -1,9 +1,74 @@
 export default {
   items: [
     {
-      name: 'Main',
-      url: '/main',
-      icon: 'icon-speedometer'
+      name: '체리카드',
+      url: '/news/pick',
+      icon: 'fa fa-newspaper-o',
+      children: [
+        {
+          name: 'SKY\'s Pick',
+          url: '/news/pick'
+        },
+        {
+          name: '뷰티',
+          url: '/news/beauty'
+        },
+        {
+          name: '고메',
+          url: '/news/gourmet'
+        },
+        {
+          name: '영화',
+          url: '/news/movie'
+        },
+        {
+          name: '재태크',
+          url: '/news/financial-technology'
+        },
+        {
+          name: '트렌드',
+          url: '/news/trend'
+        }
+      ]
+    },
+    {
+      name: '질문하기',
+      url: '/question?sort=like',
+      icon: 'fa fa-quora',
+      children: [
+        {
+          name: '인기',
+          url: '/question?sort=like'
+        },
+        {
+          name: '최신',
+          url: '/question?sort=new'
+        },
+        {
+          name: 'Top',
+          url: '/question?sort=top'
+        }
+      ]
+    },
+    {
+      name: '컬럼&Live',
+      url: '/serial',
+      icon: 'fa fa-film',
+      children: [
+        {
+          name: '컬럼',
+          url: '/serial/column'
+        },
+        {
+          name: 'Live',
+          url: '/serial/live'
+        }
+      ]
+    },
+    {
+      name: 'Tags',
+      url: '/tags',
+      icon: 'fa fa-hashtag'
     }
   ]
 }
