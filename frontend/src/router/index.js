@@ -6,10 +6,13 @@ import GourmetNews from '@/views/GourmetNews'
 import MovieNews from '@/views/MovieNews'
 import FinancialTechnologyNews from '@/views/FinancialTechnologyNews'
 import TrendNews from '@/views/TrendNews'
-import Question from '@/views/Question'
+import Questions from '@/views/Questions'
 import Column from '@/views/Column'
 import Live from '@/views/Live'
 import Tags from '@/views/Tags'
+import NewQuestion from '@/views/NewQuestion'
+import CherryTransfer from '@/views/CherryTransfer'
+import Profile from '@/views/Profile'
 
 // Containers
 import Full from '@/containers/Full'
@@ -56,9 +59,9 @@ export default new Router({
           component: TrendNews
         },
         {
-          path: '/question',
+          path: '/questions',
           name: '질문하기',
-          component: Question
+          component: Questions
         },
         {
           path: '/serial/column',
@@ -74,6 +77,21 @@ export default new Router({
           path: '/tags',
           name: 'Tags',
           component: Tags
+        },
+        {
+          path: '/new-question',
+          name: '질문 등록',
+          component: NewQuestion
+        },
+        {
+          path: '/cherry-transfer',
+          name: 'Cherry Transfer',
+          component: CherryTransfer
+        },
+        {
+          path: '/profile',
+          name: '프로필',
+          component: Profile
         }
       ]
     }

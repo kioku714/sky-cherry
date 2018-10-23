@@ -9,27 +9,27 @@
     </button>
     <ul class="nav navbar-nav ml-auto">
       <li class="nav-item d-md-down-none">
-        <router-link :to="{name: '뷰티'}">
+        <router-link :to="{name: '질문하기', query: { sort: 'like' }}">
           <span class="fa fa-search"></span>
         </router-link>
       </li>
       <li class="nav-item d-md-down-none">
-        <router-link :to="{name: '뷰티'}">
+        <router-link :to="{name: '질문 등록'}">
           <span class="fa fa-quora"></span>
         </router-link>
       </li>
       <li class="nav-item d-md-down-none">
-        <router-link :to="{name: '뷰티'}">
+        <router-link :to="{name: 'Cherry Transfer'}">
           <span class="fa fa-bitcoin"></span>
         </router-link>
       </li>
       <li class="nav-item d-md-down-none">
-        <router-link :to="{name: '뷰티'}">
+        <router-link :to="{name: '프로필', query: { tab: 'notification' }}">
           <span class="fa fa-bell-o"></span>
         </router-link>
       </li>
       <li class="nav-item d-md-down-none">
-        <router-link :to="{name: '뷰티'}">
+        <router-link :to="{name: '프로필', query: { tab: 'info' }}">
           <span class="fa fa-user-o"></span>
         </router-link>
       </li>

@@ -1,12 +1,12 @@
 <template>
   <div class="animated fadeIn">
-    <h1>질문 상세</h1>
+    <h1>질문하기</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Question',
+  name: 'Questions',
   created () {
   },
   data () {
