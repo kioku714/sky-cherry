@@ -1,12 +1,12 @@
 <template>
-  <div class="animated fadeIn">
-    <h1>질문하기</h1>
+  <div class="movies">
+    <h1>테스트</h1>
     <div class="text-sm-right">
       <button v-on:click="registerQuestion">질문 등록</button>
     </div>
-    <div v-for="question in questions" class="movie" :key="question.id">
+    <div v-for="movie in movies" class="movie" :key="movie.id">
       <div>
-        <strong>{{ question.no }} : {{ question.title }}</strong>
+        <strong>{{ movie.no }} : {{ movie.title }}</strong>
       </div>
     </div>
   </div>
@@ -14,16 +14,15 @@
 
 <script>
 export default {
-  name: 'Question',
   created () {
     this.$http.get('/api/question')
       .then((response) => {
-        this.questions = response.data
+        this.movies = response.data
       })
   },
   data () {
     return {
-      questions: []
+      movies: []
     }
   },
   methods: {
