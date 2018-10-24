@@ -10,7 +10,7 @@
         <div class="content">
           <!-- 사용자 닉네임, 질문 생성 시간  -->
           <span class="question-owner">
-            <a target="_blank" class="username-link" href="/profiles/v1vm3rjltd14">yeaseul.moon</a> 
+            <a target="_blank" class="username-link" href="/profiles/v1vm3rjltd14">yeaseul.moon</a>
             5 days ago
           </span>
           <!-- 질문 제목 -->
@@ -20,7 +20,7 @@
           <!-- 질문 상세 내용, more 링크 -->
           <div class="question-body-container">
               <p class="question-body">
-                {{ question.description }} 
+                {{ question.description }}
                 <a class="more-link" href="/questions/as-the-creator-of-a-smart-contract-how-can-i-retain-control-over-e1474b6f-5c80-4626-bba3-52b72f5dfe5e">more</a>
               </p>
           </div>
@@ -66,27 +66,25 @@ export default {
   methods: {
     registerQuestion () {
       var question = {
-        title: "제 보험 한번만 봐주세요.",
-        description: "엄마 친구가 보험설계사라 일단 이것 저것 가입하긴 했는데 제대로 가입 한게 맞나요? 보장 내용 한번만 봐주세요.. 전문가님의 조언이 필요합니다. 제 보험 내역은 아래와 같습니다.",
-        mainField: "재테크",
-        subField: "보험",
-        age: 31,
-        gender: "female",
-        occupation: "사무직",
-        familtyType: "1인가구",
-        interest: "결혼자금",
-        montlyIncome: "300~350",
-        assets: "8000만~1억",
-        incomeManagement: "8000만~1억",
+        title: '제 보험 한번만 봐주세요.',
+        description: '엄마 친구가 보험설계사라 일단 이것 저것 가입하긴 했는데',
+        mainField: '재테크',
+        subField: '보험',
+        age: 30,
+        occupation: '',
+        familtyType: '',
+        interest: '',
+        montlyIncome: '',
+        assets: '',
+        incomeManagement: '',
         tags: [
-          "30대여자",
-          "1인가구",
-          "사무직"
+          '30대여자',
+          '1인가구',
+          '사무직'
         ]
       }
       this.$http.post('/api/question', question)
         .then((response) => {
-          
         })
     }
   }

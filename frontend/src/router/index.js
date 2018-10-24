@@ -3,14 +3,8 @@ import Router from 'vue-router'
 
 import News from '@/views/News'
 import NewsDetail from '@/views/NewsDetail'
-import PickNews from '@/views/PickNews'
-import BeautyNews from '@/views/BeautyNews'
-import GourmetNews from '@/views/GourmetNews'
-import MovieNews from '@/views/MovieNews'
-import FinancialTechnologyNews from '@/views/FinancialTechnologyNews'
-import TrendNews from '@/views/TrendNews'
-import Question from '@/views/Question'
 import Questions from '@/views/Questions'
+import Question from '@/views/Question'
 import Column from '@/views/Column'
 import Live from '@/views/Live'
 import Tags from '@/views/Tags'
@@ -48,6 +42,16 @@ export default new Router({
           component: Questions
         },
         {
+          path: '/question',
+          name: '질문 상세',
+          component: Question
+        },
+        {
+          path: '/new-question',
+          name: '질문 등록',
+          component: NewQuestion
+        },
+        {
           path: '/serial/column',
           name: '컬럼',
           component: Column
@@ -61,11 +65,6 @@ export default new Router({
           path: '/tags',
           name: 'Tags',
           component: Tags
-        },
-        {
-          path: '/new-question',
-          name: '질문 등록',
-          component: NewQuestion
         },
         {
           path: '/cherry-transfer',
