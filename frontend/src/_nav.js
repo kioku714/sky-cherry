@@ -33,20 +33,20 @@ export default {
     },
     {
       name: '질문하기',
-      url: '/question',
+      url: '/questions',
       icon: 'fa fa-quora',
       children: [
         {
           name: '인기',
-          url: '/question?sort=like'
+          url: '/questions?sort=like'
         },
         {
           name: '최신',
-          url: '/question?sort=new'
+          url: '/questions?sort=new'
         },
         {
           name: 'Top',
-          url: '/question?sort=top'
+          url: '/questions?sort=top'
         }
       ]
     },

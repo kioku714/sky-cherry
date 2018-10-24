@@ -26,6 +26,7 @@ $yellow:                          #ffc107 !default;
 $green:                           #4dbd74;
 $teal:                            #20c997 !default;
 $cyan:                            #63c2de;
+$cherry:                          #ad2552;
 
 $colors: (
   blue:                           $blue,
@@ -44,7 +45,7 @@ $colors: (
 );
 
 $theme-colors: (
-  primary:                        $blue,
+  primary:                        $cherry,
   secondary:                      $gray-300,
   success:                        $green,
   info:                           $cyan,
