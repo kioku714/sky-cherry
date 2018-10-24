@@ -109,16 +109,17 @@ QuestionSchema.statics = {
   
     /**
      * Get question
-     * @param {Number} no - The Number of question.
+     * @param {ObjectId} id - The ObjectId of question.
      * @returns {Promise<Question, APIError>}
      */
-    get(no) {
-      return this.findOne({ no: parseInt(no) })
-        .populate('createdBy')
-        .populate('answers')
-        .populate('likes')
+    get(id) {
+      return this.findById(id)
+        // .populate('createdBy')
+        // .populate('answers')
+        // .populate('likes')
         .exec()
         .then((question) => {
+            console.log(question.title)
           if (question) {
             return question;
           }

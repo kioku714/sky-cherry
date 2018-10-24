@@ -42,7 +42,7 @@ export default new Router({
           component: Questions
         },
         {
-          path: '/question',
+          path: '/question/:questionId',
           name: '질문 상세',
           component: Question
         },
