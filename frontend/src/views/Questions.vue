@@ -8,7 +8,7 @@
           <!-- 사용자 닉네임, 질문 생성 시간  -->
           <span class="question-owner">
             <a target="_blank" class="username-link" href="/profiles/v1vm3rjltd14">yeaseul.moon</a>
-            5 days ago
+            {{ prettyDate($moment.utc(question.createdAt).valueOf()) }}
           </span>
           <!-- 질문 제목 -->
           <h4 class="question-header">
@@ -68,6 +68,18 @@ export default {
         .then((response) => {
           this.questions = response.data
         })
+    },
+    prettyDate (time) {
+      var diff = new Date().getMilliseconds() - new Date(time).getTime()
+      if (diff < 60) {
+        return '방금전'
+      } else if (diff < 3600) {
+        return Math.floor(diff / 60) + '분 전'
+      } else if (diff < 86400) {
+        return Math.floor(diff / 3600) + '시간 전'
+      } else if (diff < 2419200) {
+        return Math.floor(diff / 86400) + '일 전'
+      }
     }
   }
 }

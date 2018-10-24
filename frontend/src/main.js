@@ -5,11 +5,13 @@ import BootstrapVue from 'bootstrap-vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import moment from 'moment'
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 
 Vue.use(BootstrapVue)
+Vue.use(require('vue-moment'), {moment})
 
 /* eslint-disable no-new */
 new Vue({
