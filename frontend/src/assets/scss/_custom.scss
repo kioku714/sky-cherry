@@ -12,6 +12,10 @@ body {
     background-color: #FEFBF4;
 }
 
+.brand-minimized .app-header.navbar .navbar-brand {
+    background-color: #FEFBF4;
+}
+
 app-header.navbar .navbar-brand {
     background-color: #FEFBF4;
 }
@@ -34,4 +38,12 @@ h1 {
 
 .sidebar-nav a {
     color: #ad2552;
+}
+
+.main .breadcrumb {
+    color: #4c3926;
+}
+
+.app-header.navbar .nav-item {
+    min-width: 30px;
 }
