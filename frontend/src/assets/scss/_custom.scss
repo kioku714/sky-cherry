@@ -1,5 +1,4 @@
 // Here you can add other styles
-
 body { 
     background-color: #FEFBF4;
 }
@@ -38,6 +37,130 @@ h1 {
 
 .sidebar-nav a {
     color: #ad2552;
+}
+
+.list_p1 .a {
+    text-decoration: none;
+    text-decoration-line: none;
+    text-decoration-style: initial;
+    text-decoration-color: initial;
+    border: none;
+    color: #1a1a1a;
+}
+
+ul {
+    list-style:none;
+    margin: 0;
+    padding: 0;
+}
+
+.list_p1 .li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+.list_p1 .bundle .tit {
+    height: 60px;
+}
+
+.list_p1 .bundle a {
+    padding-bottom: 37px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #1a1a1a;
+    background: #ffffff;
+}
+
+.list_p1 .bundle .tit {
+    display: block;
+    height: 46px;
+    overflow: hidden;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 23px;
+}
+
+.list_p1 .bundle .cont {
+    padding: 20px 0 0 15px;
+    display: block;
+    position: relative;
+}
+
+.list_p1 .bundle .cont:before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    left: 15px;
+    width: 14px;
+    height: 14px;
+    background: url(http://menu.mt.co.kr/ttimes/images/renew/bg_diamond.png) no-repeat 0 0;
+    background-size: 100%;
+}
+
+.list_p1 .bundle a .cont:before, .list_p1 .bundle a .cont:before {
+    top: -14px;
+    left: 29px;
+    width: 28px;
+    height: 28px;
+}
+
+.photo_info {
+    font-size: 13px;
+    text-align: right;
+    color: #999;
+}
+
+.username-link {
+    font-weight: bold;
+    color: #17BEBB;
+}
+
+.question-owner {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+    color: #7E8184;
+}
+
+.question-header a {
+    text-decoration: none;
+    background-color: transparent;
+    color: #222933;
+}
+
+.question-body {
+    color: #3c4859;
+    margin-top: 0px;
+    font-size: 18px;
+    word-break: break-word;
+    line-height: 23px;
+}
+
+.tags-container, .oq_tags_container {
+    margin-bottom: 12px;
+}
+
+.question-tag {
+    font-size: 12px;
+    border-radius: .5rem;
+    border: solid 1px #8894a5;
+    padding: .25rem 1.35rem .25rem 1rem;
+    line-height: .75rem;
+    margin-right: 5px;
+    display: inline-block;
+    position: relative;
+    color: #3c4859;
+    margin-bottom: 3px;
+}
+
+.karma-icon-container {
+    color: #f08700;
+}
+
+.question-icon-container {
+    margin-right: 12px;
+    position: relative;
 }
 
 .main .breadcrumb {

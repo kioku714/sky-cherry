@@ -6,7 +6,7 @@ export default {
       icon: 'fa fa-newspaper-o',
       children: [
         {
-          name: 'SKY\'s Pick',
+          name: 'SKY’s Pick',
           url: '/news/pick'
         },
         {
@@ -22,11 +22,11 @@ export default {
           url: '/news/movie'
         },
         {
-          name: '재태크',
-          url: '/news/financial-technology'
+          name: '제테크',
+          url: '/news/financial'
         },
         {
-          name: '트렌드',
+          name: '트랜드',
           url: '/news/trend'
         }
       ]

@@ -1,11 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
+import News from '@/views/News'
+import NewsDetail from '@/views/NewsDetail'
 import PickNews from '@/views/PickNews'
 import BeautyNews from '@/views/BeautyNews'
 import GourmetNews from '@/views/GourmetNews'
 import MovieNews from '@/views/MovieNews'
 import FinancialTechnologyNews from '@/views/FinancialTechnologyNews'
 import TrendNews from '@/views/TrendNews'
+import Question from '@/views/Question'
 import Questions from '@/views/Questions'
 import Column from '@/views/Column'
 import Live from '@/views/Live'
@@ -29,34 +33,14 @@ export default new Router({
       component: Full,
       children: [
         {
-          path: '/news/pick',
-          name: 'SKY\'s Pick',
-          component: PickNews
+          path: 'news/:category',
+          name: '체리카드',
+          component: News
         },
         {
-          path: '/news/beauty',
-          name: '뷰티',
-          component: BeautyNews
-        },
-        {
-          path: '/news/gourmet',
-          name: '고메',
-          component: GourmetNews
-        },
-        {
-          path: '/news/movie',
-          name: '영화',
-          component: MovieNews
-        },
-        {
-          path: '/news/financial-technology',
-          name: '재태크',
-          component: FinancialTechnologyNews
-        },
-        {
-          path: '/news/trend',
-          name: '트렌드',
-          component: TrendNews
+          path: 'news/:category/:id',
+          name: '체리카드 상세',
+          component: NewsDetail
         },
         {
           path: '/questions',
