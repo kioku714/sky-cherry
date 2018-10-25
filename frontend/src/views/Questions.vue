@@ -1,7 +1,7 @@
 <template>
   <div class="animated fadeIn">
     <h1>질문하기</h1>
-    <div v-for="question in questions" class="movie" :key="question.id">
+    <div v-for="question in listItems" class="movie" :key="question">
 
       <div class="new-question grid-item">
         <div class="content">
@@ -43,18 +43,32 @@
       </div>
 
     </div>
+
+    <a class="load-more-btn" v-show="distance < questions.length" @click="manualLoad">Load more</a>
+    <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading">
+        <span slot="no-more"/>
+        <span slot="no-results"/>
+    </infinite-loading>
   </div>
 </template>
 
 <script>
+import InfiniteLoading from 'vue-infinite-loading'
+
 export default {
   name: 'Questions',
   created () {
     this.featchQuestionList()
   },
+  components: {
+    InfiniteLoading
+  },
   data () {
     return {
-      questions: []
+      questions: [],
+      listItems: [],
+      pageCount: 3,
+      distance: 0
     }
   },
   beforeRouteUpdate (to, from, next) {
@@ -62,15 +76,29 @@ export default {
     next()
   },
   methods: {
+    infiniteHandler (state) {
+      state.complete()
+    },
     featchQuestionList () {
       this.questions = []
       this.$http.get('/api/question')
         .then((response) => {
           this.questions = response.data
+          this.manualLoad()
         })
     },
+    manualLoad () {
+      this.distance = this.distance + this.pageCount
+      const temp = []
+      const itemCount = this.listItems.length + this.pageCount
+      for (let i = this.listItems.length; i <= (itemCount > this.questions.length ? this.questions.length : itemCount) - 1; i++) {
+        console.log(i)
+        temp.push(this.questions[i])
+      }
+      this.listItems = this.listItems.concat(temp)
+    },
     prettyDate (time) {
-      var diff = new Date().getMilliseconds() - new Date(time).getTime()
+      var diff = (new Date().getTime() - new Date(time).getTime()) / 1000
       if (diff < 60) {
         return '방금전'
       } else if (diff < 3600) {
