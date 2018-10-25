@@ -1,19 +1,169 @@
 <template>
   <div class="animated fadeIn">
-    <h1>질문 등록</h1>
-    <div class="text-sm-right">
-      <button v-on:click="registerQuestion">질문 등록</button>
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h1>질문 등록</h1>
+        </div>
+        <div class="card-body">
+          <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label">분야 : </label>
+              <div class="col-md-5">
+                <select class="form-control" id="select1" name="select1">
+                  <option value="0">Please select</option>
+                  <option value="1">Option #1</option>
+                  <option value="2">Option #2</option>
+                  <option value="3">Option #3</option>
+                </select>
+              </div>
+              <div class="col-md-5">
+                <select class="form-control" id="select1" name="select1">
+                  <option value="0">Please select</option>
+                  <option value="1">Option #1</option>
+                  <option value="2">Option #2</option>
+                  <option value="3">Option #3</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-12 col-form-label" for="text-input"><strong>Ask a question...</strong></label>
+            </div>
+            <div class="from-group row">
+              <div class="col-md-12">
+                <input class="form-control" id="text-input" type="text" name="text-input" placeholder="제목을 입력하세요.">
+              </div>
+            </div>
+            <br>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="email-input">성별/나이</label>
+              <label class="col-md-4 col-form-label" for="email-input">{{ "male" === from.gender ? "남" : "여"}} / {{ from.age }}</label>
+              <label class="col-md-2 col-form-label" for="email-input">직업</label>
+              <div class="col-md-4">
+                <select class="form-control" id="select1" name="select1">
+                  <option value="0">Please select</option>
+                  <option value="1">Option #1</option>
+                  <option value="2">Option #2</option>
+                  <option value="3">Option #3</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="email-input">가족형태</label>
+              <div class="col-md-4">
+                <select class="form-control" id="select1" name="select1">
+                  <option value="0">Please select</option>
+                  <option value="1">Option #1</option>
+                  <option value="2">Option #2</option>
+                  <option value="3">Option #3</option>
+                </select>
+              </div>
+              <label class="col-md-2 col-form-label" for="email-input">관심사</label>
+              <div class="col-md-4">
+                <select class="form-control" id="select1" name="select1">
+                  <option value="0">Please select</option>
+                  <option value="1">Option #1</option>
+                  <option value="2">Option #2</option>
+                  <option value="3">Option #3</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="email-input">월평균소득</label>
+              <div class="col-md-4">
+                <select class="form-control" id="select1" name="select1">
+                  <option value="0">Please select</option>
+                  <option value="1">Option #1</option>
+                  <option value="2">Option #2</option>
+                  <option value="3">Option #3</option>
+                </select>
+              </div>
+              <label class="col-md-2 col-form-label" for="email-input">보유자산</label>
+              <div class="col-md-4">
+                <select class="form-control" id="select1" name="select1">
+                  <option value="0">Please select</option>
+                  <option value="1">Option #1</option>
+                  <option value="2">Option #2</option>
+                  <option value="3">Option #3</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label">소득운용현황</label>
+                <div class="col-md-10 col-form-label">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" id="inline-radio1" type="radio" value="option1" name="inline-radios">
+                    <label class="form-check-label" for="inline-radio1">예/적금</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" id="inline-radio2" type="radio" value="option2" name="inline-radios">
+                   <label class="form-check-label" for="inline-radio2">주식</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                   <input class="form-check-input" id="inline-radio3" type="radio" value="option3" name="inline-radios">
+                   <label class="form-check-label" for="inline-radio3">펀드</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                   <input class="form-check-input" id="inline-radio3" type="radio" value="option3" name="inline-radios">
+                   <label class="form-check-label" for="inline-radio3">보험</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                   <input class="form-check-input" id="inline-radio3" type="radio" value="option3" name="inline-radios">
+                   <label class="form-check-label" for="inline-radio3">부동산</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                   <input class="form-check-input" id="inline-radio3" type="radio" value="option3" name="inline-radios">
+                   <label class="form-check-label" for="inline-radio3">기타</label>
+                  </div>
+                </div>
+              </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <textarea class="form-control" id="textarea-input" name="textarea-input" rows="9" placeholder="질문을 입력하세요."></textarea>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <vue-tags-input
+                  v-model="tag"
+                  :tags="tags"
+                  @tags-changed="newTags => tags = newTags"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer text-sm-right">
+          <button class="btn btn-sm btn-primary" type="submit" v-on:click="registerQuestion">
+            <i class="fa fa-dot-circle-o"></i> Submit
+          </button>
+          <button class="btn btn-sm btn-danger" type="reset">
+            <i class="fa fa-ban"></i> Reset
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import VueTagsInput from '@johmun/vue-tags-input'
+
 export default {
   name: 'NewQuestion',
+  components: {
+    VueTagsInput
+  },
   created () {
   },
   data () {
     return {
+      from: {
+        age: 31,
+        gender: 'female',
+        tag: '',
+        tags: []
+      }
     }
   },
   methods: {
