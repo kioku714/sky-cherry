@@ -58,7 +58,7 @@ import InfiniteLoading from 'vue-infinite-loading'
 export default {
   name: 'Questions',
   created () {
-    this.featchQuestionList()
+    this.featchQuestionList(this.$route.query.sort)
   },
   components: {
     InfiniteLoading
@@ -73,27 +73,38 @@ export default {
     }
   },
   beforeRouteUpdate (to, from, next) {
-    this.featchQuestionList()
+    this.featchQuestionList(to.query.sort)
     next()
   },
   methods: {
     infiniteHandler (state) {
       state.complete()
     },
-    featchQuestionList () {
+    featchQuestionList (sort) {
       this.questions = []
+      this.listItems = []
+      this.distance = 0
       this.$http.get('/api/question')
         .then((response) => {
           this.questions = response.data
+        })
+        .then(() => {
+          if (sort !== 'new') {
+            this.questions = this.sortByLike()
+          }
           this.manualLoad()
         })
+    },
+    sortByLike () {
+      return this.questions.slice().sort(function (a, b) {
+        return b.likes.length - a.likes.length
+      })
     },
     manualLoad () {
       this.distance = this.distance + this.pageCount
       const temp = []
       const itemCount = this.listItems.length + this.pageCount
       for (let i = this.listItems.length; i <= (itemCount > this.questions.length ? this.questions.length : itemCount) - 1; i++) {
-        console.log(i)
         temp.push(this.questions[i])
       }
       this.listItems = this.listItems.concat(temp)
