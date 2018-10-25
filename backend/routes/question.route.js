@@ -1,6 +1,5 @@
 var express = require('express');
 var questionCtrl = require('../controllers/question.controller');
-var movies = require('../test.json');
 
 const router = express.Router();
 
@@ -10,4 +9,11 @@ router.route('/')
   // POST /api/question - Create new question
   .post(questionCtrl.create);
 
-  module.exports = router;
+router.route('/:questionId')
+  // GET /api/question/:questionId - Get question
+  .get(questionCtrl.get);
+
+// Load question when API with questionId route parameter is hit
+router.param('questionId', questionCtrl.load);
+
+module.exports = router;
