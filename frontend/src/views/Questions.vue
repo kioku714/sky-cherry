@@ -7,7 +7,7 @@
         <div class="content">
           <!-- 사용자 닉네임, 질문 생성 시간  -->
           <span class="question-owner">
-            <a target="_blank" class="username-link" href="/profiles/v1vm3rjltd14">yeaseul.moon</a>
+            <a class="username-link" v-bind:href="'/profile/' + question._id">yeaseul.moon</a>
             {{ prettyDate($moment.utc(question.createdAt).valueOf()) }}
           </span>
           <!-- 질문 제목 -->
@@ -17,8 +17,8 @@
           <!-- 질문 상세 내용, more 링크 -->
           <div class="question-body-container">
             <p class="question-body">
-              {{ question.description }}
-              <a class="more-link" v-bind:href="'/question/' + question._id">more</a>
+              {{ getDescription(question.description) }}
+              <a v-show="question.description.length > maxDescriptionLength" class="more-link" v-bind:href="'/question/' + question._id">more</a>
             </p>
           </div>
           <!-- Tags -->
@@ -68,7 +68,8 @@ export default {
       questions: [],
       listItems: [],
       pageCount: 3,
-      distance: 0
+      distance: 0,
+      maxDescriptionLength: 50
     }
   },
   beforeRouteUpdate (to, from, next) {
@@ -105,9 +106,15 @@ export default {
         return Math.floor(diff / 60) + '분 전'
       } else if (diff < 86400) {
         return Math.floor(diff / 3600) + '시간 전'
-      } else if (diff < 2419200) {
+      } else {
         return Math.floor(diff / 86400) + '일 전'
       }
+    },
+    getDescription (description) {
+      if (description.length > this.maxDescriptionLength) {
+        return description.substr(0, this.maxDescriptionLength) + '...'
+      }
+      return description
     }
   }
 }
