@@ -10,7 +10,7 @@
             <div class="form-group row">
               <label class="col-md-2 col-form-label">분야 : </label>
               <div class="col-md-5">
-                <select class="form-control" id="select1" name="select1">
+                <select class="form-control" v-model="form.mainField">
                   <option value="0">Please select</option>
                   <option value="1">Option #1</option>
                   <option value="2">Option #2</option>
@@ -18,7 +18,7 @@
                 </select>
               </div>
               <div class="col-md-5">
-                <select class="form-control" id="select1" name="select1">
+                <select class="form-control" v-model="form.subField">
                   <option value="0">Please select</option>
                   <option value="1">Option #1</option>
                   <option value="2">Option #2</option>
@@ -31,16 +31,16 @@
             </div>
             <div class="from-group row">
               <div class="col-md-12">
-                <input class="form-control" id="text-input" type="text" name="text-input" placeholder="제목을 입력하세요.">
+                <b-form-input type="text" v-model="form.title" placeholder="제목을 입력하세요."></b-form-input>
               </div>
             </div>
             <br>
             <div class="form-group row">
               <label class="col-md-2 col-form-label" for="email-input">성별/나이</label>
-              <label class="col-md-4 col-form-label" for="email-input">{{ "male" === from.gender ? "남" : "여"}} / {{ from.age }}</label>
+              <label class="col-md-4 col-form-label" for="email-input">{{ "male" === form.gender ? "남" : "여"}} / {{ form.age }}</label>
               <label class="col-md-2 col-form-label" for="email-input">직업</label>
               <div class="col-md-4">
-                <select class="form-control" id="select1" name="select1">
+                <select class="form-control" v-model="form.occupation">
                   <option value="0">Please select</option>
                   <option value="1">Option #1</option>
                   <option value="2">Option #2</option>
@@ -51,7 +51,7 @@
             <div class="form-group row">
               <label class="col-md-2 col-form-label" for="email-input">가족형태</label>
               <div class="col-md-4">
-                <select class="form-control" id="select1" name="select1">
+                <select class="form-control" v-model="form.familtyType">
                   <option value="0">Please select</option>
                   <option value="1">Option #1</option>
                   <option value="2">Option #2</option>
@@ -60,7 +60,7 @@
               </div>
               <label class="col-md-2 col-form-label" for="email-input">관심사</label>
               <div class="col-md-4">
-                <select class="form-control" id="select1" name="select1">
+                <select class="form-control" v-model="form.interest">
                   <option value="0">Please select</option>
                   <option value="1">Option #1</option>
                   <option value="2">Option #2</option>
@@ -71,7 +71,7 @@
             <div class="form-group row">
               <label class="col-md-2 col-form-label" for="email-input">월평균소득</label>
               <div class="col-md-4">
-                <select class="form-control" id="select1" name="select1">
+                <select class="form-control" v-model="form.montlyIncome">
                   <option value="0">Please select</option>
                   <option value="1">Option #1</option>
                   <option value="2">Option #2</option>
@@ -80,7 +80,7 @@
               </div>
               <label class="col-md-2 col-form-label" for="email-input">보유자산</label>
               <div class="col-md-4">
-                <select class="form-control" id="select1" name="select1">
+                <select class="form-control" v-model="form.assets">
                   <option value="0">Please select</option>
                   <option value="1">Option #1</option>
                   <option value="2">Option #2</option>
@@ -119,7 +119,7 @@
               </div>
             <div class="form-group row">
               <div class="col-md-12">
-                <textarea class="form-control" id="textarea-input" name="textarea-input" rows="9" placeholder="질문을 입력하세요."></textarea>
+                <vue-editor v-model="form.description" placeholder="질문을 입력하세요."></vue-editor>
               </div>
             </div>
             <div class="form-group row">
@@ -134,11 +134,11 @@
           </form>
         </div>
         <div class="card-footer text-sm-right">
-          <button class="btn btn-sm btn-primary" type="submit" v-on:click="registerQuestion">
-            <i class="fa fa-dot-circle-o"></i> Submit
+          <button class="btn btn-sm btn-primary" type="submit" v-on:click="createQuestion">
+            <i class="fa fa-dot-circle-o"></i> 등록
           </button>
-          <button class="btn btn-sm btn-danger" type="reset">
-            <i class="fa fa-ban"></i> Reset
+          <button class="btn btn-sm btn-danger" type="reset" v-on:click="cancel">
+            <i class="fa fa-ban"></i> 취소
           </button>
         </div>
       </div>
@@ -148,26 +148,39 @@
 
 <script>
 import VueTagsInput from '@johmun/vue-tags-input'
+import { VueEditor } from 'vue2-editor'
 
 export default {
   name: 'NewQuestion',
   components: {
+    VueEditor,
     VueTagsInput
   },
   created () {
   },
   data () {
     return {
-      from: {
+      form: {
+        title: '',
+        description: '',
+        mainField: '1',
+        subField: '',
         age: 31,
         gender: 'female',
-        tag: '',
+        occupation: '',
+        familtyType: '',
+        interest: '',
+        montlyIncome: '',
+        assets: '',
+        incomeManagement: '',
         tags: []
-      }
+      },
+      tag: '',
+      tags: []
     }
   },
   methods: {
-    registerQuestion () {
+    createQuestion () {
       var question = {
         title: '이더리움이??',
         description: '엄마 친구가 보험설계사라 일단 이것 저것 가입하긴 했는데 제대로 가입 한게 맞나요? 보장 내용 한번만 봐주세요.. 전문가님의 조언이 필요합니다. 제 보험 내역은 아래와 같습니다.',
@@ -190,6 +203,9 @@ export default {
       this.$http.post('/api/question', question)
         .then((response) => {
         })
+    },
+    cancel () {
+      this.$router.go(-1)
     }
   }
 }
