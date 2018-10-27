@@ -99,8 +99,8 @@ QuestionSchema.statics = {
      * @param {number} limit - Limit number of question to be returned.
      * @returns {Promise<Question[]>}
      */
-    list({ skip = 0, limit = 50 } = {}) {
-      return this.find()
+    list({ skip = 0, limit = 50, q = {} } = {}) {
+      return this.find(q)
         .sort({ createdAt: -1 })
         .skip(+skip)
         .limit(+limit)
