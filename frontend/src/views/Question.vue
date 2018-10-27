@@ -9,7 +9,7 @@
 export default {
   name: 'Question',
   created () {
-    this.$http.get('/api/question/' + this.$route.params.questionId)
+    this.$http.get('/api/questions/' + this.$route.params.questionId)
       .then((response) => {
         this.question = response.data
       })
