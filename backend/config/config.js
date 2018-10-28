@@ -7,6 +7,11 @@ require('dotenv').config();
 const envVarsSchema = Joi.object({
     MONGO_HOST: Joi.string().required().description('Mongo DB host url'),
     MONGO_PORT: Joi.number().default(27017),
+    WEB3_PROVIDER: Joi.required().description('Web3 provier required to connect etherem network'),
+    CONTRACT_ABI: Joi.required().description('Contract ABI required for smart contract'),
+    CONTRACT_ACCOUNT: Joi.required().description('Contract account required for smart contract'),
+    GAS_PRICE: Joi.number().default(1),
+    GAS_LIMIT: Joi.number().default(100000)
 }).unknown()
 .required();
 
@@ -19,7 +24,19 @@ const config = {
     mongo: {
         host: envVars.MONGO_HOST,
         port: envVars.MONGO_PORT
-    }
+    },
+    web3Provider: envVars.WEB3_PROVIDER,
+    contractABI: envVars.CONTRACT_ABI,
+    contractAccount: envVars.CONTRACT_ACCOUNT,
+    system: {
+        address: envVars.SYSTEM_ADDRESS,
+        keystore: envVars.SYSTEM_KEYSTORE,
+        account: envVars.SYSTEM_ACCOUNT
+    },
+    testAccounts: envVars.TEST_ACCOUNTS,
+    commonPassword: envVars.COMMON_PASSWORD,
+    gasPrice: envVars.GAS_PRICE,
+    gasLimit: envVars.GAS_LIMIT
 };
 
 module.exports = config;
