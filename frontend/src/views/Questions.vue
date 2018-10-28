@@ -84,7 +84,7 @@ export default {
       this.questions = []
       this.listItems = []
       this.distance = 0
-      this.$http.get('/api/question')
+      this.$http.get('/api/questions')
         .then((response) => {
           this.questions = response.data
         })

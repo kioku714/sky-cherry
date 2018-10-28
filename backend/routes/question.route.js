@@ -4,13 +4,13 @@ var questionCtrl = require('../controllers/question.controller');
 const router = express.Router();
 
 router.route('/')
-  // GET /api/question - Get list of question
+  // GET /api/questions - Get list of question
   .get(questionCtrl.list)
-  // POST /api/question - Create new question
+  // POST /api/questions - Create new question
   .post(questionCtrl.create);
 
 router.route('/:questionId')
-  // GET /api/question/:questionId - Get question
+  // GET /api/questions/:questionId - Get question
   .get(questionCtrl.get);
 
 // Load question when API with questionId route parameter is hit

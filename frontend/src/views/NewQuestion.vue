@@ -200,7 +200,7 @@ export default {
           '사무직'
         ]
       }
-      this.$http.post('/api/question', question)
+      this.$http.post('/api/questions', question)
         .then((response) => {
         })
     },
