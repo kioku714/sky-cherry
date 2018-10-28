@@ -11,8 +11,8 @@
               <label class="col-md-2 col-form-label">분야 : </label>
               <div class="col-md-5">
                 <select class="form-control" v-model="form.mainField">
-                  <option value="0">Please select</option>
                   <option value="1">Option #1</option>
+                  <option value="financialTechnology">제테크</option>
                   <option value="2">Option #2</option>
                   <option value="3">Option #3</option>
                 </select>
@@ -41,85 +41,79 @@
               <label class="col-md-2 col-form-label" for="email-input">직업</label>
               <div class="col-md-4">
                 <select class="form-control" v-model="form.occupation">
-                  <option value="0">Please select</option>
-                  <option value="1">Option #1</option>
-                  <option value="2">Option #2</option>
-                  <option value="3">Option #3</option>
+                  <option value="officer">사무직</option>
+                  <option value="ceo">사장님</option>
                 </select>
               </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row" v-if="form.mainField === 'financialTechnology'">
               <label class="col-md-2 col-form-label" for="email-input">가족형태</label>
               <div class="col-md-4">
                 <select class="form-control" v-model="form.familtyType">
-                  <option value="0">Please select</option>
-                  <option value="1">Option #1</option>
-                  <option value="2">Option #2</option>
-                  <option value="3">Option #3</option>
+                  <option value="familtyType1">1인가구</option>
+                  <option value="familtyType2">2인가구</option>
+                  <option value="familtyType3">3인가구</option>
+                  <option value="familtyType4">4인가구</option>
+                  <option value="familtyType5">5인가구</option>
+                  <option value="familtyType6">6인가구</option>
+                  <option value="familtyType7">7인가구</option>
                 </select>
               </div>
               <label class="col-md-2 col-form-label" for="email-input">관심사</label>
               <div class="col-md-4">
                 <select class="form-control" v-model="form.interest">
-                  <option value="0">Please select</option>
-                  <option value="1">Option #1</option>
-                  <option value="2">Option #2</option>
-                  <option value="3">Option #3</option>
+                  <option value="interest1">결혼자금</option>
+                  <option value="interest2">Option #1</option>
+                  <option value="interest3">Option #2</option>
+                  <option value="interest4">Option #3</option>
                 </select>
               </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row" v-if="form.mainField === 'financialTechnology'">
               <label class="col-md-2 col-form-label" for="email-input">월평균소득</label>
               <div class="col-md-4">
                 <select class="form-control" v-model="form.montlyIncome">
-                  <option value="0">Please select</option>
-                  <option value="1">Option #1</option>
-                  <option value="2">Option #2</option>
-                  <option value="3">Option #3</option>
+                  <option value="montlyIncome1">~150</option>
+                  <option value="montlyIncome2">150~200</option>
+                  <option value="montlyIncome3">200~250</option>
+                  <option value="montlyIncome4">250~300</option>
+                  <option value="montlyIncome5">300~350</option>
+                  <option value="montlyIncome6">350~400</option>
+                  <option value="montlyIncome7">300~350</option>
+                  <option value="montlyIncome8">350~</option>
                 </select>
               </div>
               <label class="col-md-2 col-form-label" for="email-input">보유자산</label>
               <div class="col-md-4">
                 <select class="form-control" v-model="form.assets">
-                  <option value="0">Please select</option>
-                  <option value="1">Option #1</option>
-                  <option value="2">Option #2</option>
-                  <option value="3">Option #3</option>
+                  <option value="assets1">~1000만</option>
+                  <option value="assets2">5000만</option>
+                  <option value="assets3">8000만~1억</option>
+                  <option value="assets4">1억~</option>
                 </select>
               </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row" v-if="form.mainField === 'financialTechnology'">
                 <label class="col-md-2 col-form-label">소득운용현황</label>
                 <div class="col-md-10 col-form-label">
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" id="inline-radio1" type="radio" value="option1" name="inline-radios">
-                    <label class="form-check-label" for="inline-radio1">예/적금</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" id="inline-radio2" type="radio" value="option2" name="inline-radios">
-                   <label class="form-check-label" for="inline-radio2">주식</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                   <input class="form-check-input" id="inline-radio3" type="radio" value="option3" name="inline-radios">
-                   <label class="form-check-label" for="inline-radio3">펀드</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                   <input class="form-check-input" id="inline-radio3" type="radio" value="option3" name="inline-radios">
-                   <label class="form-check-label" for="inline-radio3">보험</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                   <input class="form-check-input" id="inline-radio3" type="radio" value="option3" name="inline-radios">
-                   <label class="form-check-label" for="inline-radio3">부동산</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                   <input class="form-check-input" id="inline-radio3" type="radio" value="option3" name="inline-radios">
-                   <label class="form-check-label" for="inline-radio3">기타</label>
-                  </div>
+                  <b-form-radio-group
+                    plain
+                    :options="[
+                      {text: '예/적금 ',value: 'deposit'},
+                      {text: '주식 ',value: 'stock'},
+                      {text: '펀드 ',value: 'fund'},
+                      {text: '보험 ',value: 'insurance'},
+                      {text: '부동산 ',value: 'realty'},
+                      {text: '기타 ',value: 'etc'}
+                    ]"
+                    checked="1"
+                    v-model="form.incomeManagement" @change="form.incomeManagement = ''">
+                  </b-form-radio-group>
                 </div>
               </div>
             <div class="form-group row">
               <div class="col-md-12">
-                <vue-editor v-model="form.description" placeholder="질문을 입력하세요."></vue-editor>
+                <textarea class="form-control" v-model="form.description" rows="9" placeholder="질문을 입력하세요."></textarea>
               </div>
             </div>
             <div class="form-group row">
@@ -128,6 +122,7 @@
                   v-model="tag"
                   :tags="tags"
                   @tags-changed="newTags => tags = newTags"
+                  @before-adding-tag="addTagStyle"
                 />
               </div>
             </div>
@@ -148,12 +143,10 @@
 
 <script>
 import VueTagsInput from '@johmun/vue-tags-input'
-import { VueEditor } from 'vue2-editor'
 
 export default {
   name: 'NewQuestion',
   components: {
-    VueEditor,
     VueTagsInput
   },
   created () {
@@ -163,7 +156,7 @@ export default {
       form: {
         title: '',
         description: '',
-        mainField: '1',
+        mainField: 'financialTechnology',
         subField: '',
         age: 31,
         gender: 'female',
@@ -181,28 +174,17 @@ export default {
   },
   methods: {
     createQuestion () {
-      var question = {
-        title: '이더리움이??',
-        description: '엄마 친구가 보험설계사라 일단 이것 저것 가입하긴 했는데 제대로 가입 한게 맞나요? 보장 내용 한번만 봐주세요.. 전문가님의 조언이 필요합니다. 제 보험 내역은 아래와 같습니다.',
-        mainField: '재테크',
-        subField: '보험',
-        age: 31,
-        gender: 'female',
-        occupation: '사무직',
-        familtyType: '1인가구',
-        interest: '결혼자금',
-        montlyIncome: '300~350',
-        assets: '8000만~1억',
-        incomeManagement: '8000만~1억',
-        tags: [
-          '30대여자',
-          '1인가구',
-          '사무직'
-        ]
-      }
-      this.$http.post('/api/questions', question)
+      this.form.tags = this.getTags()
+      this.$http.post('/api/questions', this.form)
         .then((response) => {
         })
+    },
+    getTags () {
+      return this.tags.map(x => x.text)
+    },
+    addTagStyle (obj) {
+      obj.tag.style='font-size: 12px; color: #3c4859; background-color: transparent; border: solid 1px #8894a5; border-radius: .5rem;'
+      obj.addTag()
     },
     cancel () {
       this.$router.go(-1)
