@@ -33,7 +33,8 @@ export default {
   components: {
     AppHeaderDropdown
   },
-  data: () => {
+  data () {
+    return {}
   }
 }
 </script>

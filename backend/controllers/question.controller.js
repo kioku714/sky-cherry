@@ -4,12 +4,16 @@ var Question = require('../models/question.model');
  * Get question list.
  * @property {number} req.query.skip - Number of questions to be skipped.
  * @property {number} req.query.limit - Limit number of questions to be returned.
+ * @property {string} req.query.createdBy - filter of questions to be returned.
  * @returns {Question[]}
  */
 function list(req, res, next) {
-    const { limit = 50, skip = 0 } = req.query;
-    Question.list({ limit, skip })
-      .then(question => res.json(question))
+    const { limit = 50, skip = 0, q = {}} = req.query;
+    if(req.query.createdBy) {
+      q.createdBy = req.query.createdBy
+    }
+    Question.list({ limit, skip, q })
+      .then(questions => res.json(questions))
       .catch(e => next(e));
   }
   

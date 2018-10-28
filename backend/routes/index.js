@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 // mount news routes at /news
 router.use('/news', newsRoutes);
 
-// mount question routes at /question
-router.use('/question', questionRoutes);
+// mount question routes at /questions
+router.use('/questions', questionRoutes);
 
 module.exports = router;

@@ -39,6 +39,7 @@ import bCarousel from 'bootstrap-vue/es/components/carousel/carousel'
 import bCarouselSlide from 'bootstrap-vue/es/components/carousel/carousel-slide'
 
 export default {
+  name: 'NewsDetail',
   created () {
     this.$http.get('/api/news/' + this.$route.params.category + '/' + this.$route.params.id)
       .then((response) => {

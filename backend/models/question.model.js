@@ -99,8 +99,8 @@ QuestionSchema.statics = {
      * @param {number} limit - Limit number of question to be returned.
      * @returns {Promise<Question[]>}
      */
-    list({ skip = 0, limit = 50 } = {}) {
-      return this.find()
+    list({ skip = 0, limit = 50, q = {} } = {}) {
+      return this.find(q)
         .sort({ createdAt: -1 })
         .skip(+skip)
         .limit(+limit)
@@ -109,16 +109,17 @@ QuestionSchema.statics = {
   
     /**
      * Get question
-     * @param {Number} no - The Number of question.
+     * @param {ObjectId} id - The ObjectId of question.
      * @returns {Promise<Question, APIError>}
      */
-    get(no) {
-      return this.findOne({ no: parseInt(no) })
-        .populate('createdBy')
-        .populate('answers')
-        .populate('likes')
+    get(id) {
+      return this.findById(id)
+        // .populate('createdBy')
+        // .populate('answers')
+        // .populate('likes')
         .exec()
         .then((question) => {
+            console.log(question.title)
           if (question) {
             return question;
           }
