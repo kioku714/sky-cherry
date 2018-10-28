@@ -11,18 +11,16 @@
               <label class="col-md-2 col-form-label">분야 : </label>
               <div class="col-md-5">
                 <select class="form-control" v-model="form.mainField">
-                  <option value="1">Option #1</option>
-                  <option value="financialTechnology">제테크</option>
-                  <option value="2">Option #2</option>
-                  <option value="3">Option #3</option>
+                  <option v-for="option in fieldItems" v-bind:value="option.mainFieldValue" :key="option.mainFieldValue">
+                    {{ option.mainFieldName }}
+                  </option>
                 </select>
               </div>
               <div class="col-md-5">
                 <select class="form-control" v-model="form.subField">
-                  <option value="0">Please select</option>
-                  <option value="1">Option #1</option>
-                  <option value="2">Option #2</option>
-                  <option value="3">Option #3</option>
+                  <option v-for="option in getSubFieldItems(form.mainField)" v-bind:value="option.value" :key="option.value">
+                    {{ option.text }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -41,59 +39,76 @@
               <label class="col-md-2 col-form-label" for="email-input">직업</label>
               <div class="col-md-4">
                 <select class="form-control" v-model="form.occupation">
-                  <option value="officer">사무직</option>
-                  <option value="ceo">사장님</option>
+                  <option value="administrator">관리자</option>
+                  <option value="expert">전문가 및 관련</option>
+                  <option value="office">사무</option>
+                  <option value="service">서비스</option>
+                  <option value="sale">판매</option>
+                  <option value="ceo">농림어업</option>
+                  <option value="ceo">기능원 및 관련</option>
+                  <option value="engineer">장치 기계조작 및 조립</option>
+                  <option value="student">학생</option>
+                  <option value="soldier">전, 현직 군인</option>
                 </select>
               </div>
             </div>
-            <div class="form-group row" v-if="form.mainField === 'financialTechnology'">
+            <div class="form-group row" v-if="form.mainField === 'finance'">
               <label class="col-md-2 col-form-label" for="email-input">가족형태</label>
               <div class="col-md-4">
                 <select class="form-control" v-model="form.familtyType">
-                  <option value="familtyType1">1인가구</option>
-                  <option value="familtyType2">2인가구</option>
-                  <option value="familtyType3">3인가구</option>
-                  <option value="familtyType4">4인가구</option>
-                  <option value="familtyType5">5인가구</option>
-                  <option value="familtyType6">6인가구</option>
-                  <option value="familtyType7">7인가구</option>
+                  <option value="familtyType1">미혼-1인가구</option>
+                  <option value="familtyType2">미혼-가족과 거주</option>
+                  <option value="familtyType3">미혼-기타형태 거주</option>
+                  <option value="familtyType4">기혼-무자녀</option>
+                  <option value="familtyType5">기혼-1자녀</option>
+                  <option value="familtyType6">기혼-2자녀</option>
+                  <option value="familtyType7">기혼-3자녀 이상</option>
                 </select>
               </div>
               <label class="col-md-2 col-form-label" for="email-input">관심사</label>
               <div class="col-md-4">
                 <select class="form-control" v-model="form.interest">
-                  <option value="interest1">결혼자금</option>
-                  <option value="interest2">Option #1</option>
-                  <option value="interest3">Option #2</option>
-                  <option value="interest4">Option #3</option>
+                  <option value="interest1">내집마련</option>
+                  <option value="interest2">결혼자금</option>
+                  <option value="interest3">목돈모으기</option>
+                  <option value="interest4">자기계발</option>
+                  <option value="interest5">건물구입</option>
+                  <option value="interest6">해외금융</option>
+                  <option value="interest7">주식투자</option>
                 </select>
               </div>
             </div>
-            <div class="form-group row" v-if="form.mainField === 'financialTechnology'">
+            <div class="form-group row" v-if="form.mainField === 'finance'">
               <label class="col-md-2 col-form-label" for="email-input">월평균소득</label>
               <div class="col-md-4">
                 <select class="form-control" v-model="form.montlyIncome">
-                  <option value="montlyIncome1">~150</option>
-                  <option value="montlyIncome2">150~200</option>
-                  <option value="montlyIncome3">200~250</option>
-                  <option value="montlyIncome4">250~300</option>
-                  <option value="montlyIncome5">300~350</option>
-                  <option value="montlyIncome6">350~400</option>
-                  <option value="montlyIncome7">300~350</option>
-                  <option value="montlyIncome8">350~</option>
+                  <option value="montlyIncome1">100 이하</option>
+                  <option value="montlyIncome2">100~150</option>
+                  <option value="montlyIncome3">150~200</option>
+                  <option value="montlyIncome4">200~250</option>
+                  <option value="montlyIncome5">250~300</option>
+                  <option value="montlyIncome6">300~350</option>
+                  <option value="montlyIncome7">350~400</option>
+                  <option value="montlyIncome8">400~500</option>
+                  <option value="montlyIncome9">500~600</option>
+                  <option value="montlyIncome10">600 이상</option>
                 </select>
               </div>
               <label class="col-md-2 col-form-label" for="email-input">보유자산</label>
               <div class="col-md-4">
                 <select class="form-control" v-model="form.assets">
-                  <option value="assets1">~1000만</option>
-                  <option value="assets2">5000만</option>
-                  <option value="assets3">8000만~1억</option>
-                  <option value="assets4">1억~</option>
+                  <option value="assets1">1000 이하</option>
+                  <option value="assets2">1000~3000</option>
+                  <option value="assets3">3000~5000</option>
+                  <option value="assets4">5000~8000</option>
+                  <option value="assets5">8000~1억</option>
+                  <option value="assets6">1억~3억</option>
+                  <option value="assets7">3억~5억</option>
+                  <option value="assets8">5억 이상</option>
                 </select>
               </div>
             </div>
-            <div class="form-group row" v-if="form.mainField === 'financialTechnology'">
+            <div class="form-group row" v-if="form.mainField === 'finance'">
                 <label class="col-md-2 col-form-label">소득운용현황</label>
                 <div class="col-md-10 col-form-label">
                   <b-form-radio-group
@@ -106,7 +121,7 @@
                       {text: '부동산 ',value: 'realty'},
                       {text: '기타 ',value: 'etc'}
                     ]"
-                    checked="1"
+                    checked="deposit"
                     v-model="form.incomeManagement" @change="form.incomeManagement = ''">
                   </b-form-radio-group>
                 </div>
@@ -156,7 +171,7 @@ export default {
       form: {
         title: '',
         description: '',
-        mainField: 'financialTechnology',
+        mainField: 'beauty',
         subField: '',
         age: 31,
         gender: 'female',
@@ -165,11 +180,65 @@ export default {
         interest: '',
         montlyIncome: '',
         assets: '',
-        incomeManagement: '',
+        incomeManagement: 'deposit',
         tags: []
       },
       tag: '',
-      tags: []
+      tags: [],
+      fieldItems: [
+        {
+          mainFieldValue: 'beauty',
+          mainFieldName: '뷰티',
+          subFields: [
+            {text: '스킨케어', value: 'skincare'},
+            {text: '메이크업', value: 'makeup'},
+            {text: '바디/헤어/향수', value: 'bodycare'},
+            {text: '다이어트/운동', value: 'diet'},
+            {text: '다이어트/운동', value: 'innerbeauty'}
+          ]
+        },
+        {
+          mainFieldValue: 'food',
+          mainFieldName: '푸드',
+          subFields: [
+            {text: '브런치/카페', value: 'cafe'},
+            {text: '맛집', value: 'restaurant'},
+            {text: '술집', value: 'bar'}
+          ]
+        },
+        {
+          mainFieldValue: 'culture',
+          mainFieldName: '컬쳐',
+          subFields: [
+            {text: '영화/TV', value: 'movie'},
+            {text: '음악', value: 'music'},
+            {text: '도서', value: 'books'},
+            {text: '공연', value: 'show'},
+            {text: '스포츠', value: 'sports'}
+          ]
+        },
+        {
+          mainFieldValue: 'finance',
+          mainFieldName: '금융',
+          subFields: [
+            {text: '예/적금', value: 'deposit'},
+            {text: '펀드', value: 'fund'},
+            {text: '주식', value: 'stock'},
+            {text: '보험', value: 'insurance'},
+            {text: '부동산', value: 'realty'},
+            {text: '기타', value: 'etc'}
+          ]
+        },
+        {
+          mainFieldValue: 'lifestyle',
+          mainFieldName: '라이프스타일',
+          subFields: [
+            {text: '패션/잡화', value: 'fashion'},
+            {text: '디지털', value: 'digital'},
+            {text: '리빙', value: 'living'}
+          ]
+        }
+      ]
     }
   },
   methods: {
@@ -183,8 +252,11 @@ export default {
       return this.tags.map(x => x.text)
     },
     addTagStyle (obj) {
-      obj.tag.style='font-size: 12px; color: #3c4859; background-color: transparent; border: solid 1px #8894a5; border-radius: .5rem;'
+      obj.tag.style = 'font-size: 12px; color: #3c4859; background-color: transparent; border: solid 1px #8894a5; border-radius: .5rem;'
       obj.addTag()
+    },
+    getSubFieldItems (mainField) {
+      return this.fieldItems.find(x => x.mainFieldValue === mainField).subFields
     },
     cancel () {
       this.$router.go(-1)
