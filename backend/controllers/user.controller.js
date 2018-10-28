@@ -85,7 +85,7 @@ User.find({email: 'test01@cj.net'})
             var tokens = web3.utils.toWei('50', 'ether');
             var data = contract.methods.transfer(to, tokens).encodeABI();
             
-            sendTransaction(walletInfo, config.contractAccount, data, 0);
+            // sendTransaction(walletInfo, config.contractAccount, data, 0);
         }
     })
     .catch(e => console.error);
