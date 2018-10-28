@@ -30,7 +30,7 @@ const config = {
     contractAccount: envVars.CONTRACT_ACCOUNT,
     system: {
         address: envVars.SYSTEM_ADDRESS,
-        keystore: envVars.SYSTEM_KEYSTORE,
+        keyStore: envVars.SYSTEM_KEYSTORE,
         account: envVars.SYSTEM_ACCOUNT
     },
     testAccounts: envVars.TEST_ACCOUNTS,

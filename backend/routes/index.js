@@ -4,6 +4,7 @@ var config = require('../config/config');
 var authRoutes = require('./auth.route');
 var newsRoutes = require('./news.route');
 var questionRoutes = require('./question.route');
+var contractRoutes = require('./contract.route');
 
 var router = express.Router();
 
@@ -20,5 +21,8 @@ router.use('/news', newsRoutes);
 
 // mount question routes at /questions
 router.use('/questions', questionRoutes);
+
+// mount contract routes at /contracts
+router.use('/contracts', contractRoutes);
 
 module.exports = router;
