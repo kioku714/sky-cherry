@@ -18,20 +18,8 @@ var web3 = new Web3(config.web3Provider);
 function login(req, res, next) {
   User.getByEmail(req.body.email)
     .then((user) => {
-      var walletInfo = {};
-
       console.log(user);
-      
-      // if(config.root.id === user.email) {
-      //   if(config.root.password === req.body.password) {
-      //     walletInfo.address = user.keyStore.address;
-      //   } else {
-      //     throw new APIError('password invalid.', httpStatus.UNAUTHORIZED, true);
-      //   }
-      // } else {
-      //   walletInfo = web3.eth.accounts.decrypt(user.keyStore, req.body.password);
-      // }
-
+      var walletInfo = web3.eth.accounts.decrypt(user.keyStore, req.body.password);
       var options = {expiresIn: 60*60*24};
       const token = jwt.sign({
         _id: user._id,

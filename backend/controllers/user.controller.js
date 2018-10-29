@@ -64,31 +64,18 @@ async function createAccount(email) {
     });
 
     user.save()
-        .then(savedUser => {
+        .then(async(savedUser) => {
             console.info(savedUser);
 
-            // var walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, config.commonPassword);
-            // var to = savedUser[0].keyStore.address;
-            // var tokens = web3.utils.toWei('50', 'ether');
-            // var data = contract.methods.transfer(to, tokens).encodeABI();
-            
-            // sendTransaction(walletInfo, config.contractAccount, data, 0);
-        })
-        .catch(e => console.error);
-}
-
-User.find({email: 'test01@cj.net'})
-    .then(user => {
-        if (user.length > 0) {
             var walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, config.commonPassword);
-            var to = user[0].keyStore.address;
+            var to = savedUser[0].keyStore.address;
             var tokens = web3.utils.toWei('50', 'ether');
             var data = contract.methods.transfer(to, tokens).encodeABI();
             
-            // sendTransaction(walletInfo, config.contractAccount, data, 0);
-        }
-    })
-    .catch(e => console.error);
+            await sendTransaction(walletInfo, config.contractAccount, data, 0);
+        })
+        .catch(e => console.error);
+}
 
 async function sendTransaction(walletInfo, to, data, value) {
     var myAddress = walletInfo.address;

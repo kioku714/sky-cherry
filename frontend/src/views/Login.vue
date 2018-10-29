@@ -57,6 +57,8 @@ export default {
           }).catch((error) => {
             alert(error.response.data.message)
           })
+      } else {
+        alert('이메일 또는 비밀번호를 입력해주세요.')
       }
     }
   }
