@@ -1,7 +1,6 @@
 var Promise = require('bluebird');
 var mongoose = require('mongoose');
 var httpStatus = require('http-status');
-var autoIncrement = require('mongoose-auto-increment');
 var APIError = require('../helpers/APIError');
 var config = require('../config/config');
 
@@ -133,16 +132,3 @@ QuestionSchema.statics = {
  * @typedef Question
  */
 module.exports = mongoose.model('Question', QuestionSchema);
-autoIncrement.initialize(mongoose.connection);
-/**
- * 1씩 증가하는 primary Key 생성
- * model : 생성할 document 이름
- * field : primary key
- * startAt : 1부터 시작
- */
-QuestionSchema.plugin(autoIncrement.plugin , { 
-  model: 'Question', 
-  field: 'no', 
-  startAt: 1,
-  incrementBy: 1
-});

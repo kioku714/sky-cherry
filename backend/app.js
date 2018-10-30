@@ -3,9 +3,17 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var compress = require('compression');
+var methodOverride = require('method-override');
+var cors = require('cors');
+var expressValidation = require('express-validation');
+var helmet = require('helmet');
+var appRoot = require('app-root-path');
+var APIError = require('./helpers/APIError');
 
 var indexRouter = require('./routes/index');
-var testRouter = require('./routes/test');
 
 var app = express();
 
@@ -20,7 +28,20 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/test', testRouter);
+
+// if error is not an instanceOf APIError, convert it.
+app.use((err, req, res, next) => {
+  if (err instanceof expressValidation.ValidationError) {
+    // validation error contains errors which is an array of error each containing message[]
+    const unifiedErrorMessage = err.errors.map(error => error.messages.join('. ')).join(' and ');
+    const error = new APIError(unifiedErrorMessage, err.status, true);
+    return next(error);
+  } else if (!(err instanceof APIError)) {
+    const apiError = new APIError(err.message, err.status, err.isPublic);
+    return next(apiError);
+  }
+  return next(err);
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -28,14 +49,11 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+app.use((err, req, res, next) => 
+  res.status(err.status).json({
+    message: err.isPublic ? err.message : httpStatus[err.status],
+    // stack: config.env === 'development' ? err.stack : {}
+  })
+);
 
 module.exports = app;
