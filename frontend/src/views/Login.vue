@@ -52,7 +52,7 @@ export default {
               this.$session.start()
               this.$session.set('user-token', response.data.token)
               this.$http.defaults.headers.common['Authorization'] = response.data.token
-              this.$router.push('/')
+              this.$router.push(localStorage.getItem('prevPath'))
             }
           }).catch((error) => {
             alert(error.response.data.message)

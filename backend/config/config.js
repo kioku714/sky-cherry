@@ -21,6 +21,7 @@ if (error) {
 };
 
 const config = {
+    jwtSecret: envVars.JWT_SECRET,
     mongo: {
         host: envVars.MONGO_HOST,
         port: envVars.MONGO_PORT

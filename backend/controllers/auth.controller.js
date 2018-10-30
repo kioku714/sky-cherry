@@ -18,7 +18,6 @@ var web3 = new Web3(config.web3Provider);
 function login(req, res, next) {
   User.getByEmail(req.body.email)
     .then((user) => {
-      console.log(user);
       var walletInfo = web3.eth.accounts.decrypt(user.keyStore, req.body.password);
       var options = {expiresIn: 60*60*24};
       const token = jwt.sign({
