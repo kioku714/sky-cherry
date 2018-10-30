@@ -19,6 +19,8 @@ import Full from '@/containers/Full'
 Vue.use(Router)
 
 function requireAuth (to, from, next) {
+  // 로그인 후 이동할 path 저장
+  localStorage.setItem('prevPath', to.fullPath)
   // get user-token from Local storage with vue-session
   var localSess = localStorage.getItem('vue-session-key')
   if (localSess) {
@@ -84,12 +86,14 @@ export default new Router({
         {
           path: '/cherry-transfer',
           name: 'Cherry Transfer',
-          component: CherryTransfer
+          component: CherryTransfer,
+          beforeEnter: requireAuth
         },
         {
           path: '/profile',
           name: '프로필',
-          component: Profile
+          component: Profile,
+          beforeEnter: requireAuth
         }
       ]
     },
