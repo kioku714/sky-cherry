@@ -9,14 +9,14 @@
           <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
             <div class="form-group row">
               <label class="col-md-2 col-form-label">분야 : </label>
-              <div class="col-md-5">
+              <div class="col-md-2">
                 <select class="form-control" v-model="form.mainField">
                   <option v-for="option in fieldItems" v-bind:value="option.mainFieldValue" :key="option.mainFieldValue">
                     {{ option.mainFieldName }}
                   </option>
                 </select>
               </div>
-              <div class="col-md-5">
+              <div class="col-md-2">
                 <select class="form-control" v-model="form.subField">
                   <option v-for="option in getSubFieldItems(form.mainField)" v-bind:value="option.value" :key="option.value">
                     {{ option.text }}
@@ -34,18 +34,19 @@
             </div>
             <br>
             <div class="form-group row">
-              <label class="col-md-2 col-form-label" for="email-input">성별/나이</label>
-              <label class="col-md-4 col-form-label" for="email-input">{{ "male" === form.gender ? "남" : "여"}} / {{ form.age }}</label>
-              <label class="col-md-2 col-form-label" for="email-input">직업</label>
-              <div class="col-md-4">
+              <label class="col-md-2 col-form-label">성별/나이</label>
+              <label class="col-md-2 col-form-label">{{ "male" === form.gender ? "남" : "여"}} / {{ form.age }}</label>
+              <label class="col-md-2 col-form-label"></label>
+              <label class="col-md-2 col-form-label">직업</label>
+              <div class="col-md-2">
                 <select class="form-control" v-model="form.occupation">
                   <option value="administrator">관리자</option>
                   <option value="expert">전문가 및 관련</option>
                   <option value="office">사무</option>
                   <option value="service">서비스</option>
                   <option value="sale">판매</option>
-                  <option value="ceo">농림어업</option>
-                  <option value="ceo">기능원 및 관련</option>
+                  <option value="agriculture">농림어업</option>
+                  <option value="technician">기능원 및 관련</option>
                   <option value="engineer">장치 기계조작 및 조립</option>
                   <option value="student">학생</option>
                   <option value="soldier">전, 현직 군인</option>
@@ -53,58 +54,60 @@
               </div>
             </div>
             <div class="form-group row" v-if="form.mainField === 'finance'">
-              <label class="col-md-2 col-form-label" for="email-input">가족형태</label>
-              <div class="col-md-4">
+              <label class="col-md-2 col-form-label">가족형태</label>
+              <div class="col-md-2">
                 <select class="form-control" v-model="form.familtyType">
-                  <option value="familtyType1">미혼-1인가구</option>
-                  <option value="familtyType2">미혼-가족과 거주</option>
-                  <option value="familtyType3">미혼-기타형태 거주</option>
-                  <option value="familtyType4">기혼-무자녀</option>
-                  <option value="familtyType5">기혼-1자녀</option>
-                  <option value="familtyType6">기혼-2자녀</option>
-                  <option value="familtyType7">기혼-3자녀 이상</option>
+                  <option value="single">미혼-1인가구</option>
+                  <option value="family">미혼-가족과 거주</option>
+                  <option value="others">미혼-기타형태 거주</option>
+                  <option value="noChild">기혼-무자녀</option>
+                  <option value="oneChild">기혼-1자녀</option>
+                  <option value="twoChild">기혼-2자녀</option>
+                  <option value="manyChild">기혼-3자녀 이상</option>
                 </select>
               </div>
-              <label class="col-md-2 col-form-label" for="email-input">관심사</label>
-              <div class="col-md-4">
+              <label class="col-md-2 col-form-label"></label>
+              <label class="col-md-2 col-form-label">관심사</label>
+              <div class="col-md-2">
                 <select class="form-control" v-model="form.interest">
-                  <option value="interest1">내집마련</option>
-                  <option value="interest2">결혼자금</option>
-                  <option value="interest3">목돈모으기</option>
-                  <option value="interest4">자기계발</option>
-                  <option value="interest5">건물구입</option>
-                  <option value="interest6">해외금융</option>
-                  <option value="interest7">주식투자</option>
+                  <option value="myHouse">내집마련</option>
+                  <option value="weddingMoney">결혼자금</option>
+                  <option value="savingMoney">목돈모으기</option>
+                  <option value="selfImprovement">자기계발</option>
+                  <option value="buildingPurchase">건물구입</option>
+                  <option value="overseasFinancial">해외금융</option>
+                  <option value="stockInvestment">주식투자</option>
                 </select>
               </div>
             </div>
             <div class="form-group row" v-if="form.mainField === 'finance'">
-              <label class="col-md-2 col-form-label" for="email-input">월평균소득</label>
-              <div class="col-md-4">
+              <label class="col-md-2 col-form-label">월평균소득</label>
+              <div class="col-md-2">
                 <select class="form-control" v-model="form.montlyIncome">
-                  <option value="montlyIncome1">100 이하</option>
-                  <option value="montlyIncome2">100~150</option>
-                  <option value="montlyIncome3">150~200</option>
-                  <option value="montlyIncome4">200~250</option>
-                  <option value="montlyIncome5">250~300</option>
-                  <option value="montlyIncome6">300~350</option>
-                  <option value="montlyIncome7">350~400</option>
-                  <option value="montlyIncome8">400~500</option>
-                  <option value="montlyIncome9">500~600</option>
-                  <option value="montlyIncome10">600 이상</option>
+                  <option value="under100">100 이하</option>
+                  <option value="100To150">100~150</option>
+                  <option value="150To200">150~200</option>
+                  <option value="200To250">200~250</option>
+                  <option value="250To300">250~300</option>
+                  <option value="300To350">300~350</option>
+                  <option value="350To400">350~400</option>
+                  <option value="400To500">400~500</option>
+                  <option value="500To600">500~600</option>
+                  <option value="over600">600 이상</option>
                 </select>
               </div>
-              <label class="col-md-2 col-form-label" for="email-input">보유자산</label>
-              <div class="col-md-4">
+              <label class="col-md-2 col-form-label"></label>
+              <label class="col-md-2 col-form-label">보유자산</label>
+              <div class="col-md-2">
                 <select class="form-control" v-model="form.assets">
-                  <option value="assets1">1000 이하</option>
-                  <option value="assets2">1000~3000</option>
-                  <option value="assets3">3000~5000</option>
-                  <option value="assets4">5000~8000</option>
-                  <option value="assets5">8000~1억</option>
-                  <option value="assets6">1억~3억</option>
-                  <option value="assets7">3억~5억</option>
-                  <option value="assets8">5억 이상</option>
+                  <option value="under1000">1000 이하</option>
+                  <option value="1000to3000">1000~3000</option>
+                  <option value="3000to5000">3000~5000</option>
+                  <option value="5000to8000">5000~8000</option>
+                  <option value="8000to1bil">8000~1억</option>
+                  <option value="1bilto3bil">1억~3억</option>
+                  <option value="3bilto5bil">3억~5억</option>
+                  <option value="over5bil">5억 이상</option>
                 </select>
               </div>
             </div>
@@ -145,10 +148,7 @@
         </div>
         <div class="card-footer text-sm-right">
           <button class="btn btn-sm btn-primary" type="submit" v-on:click="createQuestion">
-            <i class="fa fa-dot-circle-o"></i> 등록
-          </button>
-          <button class="btn btn-sm btn-danger" type="reset" v-on:click="cancel">
-            <i class="fa fa-ban"></i> 취소
+            Post Your Question
           </button>
         </div>
       </div>
@@ -171,7 +171,7 @@ export default {
       form: {
         title: '',
         description: '',
-        mainField: 'beauty',
+        mainField: 'style',
         subField: '',
         age: 31,
         gender: 'female',
@@ -187,23 +187,22 @@ export default {
       tags: [],
       fieldItems: [
         {
-          mainFieldValue: 'beauty',
-          mainFieldName: '뷰티',
+          mainFieldValue: 'style',
+          mainFieldName: '스타일',
           subFields: [
-            {text: '스킨케어', value: 'skincare'},
-            {text: '메이크업', value: 'makeup'},
-            {text: '바디/헤어/향수', value: 'bodycare'},
-            {text: '다이어트/운동', value: 'diet'},
-            {text: '다이어트/운동', value: 'innerbeauty'}
+            {text: '패션/잡화', value: 'fashion'},
+            {text: '메이크업/헤어', value: 'makeup'},
+            {text: '스킨/바디', value: 'skin'}
           ]
         },
         {
-          mainFieldValue: 'food',
-          mainFieldName: '푸드',
+          mainFieldValue: 'place',
+          mainFieldName: '플레이스',
           subFields: [
-            {text: '브런치/카페', value: 'cafe'},
             {text: '맛집', value: 'restaurant'},
-            {text: '술집', value: 'bar'}
+            {text: '카페', value: 'cafe'},
+            {text: '지역', value: 'area'},
+            {text: '여행', value: 'travel'}
           ]
         },
         {
@@ -214,28 +213,28 @@ export default {
             {text: '음악', value: 'music'},
             {text: '도서', value: 'books'},
             {text: '공연', value: 'show'},
-            {text: '스포츠', value: 'sports'}
+            {text: '스포츠/게임', value: 'sports'}
           ]
         },
         {
           mainFieldValue: 'finance',
           mainFieldName: '금융',
           subFields: [
-            {text: '예/적금', value: 'deposit'},
-            {text: '펀드', value: 'fund'},
-            {text: '주식', value: 'stock'},
-            {text: '보험', value: 'insurance'},
+            {text: '재태크', value: 'financialTechnology'},
+            {text: '금융상품', value: 'financialProducts'},
+            {text: '세금', value: 'tax'},
             {text: '부동산', value: 'realty'},
-            {text: '기타', value: 'etc'}
+            {text: '용돈관리', value: 'pocketMoney'}
           ]
         },
         {
-          mainFieldValue: 'lifestyle',
-          mainFieldName: '라이프스타일',
+          mainFieldValue: 'life',
+          mainFieldName: '라이프',
           subFields: [
-            {text: '패션/잡화', value: 'fashion'},
-            {text: '디지털', value: 'digital'},
-            {text: '리빙', value: 'living'}
+            {text: '일상/취미', value: 'hobby'},
+            {text: '리빙/인테리어', value: 'living'},
+            {text: '건강', value: 'health'},
+            {text: '기타', value: 'etc'}
           ]
         }
       ]
@@ -257,9 +256,6 @@ export default {
     },
     getSubFieldItems (mainField) {
       return this.fieldItems.find(x => x.mainFieldValue === mainField).subFields
-    },
-    cancel () {
-      this.$router.go(-1)
     }
   }
 }

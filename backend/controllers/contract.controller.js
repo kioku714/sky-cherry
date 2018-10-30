@@ -30,20 +30,18 @@ async function getUserTokens(req, res) {
 }
 
 async function getReceiptList(req, res) {
-	var userSet = {};
-	await User.list()
-    .then(users => {
-		for (i in users) {
-			if(users[i].keyStore) {
-				userSet[web3.utils.toHex(users[i].keyStore.address).toUpperCase()] = users[i];
-			}
-		}
-    })
-    .catch(e => console.error);
+	// var userSet = {};
+	// await User.list()
+    // .then(users => {
+	// 	for (i in users) {
+	// 		if(users[i].keyStore) {
+	// 			userSet[web3.utils.toHex(users[i].keyStore.address).toUpperCase()] = users[i];
+	// 		}
+	// 	}
+    // })
+    // .catch(e => console.error);
 
-	const contract = req.contract;
-
-	contract.getPastEvents('Transfer', {
+	erc20.getPastEvents('Transfer', {
 		fromBlock: 0,
 		toBlock: 'latest'
 	}, function(error, events){
@@ -55,12 +53,6 @@ async function getReceiptList(req, res) {
 				'from' : events[i].returnValues.from,
 				'to' : events[i].returnValues.to,
 				'value' : events[i].returnValues.value
-			}
-			if(userSet[event.from.toUpperCase()]) {
-				event['from-ref'] = userSet[event.from.toUpperCase()];
-			}
-			if(userSet[event.to.toUpperCase()]) {
-				event['to-ref'] = userSet[event.to.toUpperCase()];
 			}
 			eventsArray.push(event)
 		}
