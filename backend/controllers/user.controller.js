@@ -58,6 +58,7 @@ async function createAccount(email) {
     const user = new User({
         email: email,
         name: name,
+        si: (Math.floor(Math.random() * 20) + 1),
         gender: 'male',
         birthday: date,
         keyStore: encryption

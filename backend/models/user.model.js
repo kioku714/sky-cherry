@@ -16,47 +16,60 @@ const UserSchema = new mongoose.Schema({
     unique : true
   },
   name: {
-    type: String
+    type: String,
+    required: true
   },
   createdAt: {
     type: Date,
     default: Date.now
   },
   modifiedAt: {
-    type: Date
+    type: Date,
+    default: Date.now
   },
   level : {
-    type: String
+    type: String,
+    default: 'Black'
   },
   si : {
-    type: Number
+    type: Number,
+    default: 1
   },
   birthday: {
-    type: Date
+    type: Date,
+    required: true
   },
   gender: {
-    type: String
+    type: String,
+    required: true
   },
   occupation: {
-    type: String
+    type: String,
+    default: ''
   },
-  familtyType: {
-    type: String
+  familyType: {
+    type: String,
+    default: ''
   },
   interest: {
-    type: String
+    type: String,
+    default: ''
   },
   montlyIncome: {
-    type: String
+    type: String,
+    default: ''
   },
   assets: {
-    type: String
+    type: String,
+    default: ''
   },
   incomeManagement: {
-    type: String
+    type: String,
+    default: ''
   },
   description: {
-    type: String
+    type: String,
+    default: ''
   },
   keyStore: {
     type: JSON
