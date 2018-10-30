@@ -23,8 +23,6 @@ new Vue({
   components: { App },
   template: '<App/>',
   created: function () {
-    this.$toastr.defaultPosition = 'toast-bottom-right'
-    this.$toastr.defaultProgressBar = false
     var _this = this
     axios.interceptors.request.use(function (config) {
       config.headers['Authorization'] = 'Bearer ' + _this.$session.get('user-token')
