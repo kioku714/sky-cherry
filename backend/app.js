@@ -8,6 +8,7 @@ var cookieParser = require('cookie-parser');
 var compress = require('compression');
 var methodOverride = require('method-override');
 var cors = require('cors');
+var httpStatus = require('http-status');
 var expressValidation = require('express-validation');
 var helmet = require('helmet');
 var appRoot = require('app-root-path');
