@@ -63,7 +63,8 @@ export default new Router({
         {
           path: '/new-question',
           name: '질문 등록',
-          component: NewQuestion
+          component: NewQuestion,
+          beforeEnter: requireAuth
         },
         {
           path: '/serial/column',
