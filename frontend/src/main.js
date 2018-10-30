@@ -8,13 +8,16 @@ import axios from 'axios'
 import VueSession from 'vue-session'
 import HttpStatus from 'http-status'
 import moment from 'moment'
+import ReadMore from 'vue-read-more'
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 
 Vue.use(BootstrapVue)
 Vue.use(VueSession, {persist: true})
+moment.locale('ko')
 Vue.use(require('vue-moment'), {moment})
+Vue.use(ReadMore)
 
 /* eslint-disable no-new */
 new Vue({

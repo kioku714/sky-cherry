@@ -13,7 +13,7 @@ router.route('/:id/transfer')
 router.route('/:id/approval')
   .post(contractCtrl.approval)
   
-router.route('/:id/receipts')
+router.route('/receipts')
   .get(contractCtrl.getReceiptList)
 
 router.param('id', contractCtrl.load);
