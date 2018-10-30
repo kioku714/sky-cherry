@@ -187,23 +187,22 @@ export default {
       tags: [],
       fieldItems: [
         {
-          mainFieldValue: 'beauty',
-          mainFieldName: '뷰티',
+          mainFieldValue: 'style',
+          mainFieldName: '스타일',
           subFields: [
-            {text: '스킨케어', value: 'skincare'},
-            {text: '메이크업', value: 'makeup'},
-            {text: '바디/헤어/향수', value: 'bodycare'},
-            {text: '다이어트/운동', value: 'diet'},
-            {text: '다이어트/운동', value: 'innerbeauty'}
+            {text: '패션/잡화', value: 'fashion'},
+            {text: '메이크업/헤어', value: 'makeup'},
+            {text: '스킨/바디', value: 'skin'}
           ]
         },
         {
-          mainFieldValue: 'food',
-          mainFieldName: '푸드',
+          mainFieldValue: 'place',
+          mainFieldName: '플레이스',
           subFields: [
-            {text: '브런치/카페', value: 'cafe'},
             {text: '맛집', value: 'restaurant'},
-            {text: '술집', value: 'bar'}
+            {text: '카페', value: 'cafe'},
+            {text: '지역', value: 'area'},
+            {text: '여행', value: 'travel'}
           ]
         },
         {
@@ -214,28 +213,28 @@ export default {
             {text: '음악', value: 'music'},
             {text: '도서', value: 'books'},
             {text: '공연', value: 'show'},
-            {text: '스포츠', value: 'sports'}
+            {text: '스포츠/게임', value: 'sports'}
           ]
         },
         {
           mainFieldValue: 'finance',
           mainFieldName: '금융',
           subFields: [
-            {text: '예/적금', value: 'deposit'},
-            {text: '펀드', value: 'fund'},
-            {text: '주식', value: 'stock'},
-            {text: '보험', value: 'insurance'},
+            {text: '재태크', value: ''},
+            {text: '금융상품', value: ''},
+            {text: '세금', value: 'tax'},
             {text: '부동산', value: 'realty'},
-            {text: '기타', value: 'etc'}
+            {text: '용돈관리', value: ''}
           ]
         },
         {
-          mainFieldValue: 'lifestyle',
-          mainFieldName: '라이프스타일',
+          mainFieldValue: 'life',
+          mainFieldName: '라이프',
           subFields: [
-            {text: '패션/잡화', value: 'fashion'},
-            {text: '디지털', value: 'digital'},
-            {text: '리빙', value: 'living'}
+            {text: '일상/취미', value: 'hobby'},
+            {text: '리빙/인테리어', value: 'living'},
+            {text: '건강', value: 'health'},
+            {text: '기타', value: 'etc'}
           ]
         }
       ]
