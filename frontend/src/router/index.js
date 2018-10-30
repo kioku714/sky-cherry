@@ -43,62 +43,52 @@ export default new Router({
         {
           path: 'news/:category',
           name: '체리카드',
-          component: News,
-          beforeEnter: requireAuth
+          component: News
         },
         {
           path: 'news/:category/:id',
           name: '체리카드 상세',
-          component: NewsDetail,
-          beforeEnter: requireAuth
+          component: NewsDetail
         },
         {
           path: '/questions',
           name: '질문하기',
-          component: Questions,
-          beforeEnter: requireAuth
+          component: Questions
         },
         {
           path: '/question/:questionId',
           name: '질문 상세',
-          component: Question,
-          beforeEnter: requireAuth
+          component: Question
         },
         {
           path: '/new-question',
           name: '질문 등록',
-          component: NewQuestion,
-          beforeEnter: requireAuth
+          component: NewQuestion
         },
         {
           path: '/serial/column',
           name: '컬럼',
-          component: Column,
-          beforeEnter: requireAuth
+          component: Column
         },
         {
           path: '/serial/live',
           name: 'Live',
-          component: Live,
-          beforeEnter: requireAuth
+          component: Live
         },
         {
           path: '/tags',
           name: 'Tags',
-          component: Tags,
-          beforeEnter: requireAuth
+          component: Tags
         },
         {
           path: '/cherry-transfer',
           name: 'Cherry Transfer',
-          component: CherryTransfer,
-          beforeEnter: requireAuth
+          component: CherryTransfer
         },
         {
           path: '/profile',
           name: '프로필',
-          component: Profile,
-          beforeEnter: requireAuth
+          component: Profile
         }
       ]
     },
