@@ -8,12 +8,19 @@
 export default {
   name: 'CherryTransfer',
   created () {
+    this.fetchData()
   },
   data () {
     return {
     }
   },
   methods: {
+    fetchData () {
+      this.$http.get('/api/contracts/receipts')
+        .then((response) => {
+          this.receipts = response.data
+        })
+    }
   }
 }
 </script>
