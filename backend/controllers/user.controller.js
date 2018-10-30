@@ -68,7 +68,7 @@ async function createAccount(email) {
             console.info(savedUser);
 
             var walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, config.commonPassword);
-            var to = savedUser[0].keyStore.address;
+            var to = savedUser.keyStore.address;
             var tokens = web3.utils.toWei('50', 'ether');
             var data = contract.methods.transfer(to, tokens).encodeABI();
             
