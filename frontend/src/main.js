@@ -14,6 +14,7 @@ Vue.prototype.$http = axios
 
 Vue.use(BootstrapVue)
 Vue.use(VueSession, {persist: true})
+moment.locale('ko')
 Vue.use(require('vue-moment'), {moment})
 
 /* eslint-disable no-new */
