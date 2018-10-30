@@ -40,7 +40,7 @@
               </b-list-group>
               <b-list-group v-for="question in questions" :key="question.id" flush>
                 <b-list-group-item>
-                  "{{ question.title }}" <span class="text-warning">{{ question.createdAt }}</span>
+                  "{{ question.title }}" <span class="text-muted" v-readMore:50="question.description"></span> <span class="text-warning">{{ $moment.utc(question.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
             </b-tab>
@@ -52,7 +52,7 @@
               </b-list-group>
               <b-list-group v-for="answer in answers" :key="answer.id" flush>
                 <b-list-group-item>
-                    "{{ answer.question.title }}" <span class="text-warning">{{ answer.createdAt }}</span>
+                    "{{ answer.question.title }}" <span class="text-muted" v-readMore:50="answer.description"></span> <span class="text-warning">{{ $moment.utc(answer.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
             </b-tab>
@@ -63,8 +63,11 @@
                 </b-list-group-item>
               </b-list-group>
               <b-list-group v-for="like in likes" :key="like.id" flush>
-                <b-list-group-item>
-                    "{{ like.question.title }}" <span class="text-warning">{{ like.createdAt }}</span>
+                <b-list-group-item v-if="like.onModel === 'Question'">
+                    <span class="text-success">{{ like.on.createdBy.name }}</span><span class="text-muted">님의 질문을 좋아합니다.</span>"{{ like.on.title }}"<span class="text-muted" v-readMore:50="like.on.description"></span><span class="text-warning">{{ $moment.utc(like.createdAt).local().fromNow() }}</span>
+                </b-list-group-item>
+                <b-list-group-item v-else>
+                    <span class="text-success">{{ like.on.createdBy.name }}</span><span class="text-muted">님의 답변을 좋아합니다.</span>"{{ like.on.qustion.title }}"<span class="text-muted" v-readMore:50="like.on.description"></span><span class="text-warning">{{ $moment.utc(like.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
             </b-tab>
@@ -76,7 +79,7 @@
               </b-list-group>
               <b-list-group v-for="comment in comments" :key="comment.id" flush>
                 <b-list-group-item>
-                    "{{ comment.question.title }}" <span class="text-warning">{{ comment.createdAt }}</span>
+                    "{{ comment.question.title }}" <span class="text-muted" v-readMore:50="comment.description"></span> <span class="text-warning">{{ $moment.utc(comment.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
             </b-tab>
