@@ -10,11 +10,11 @@
                   <h1>로그인</h1>
                   <b-input-group class="mb-3">
                     <b-input-group-prepend><b-input-group-text><i class="icon-user"></i></b-input-group-text></b-input-group-prepend>
-                    <input v-model="form.email" type="text" class="form-control" placeholder="Username">
+                    <input v-model="form.email" type="text" class="form-control" placeholder="Username" value="test01@cj.net">
                   </b-input-group>
                   <b-input-group class="mb-4">
                     <b-input-group-prepend><b-input-group-text><i class="icon-lock"></i></b-input-group-text></b-input-group-prepend>
-                    <input v-model="form.password" type="password" class="form-control" placeholder="Password">
+                    <input v-model="form.password" type="password" class="form-control" placeholder="Password" value="TmzkdlcpfL">
                   </b-input-group>
                   <b-row>
                     <b-col cols="12" class="text-right">
