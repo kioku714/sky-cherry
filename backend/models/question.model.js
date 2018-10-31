@@ -32,7 +32,7 @@ const QuestionSchema = new mongoose.Schema({
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'SkyCherryUser',
         // required: true
     },
     answers: [{
@@ -45,19 +45,11 @@ const QuestionSchema = new mongoose.Schema({
         ref: 'Like',
         required: false
     }],
-    gender: {
-        type: String,
-        required: false
-    },
-    age: {
-        type: Number,
-        required: false
-    },
     occupation: {
         type: String,
         required: false
     },
-    familtyType: {
+    familyType: {
         type: String,
         required: false
     },
@@ -113,12 +105,11 @@ QuestionSchema.statics = {
      */
     get(id) {
       return this.findById(id)
-        // .populate('createdBy')
+        .populate('createdBy')
         // .populate('answers')
         // .populate('likes')
         .exec()
         .then((question) => {
-            console.log(question.title)
           if (question) {
             return question;
           }

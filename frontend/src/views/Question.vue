@@ -1,7 +1,19 @@
 <template>
   <div class="animated fadeIn">
-    <h1>질문상세</h1>
+    <div>
+      <a class="username-link" v-bind:href="'/profile/' + question._id">yeaseul.moon</a>
+      {{ question.createdBy.level }}
+    </div>
+    <div>
+      {{ prettyDate($moment.utc(question.createdAt).valueOf()) }}
+    </div>
     <h1>{{ question.title }}</h1>
+    <hr/>
+    <div>Profile</div>
+    <div>
+      <label class="col-md-6 col-form-label">성별/나이 : </label>
+      <label class="col-md-6 col-form-label">{{ "male" === question.createdBy.gender ? "남" : "여"}}/{{ getAge() }}</label>
+    </div>
     <h1>{{ question.description }}</h1>
     <h1>{{ question.mainField }}</h1>
     <h1>{{ question.subField }}</h1>
@@ -32,6 +44,23 @@ export default {
     }
   },
   methods: {
+    getAge () {
+      var ageDifMs = Date.now() - new Date(this.question.createdBy.birthday).getTime()
+      var ageDate = new Date(ageDifMs) // miliseconds from epoch
+      return Math.abs(ageDate.getUTCFullYear() - 1970)
+    },
+    prettyDate (time) {
+      var diff = (new Date().getTime() - new Date(time).getTime()) / 1000
+      if (diff < 60) {
+        return '방금전'
+      } else if (diff < 3600) {
+        return Math.floor(diff / 60) + '분 전'
+      } else if (diff < 86400) {
+        return Math.floor(diff / 3600) + '시간 전'
+      } else {
+        return Math.floor(diff / 86400) + '일 전'
+      }
+    }
   }
 }
 </script>

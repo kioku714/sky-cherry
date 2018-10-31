@@ -16,7 +16,8 @@ const UserSchema = new mongoose.Schema({
     unique : true
   },
   name: {
-    type: String
+    type: String,
+    required: true
   },
   createdAt: {
     type: Date,
@@ -26,21 +27,25 @@ const UserSchema = new mongoose.Schema({
     type: Date
   },
   level : {
-    type: String
+    type: String,
+    default: 'Black'
   },
   si : {
-    type: Number
+    type: Number,
+    default: 1
   },
   birthday: {
-    type: Date
+    type: Date,
+    required: true
   },
   gender: {
-    type: String
+    type: String,
+    required: true
   },
   occupation: {
     type: String
   },
-  familtyType: {
+  familyType: {
     type: String
   },
   interest: {
