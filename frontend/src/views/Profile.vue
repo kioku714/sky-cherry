@@ -4,10 +4,9 @@
         <b-col sm="2">
           <div>
             <b-img center rounded="circle" blank width="175" height="175" blank-color="#777" alt="img" class="m-1" />
-            <p class="text-center">Profile</p>
+            <p class="text-center"><strong>{{ profile.name }}</strong></p>
           </div>
           <div>
-            <p class="text-center">Name : <strong>{{ profile.name }}</strong></p>
             <p class="text-center">LV 1 / SI : <strong>{{ profile.si }}</strong></p>
             <p class="text-center">Cherry : <strong>{{ tokens }}</strong></p>
             <p class="text-center">Questions : <strong>{{ questions.length }}</strong></p>
@@ -22,7 +21,95 @@
         </b-col>
         <b-col sm="10">
           <b-tabs>
-            <b-tab title="알림" active>
+            <b-tab title="정보" active>
+              <b-row>
+                <b-col sm="12">
+                  <b-row>
+                    <b-col sm="6">
+                      <b-form-group
+                        label="성별/나이 :"
+                        label-for="genderAndAge"
+                        :label-cols="3"
+                        :horizontal="true">
+                        <b-form-input plaintext id="genderAndAge" type="text" value="여/31"></b-form-input>
+                      </b-form-group>
+                    </b-col>
+                    <b-col sm="6">
+                      <b-form-group
+                        label="직업 :"
+                        label-for="occupation"
+                        :label-cols="3"
+                        :horizontal="true">
+                        <b-form-select id="occupation" v-model="form.occupation" :options="options.occupation" class="mb-3" />
+                      </b-form-group>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col sm="6">
+                      <b-form-group
+                        label="가족형태 :"
+                        label-for="occupation"
+                        :label-cols="3"
+                        :horizontal="true">
+                        <b-form-select id="occupation" v-model="form.occupation" :options="options.occupation" class="mb-3" />
+                      </b-form-group>
+                    </b-col>
+                    <b-col sm="6">
+                      <b-form-group
+                        label="관심사 :"
+                        label-for="occupation"
+                        :label-cols="3"
+                        :horizontal="true">
+                        <b-form-select id="occupation" v-model="form.occupation" :options="options.occupation" class="mb-3" />
+                      </b-form-group>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col sm="6">
+                      <b-form-group
+                        label="월평균소득 :"
+                        label-for="occupation"
+                        :label-cols="3"
+                        :horizontal="true">
+                        <b-form-select id="occupation" v-model="form.occupation" :options="options.occupation" class="mb-3" />
+                      </b-form-group>
+                    </b-col>
+                    <b-col sm="6">
+                      <b-form-group
+                        label="보유자산 :"
+                        label-for="occupation"
+                        :label-cols="3"
+                        :horizontal="true">
+                        <b-form-select id="occupation" v-model="form.occupation" :options="options.occupation" class="mb-3" />
+                      </b-form-group>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col sm="12">
+                      <b-form-group label="소득운영현황" :horizontal="true">
+                        <b-form-radio-group id="radios2" v-model="selected" name="radioSubComponent">
+                          <b-form-radio value="first">Toggle this custom radio</b-form-radio>
+                          <b-form-radio value="second">Or toggle this other custom radio</b-form-radio>
+                          <b-form-radio value="third" disabled>This one is Disabled</b-form-radio>
+                          <b-form-radio :value="{fourth: 4}">This is the 4th radio</b-form-radio>
+                        </b-form-radio-group>
+                      </b-form-group>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col sm="12">
+                      <b-form-textarea id="textarea1"
+                                      v-model="form.description"
+                                      placeholder="질문을 입력하세요."
+                                      :rows="9"
+                                      :max-rows="9">
+                      </b-form-textarea>
+                    </b-col>
+                  </b-row>
+                </b-col>
+              </b-row>
+            </b-tab>
+            <b-tab title="알림">
               <b-list-group flush>
                 <b-list-group-item>
                   <span class="text-success">blossommmm</span><span class="text-muted">님이 당신의 질문에 답하였습니다.</span> "제 보험 한번만 봐주세요.." <span class="text-warning">2 hours ago</span>
@@ -102,11 +189,25 @@
 </template>
 
 <script>
+
+//TODO - store
+const occupation = () => [
+  { value: null, text: '관리자' },
+  { value: 'a', text: '전문가 및 관련' },
+  { value: 'b', text: '사무' }
+]
+
 export default {
   name: 'Profile',
+  components: {},
   created () {
+    console.log(this.$session.get('user-token'))
     // TODO: from params
-    let userId = ''
+    let userId = this.$route.params.userId
+    if(!userId) {
+      userId = this.$session.get('user-id')
+    }
+
     this.fetchProfile(userId)
     this.fetchTokens(userId)
     this.fetchQuestions(userId)
@@ -122,26 +223,30 @@ export default {
       answers: [],
       likes: [],
       comments: [],
-      logs: []
+      logs: [],
+      form: {
+        subField: '',
+        age: 31,
+        gender: 'female',
+        occupation: '',
+        description: ''
+      },
+      options: {
+        occupation: occupation
+      }
     }
   },
   methods: {
     fetchProfile (userId) {
-      this.profile = {
-        name: 'nobody',
-        level: 'yellow',
-        si: 105
-      }
       this.$http.get('/api/users/' + userId)
         .then((response) => {
           this.profile = response.data
         })
     },
     fetchTokens (userId) {
-      this.tokens = 10
       this.$http.get('/api/users/' + userId + '/tokens')
         .then((response) => {
-          this.tokens = response.data
+          this.tokens = response.data.tokens
         })
     },
     fetchQuestions (userId) {
