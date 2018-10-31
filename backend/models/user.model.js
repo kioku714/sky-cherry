@@ -24,8 +24,7 @@ const UserSchema = new mongoose.Schema({
     default: Date.now
   },
   modifiedAt: {
-    type: Date,
-    default: Date.now
+    type: Date
   },
   level : {
     type: String,
@@ -44,32 +43,25 @@ const UserSchema = new mongoose.Schema({
     required: true
   },
   occupation: {
-    type: String,
-    default: ''
+    type: String
   },
   familyType: {
-    type: String,
-    default: ''
+    type: String
   },
   interest: {
-    type: String,
-    default: ''
+    type: String
   },
   montlyIncome: {
-    type: String,
-    default: ''
+    type: String
   },
   assets: {
-    type: String,
-    default: ''
+    type: String
   },
   incomeManagement: {
-    type: String,
-    default: ''
+    type: String
   },
   description: {
-    type: String,
-    default: ''
+    type: String
   },
   keyStore: {
     type: JSON
