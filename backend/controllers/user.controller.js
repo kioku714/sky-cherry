@@ -27,7 +27,7 @@ function createTestUsers() {
             });
                 
             user.save()
-                .then(savedUser => console.info(savedUser))
+                .then(savedUser => console.log(savedUser.email))
                 .catch(e => console.error);
         }
     })
@@ -66,7 +66,7 @@ async function createAccount(email) {
 
     user.save()
         .then(async(savedUser) => {
-            console.info(savedUser);
+            console.log(savedUser.email);
 
             var walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, config.commonPassword);
             var to = savedUser.keyStore.address;
