@@ -10,11 +10,11 @@
                   <h1>로그인</h1>
                   <b-input-group class="mb-3">
                     <b-input-group-prepend><b-input-group-text><i class="icon-user"></i></b-input-group-text></b-input-group-prepend>
-                    <input v-model="form.email" type="text" class="form-control" placeholder="Username" value="test01@cj.net">
+                    <input v-model="form.email" type="text" class="form-control" placeholder="Username">
                   </b-input-group>
                   <b-input-group class="mb-4">
                     <b-input-group-prepend><b-input-group-text><i class="icon-lock"></i></b-input-group-text></b-input-group-prepend>
-                    <input v-model="form.password" type="password" class="form-control" placeholder="Password" value="TmzkdlcpfL">
+                    <input v-model="form.password" type="password" class="form-control" placeholder="Password">
                   </b-input-group>
                   <b-row>
                     <b-col cols="12" class="text-right">
@@ -37,8 +37,8 @@ export default {
   data () {
     return {
       form: {
-        email: '',
-        password: ''
+        email: 'test01@cj.net',
+        password: 'TmzkdlcpfL'
       }
     }
   },
@@ -51,6 +51,7 @@ export default {
             if (response.status === 200) {
               this.$session.start()
               this.$session.set('user-token', response.data.token)
+              this.$session.set('user-id', response.data._id)
               this.$http.defaults.headers.common['Authorization'] = response.data.token
               this.$router.push(localStorage.getItem('prevPath'))
             }
