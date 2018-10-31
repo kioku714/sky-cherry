@@ -124,3 +124,91 @@ function getUpdatedNonce(address, systemNonce) {
     }
     return nonces[address];
 }
+
+/**
+ * Load user and append to req.
+ */
+function load(req, res, next, id) {
+    if(id === 'me') {
+      id = req.decoded._id
+    }
+    console.log(req.decoded._id)
+    User.get(id)
+      .then((user) => {
+        req.user = user; // eslint-disable-line no-param-reassign
+        return next();
+      })
+      .catch(e => next(e));
+  }
+  
+  /**
+   * Get user
+   * @returns {User}
+   */
+  function get(req, res) {
+    return res.json(req.user);
+  }
+  
+  /**
+   * Create new user
+   * @property {string} req.body.name - The name of user.
+   * @property {string} req.body.email - The email of user.
+   * @returns {User}
+   */
+  function create(req, res, next) {
+    const user = new User({
+      email: req.body.email,
+      role: req.body.role,
+      status: req.body.status
+    });
+  
+    user.save()
+      .then(savedUser => res.json(savedUser))
+      .catch((e) => {
+        next(new APIError(e.message, httpStatus.BAD_REQUEST));
+      });
+  }
+  
+  /**
+   * Update existing user
+   * @property {string} req.body.email - The email of user.
+   * @returns {User}
+   */
+  function update(req, res, next) {
+    const user = new User(req.user);
+    
+    // TODO
+    if (req.body.name) {
+      user.name = req.body.name;
+    }
+  
+    User.update({_id: user.id}, user)
+      .then(savedUser => res.json(savedUser))
+      .catch(e => next(e));
+  }
+  
+  /**
+   * Get user list.
+   * @property {number} req.query.skip - Number of users to be skipped.
+   * @property {number} req.query.limit - Limit number of users to be returned.
+   * @returns {User[]}
+   */
+  function list(req, res, next) {
+    const { limit = 50, skip = 0, q = {}} = req.query;
+    User.list({ limit, skip, q })
+      .then(users => res.json(users))
+      .catch(e => next(e));
+  }
+  
+  /**
+   * Delete user.
+   * @returns {User}
+   */
+  function remove(req, res, next) {
+    const user = req.user;
+    user.remove()
+      .then(deletedUser => res.json(deletedUser))
+      .catch(e => next(e));
+  }
+
+  module.exports = { load, get, create, update, list, remove };
