@@ -7,7 +7,7 @@
         </b-col>
         <b-col>
           <a class="question-username-link" v-bind:href="'/profile/' + question._id">yeaseul.moon</a>
-          <small>{{ question.createdBy.level }} Cherry</small>
+          <small>{{ question.createdBy[0].level }} Cherry</small>
           <br>
           {{ $moment.utc(question.createdAt).local().fromNow() }}
         </b-col>
@@ -21,28 +21,30 @@
     <div>Profile</div>
     <div>
       <label class="col-form-label">성별/나이: </label>
-      <label class="col-form-label">{{ "male" === question.createdBy.gender ? "남" : "여"}}/{{ getAge() }}</label>
+      <label class="col-form-label">{{ "male" === question.createdBy[0].gender ? "남" : "여"}}/{{ getAge() }}</label>
       <label class="col-form-label">직업: </label>
       <label class="col-form-label">{{ getOccupation() }}</label>
     </div>
-    <div>
-      <label class="col-form-label">가족형태: </label>
-      <label class="col-form-label">{{ getFamilyType() }}</label>
-      <label class="col-form-label">관심사: </label>
-      <label class="col-form-label">{{ getInterest() }}</label>
-    </div>
-    <div>
-      <label class="col-form-label">월평균소득: </label>
-      <label class="col-form-label">{{ getMontlyIncome() }}</label>
-      <label class="col-form-label">보유자산: </label>
-      <label class="col-form-label">{{ getAssets() }}</label>
-    </div>
-    <div>
-      <b-form-group label="소득운용현황: ">
-        <b-form-radio-group v-model="question.incomeManagement"
-                            :options="inputItem.incomeManagement">
-        </b-form-radio-group>
-      </b-form-group>
+    <div v-if="this.question.mainField === 'finance'">
+      <div>
+        <label class="col-form-label">가족형태: </label>
+        <label class="col-form-label">{{ getFamilyType() }}</label>
+        <label class="col-form-label">관심사: </label>
+        <label class="col-form-label">{{ getInterest() }}</label>
+      </div>
+      <div>
+        <label class="col-form-label">월평균소득: </label>
+        <label class="col-form-label">{{ getMontlyIncome() }}</label>
+        <label class="col-form-label">보유자산: </label>
+        <label class="col-form-label">{{ getAssets() }}</label>
+      </div>
+      <div>
+        <b-form-group label="소득운용현황: ">
+          <b-form-radio-group v-model="question.incomeManagement"
+                              :options="inputItem.incomeManagement">
+          </b-form-radio-group>
+        </b-form-group>
+      </div>
     </div>
     <hr>
     <div>
@@ -196,24 +198,44 @@ export default {
       return subFileds.find(x => x.value === this.question.subField).text
     },
     getAge () {
-      var ageDifMs = Date.now() - new Date(this.question.createdBy.birthday).getTime()
+      var ageDifMs = Date.now() - new Date(this.question.createdBy[0].birthday).getTime()
       var ageDate = new Date(ageDifMs) // miliseconds from epoch
       return Math.abs(ageDate.getUTCFullYear() - 1970)
     },
     getOccupation () {
-      return this.inputItem.occupation.find(x => x.value === this.question.occupation).text
+      if (this.question.occupation) {
+        return this.inputItem.occupation.find(x => x.value === this.question.occupation).text
+      } else {
+        return ''
+      }
     },
     getFamilyType () {
-      return this.inputItem.familyType.find(x => x.value === this.question.familyType).text
+      if (this.question.familyType) {
+        return this.inputItem.familyType.find(x => x.value === this.question.familyType).text
+      } else {
+        return ''
+      }
     },
     getInterest () {
-      return this.inputItem.interest.find(x => x.value === this.question.interest).text
+      if (this.question.interest) {
+        return this.inputItem.interest.find(x => x.value === this.question.interest).text
+      } else {
+        return ''
+      }
     },
     getMontlyIncome () {
-      return this.inputItem.montlyIncome.find(x => x.value === this.question.montlyIncome).text
+      if (this.question.montlyIncome) {
+        return this.inputItem.montlyIncome.find(x => x.value === this.question.montlyIncome).text
+      } else {
+        return ''
+      }
     },
     getAssets () {
-      return this.inputItem.assets.find(x => x.value === this.question.assets).text
+      if (this.question.assets) {
+        return this.inputItem.assets.find(x => x.value === this.question.assets).text
+      } else {
+        return ''
+      }
     }
   }
 }

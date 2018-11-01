@@ -104,14 +104,33 @@ QuestionSchema.statics = {
      * @returns {Promise<Question, APIError>}
      */
     get(id) {
-      return this.findById(id)
-        .populate('createdBy')
-        // .populate('answers')
-        // .populate('likes')
+      return this.aggregate([
+            {
+                $match: { 
+                    _id: mongoose.Types.ObjectId(id) 
+                } 
+            },
+            { 
+                $lookup: { 
+                    from: 'skycherryusers', 
+                    localField: 'createdBy', 
+                    foreignField: '_id', 
+                    as: 'createdBy' 
+                }
+            },
+            { 
+                $lookup: { 
+                    from: 'answers', 
+                    localField: '_id', 
+                    foreignField: 'question', 
+                    as: 'answers' 
+                }
+            }
+        ])
         .exec()
         .then((question) => {
-          if (question) {
-            return question;
+          if (question.length == 1) {
+            return question[0];
           }
           const err = new APIError('No such question exists!', httpStatus.NOT_FOUND);
           return Promise.reject(err);
