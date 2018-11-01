@@ -90,7 +90,7 @@ export default new Router({
           beforeEnter: requireAuth
         },
         {
-          path: '/profile',
+          path: '/profiles/:userId',
           name: '프로필',
           component: Profile,
           beforeEnter: requireAuth

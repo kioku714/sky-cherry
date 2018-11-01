@@ -173,9 +173,26 @@ function load(req, res, next, id) {
   function update(req, res, next) {
     const user = new User(req.user);
     
-    // TODO
-    if (req.body.name) {
-      user.name = req.body.name;
+    if (req.body.occupation) {
+      user.occupation = req.body.occupation;
+    }
+    if (req.body.familyTtype) {
+        user.familyTtype = req.body.familyTtype;
+    }
+    if (req.body.interest) {
+        user.interest = req.body.interest;
+    }
+    if (req.body.monthlyIncome) {
+        user.monthlyIncome = req.body.monthlyIncome;
+    }
+    if (req.body.assets) {
+        user.assets = req.body.assets;
+    }
+    if (req.body.incomeManagement) {
+        user.incomeManagement = req.body.incomeManagement;
+    }
+    if (req.body.description) {
+        user.description = req.body.description;
     }
   
     User.update({_id: user.id}, user)
