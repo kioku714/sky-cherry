@@ -10,6 +10,8 @@ import HttpStatus from 'http-status'
 import moment from 'moment'
 import ReadMore from 'vue-read-more'
 
+axios.defaults.baseURL = 'http://localhost:3000'
+
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 

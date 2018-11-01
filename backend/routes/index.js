@@ -5,8 +5,10 @@ var authRoutes = require('./auth.route');
 var newsRoutes = require('./news.route');
 var questionRoutes = require('./question.route');
 var contractRoutes = require('./contract.route');
+var userRoutes = require('./user.route');
 
-var router = express.Router();
+const router = express.Router(); // eslint-disable-line new-cap
+const auth = expressJwt({secret: config.jwtSecret, requestProperty: 'decoded'})
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -24,5 +26,8 @@ router.use('/questions', questionRoutes);
 
 // mount contract routes at /contracts
 router.use('/contracts', contractRoutes);
+
+// mount auth routes at /users
+router.use('/users', auth, userRoutes);
 
 module.exports = router;

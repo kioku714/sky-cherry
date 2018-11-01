@@ -13,22 +13,38 @@ var expressValidation = require('express-validation');
 var helmet = require('helmet');
 var appRoot = require('app-root-path');
 var APIError = require('./helpers/APIError');
+var config = require('./config/config');
 
 var indexRouter = require('./routes/index');
 
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+if (config.env === 'development') {
+  app.use(logger('dev'));
+}
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+// parse body params and attache them to req.body
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(compress());
+app.use(methodOverride());
 
-app.use('/', indexRouter);
+// secure apps by setting various HTTP headers
+app.use(helmet());
+
+// enable CORS - Cross Origin Resource Sharing
+app.use(cors());
+
+// Middlewares
+app.use(express.static(path.join(appRoot.path, 'public')));
+
+app.use('/api', indexRouter);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(appRoot.path, 'public/index.html'));
+});
 
 // if error is not an instanceOf APIError, convert it.
 app.use((err, req, res, next) => {

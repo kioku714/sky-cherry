@@ -37,8 +37,8 @@ export default {
   data () {
     return {
       form: {
-        email: '',
-        password: ''
+        email: 'test01@cj.net',
+        password: 'TmzkdlcpfL'
       }
     }
   },
@@ -51,6 +51,7 @@ export default {
             if (response.status === 200) {
               this.$session.start()
               this.$session.set('user-token', response.data.token)
+              this.$session.set('user-id', response.data._id)
               this.$http.defaults.headers.common['Authorization'] = response.data.token
               this.$router.push(localStorage.getItem('prevPath'))
             }
