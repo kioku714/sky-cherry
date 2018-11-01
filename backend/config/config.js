@@ -5,6 +5,9 @@ require('dotenv').config();
 
 // define validation for all the env vars
 const envVarsSchema = Joi.object({
+    NODE_ENV: Joi.string()
+        .allow(['development', 'production', 'test', 'provision'])
+        .default('development'),
     MONGO_HOST: Joi.string().required().description('Mongo DB host url'),
     MONGO_PORT: Joi.number().default(27017),
     WEB3_PROVIDER: Joi.required().description('Web3 provier required to connect etherem network'),
@@ -21,6 +24,7 @@ if (error) {
 };
 
 const config = {
+    env: envVars.NODE_ENV,
     jwtSecret: envVars.JWT_SECRET,
     mongo: {
         host: envVars.MONGO_HOST,
