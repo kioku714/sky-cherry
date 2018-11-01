@@ -40,7 +40,7 @@
                         label-for="occupation"
                         :label-cols="3"
                         :horizontal="true">
-                        <b-form-select id="occupation" v-model="form.occupation" :options="options.occupation" class="mb-3" />
+                        <b-form-select id="occupation" v-model="form.occupation" :options="$store.state.occupation" class="mb-3" />
                       </b-form-group>
                     </b-col>
                   </b-row>
@@ -51,7 +51,7 @@
                         label-for="occupation"
                         :label-cols="3"
                         :horizontal="true">
-                        <b-form-select id="occupation" v-model="form.occupation" :options="options.occupation" class="mb-3" />
+                        <b-form-select id="occupation" v-model="form.occupation" :options="$store.state.famailyType" class="mb-3" />
                       </b-form-group>
                     </b-col>
                     <b-col sm="6">
@@ -60,7 +60,7 @@
                         label-for="occupation"
                         :label-cols="3"
                         :horizontal="true">
-                        <b-form-select id="occupation" v-model="form.occupation" :options="options.occupation" class="mb-3" />
+                        <b-form-select id="occupation" v-model="form.occupation" :options="$store.state.interest" class="mb-3" />
                       </b-form-group>
                     </b-col>
                   </b-row>
@@ -71,7 +71,7 @@
                         label-for="occupation"
                         :label-cols="3"
                         :horizontal="true">
-                        <b-form-select id="occupation" v-model="form.occupation" :options="options.occupation" class="mb-3" />
+                        <b-form-select id="occupation" v-model="form.occupation" :options="$store.state.monthlyIncome" class="mb-3" />
                       </b-form-group>
                     </b-col>
                     <b-col sm="6">
@@ -80,18 +80,16 @@
                         label-for="occupation"
                         :label-cols="3"
                         :horizontal="true">
-                        <b-form-select id="occupation" v-model="form.occupation" :options="options.occupation" class="mb-3" />
+                        <b-form-select id="occupation" v-model="form.occupation" :options="$store.state.assets" class="mb-3" />
                       </b-form-group>
                     </b-col>
                   </b-row>
                   <b-row>
                     <b-col sm="12">
-                      <b-form-group label="소득운영현황" :horizontal="true">
-                        <b-form-radio-group id="radios2" v-model="selected" name="radioSubComponent">
-                          <b-form-radio value="first">Toggle this custom radio</b-form-radio>
-                          <b-form-radio value="second">Or toggle this other custom radio</b-form-radio>
-                          <b-form-radio value="third" disabled>This one is Disabled</b-form-radio>
-                          <b-form-radio :value="{fourth: 4}">This is the 4th radio</b-form-radio>
+                      <b-form-group label="소득운영현황">
+                        <b-form-radio-group v-model="selected"
+                                            :options="$store.state.assets"
+                                            name="radioInline">
                         </b-form-radio-group>
                       </b-form-group>
                     </b-col>
@@ -190,13 +188,6 @@
 
 <script>
 
-//TODO - store
-const occupation = () => [
-  { value: null, text: '관리자' },
-  { value: 'a', text: '전문가 및 관련' },
-  { value: 'b', text: '사무' }
-]
-
 export default {
   name: 'Profile',
   components: {},
@@ -230,9 +221,6 @@ export default {
         gender: 'female',
         occupation: '',
         description: ''
-      },
-      options: {
-        occupation: occupation
       }
     }
   },

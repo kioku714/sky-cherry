@@ -9,6 +9,7 @@ import VueSession from 'vue-session'
 import HttpStatus from 'http-status'
 import moment from 'moment'
 import ReadMore from 'vue-read-more'
+import { store } from './store'
 
 axios.defaults.baseURL = 'http://localhost:3000'
 
@@ -24,6 +25,7 @@ Vue.use(ReadMore)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   components: { App },
   template: '<App/>',
