@@ -2,10 +2,10 @@
   <div class="animated fadeIn question">
     <div>
       <b-row>
-        <b-col cols="1" sm="1">
+        <b-col cols="2" sm="1">
           <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
         </b-col>
-        <b-col class="text-left">
+        <b-col>
           <a class="question-username-link" v-bind:href="'/profile/' + question._id">yeaseul.moon</a>
           <small>{{ question.createdBy.level }} Cherry</small>
           <br>
@@ -54,7 +54,7 @@
       </div>
     </div>
     <hr>
-    <h1>{{ question.answers.length }} ANSWERS</h1>
+    <h1 class="text-center">{{ question.answers.length }} ANSWERS</h1>
   </div>
 </template>
 
