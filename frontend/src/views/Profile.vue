@@ -48,19 +48,19 @@
                     <b-col sm="6">
                       <b-form-group
                         label="가족형태 :"
-                        label-for="occupation"
+                        label-for="famailyType"
                         :label-cols="3"
                         :horizontal="true">
-                        <b-form-select id="occupation" v-model="form.occupation" :options="$store.state.famailyType" class="mb-3" />
+                        <b-form-select id="famailyType" v-model="form.famailyType" :options="$store.state.famailyType" class="mb-3" />
                       </b-form-group>
                     </b-col>
                     <b-col sm="6">
                       <b-form-group
                         label="관심사 :"
-                        label-for="occupation"
+                        label-for="interest"
                         :label-cols="3"
                         :horizontal="true">
-                        <b-form-select id="occupation" v-model="form.occupation" :options="$store.state.interest" class="mb-3" />
+                        <b-form-select id="interest" v-model="form.interest" :options="$store.state.interest" class="mb-3" />
                       </b-form-group>
                     </b-col>
                   </b-row>
@@ -68,27 +68,30 @@
                     <b-col sm="6">
                       <b-form-group
                         label="월평균소득 :"
-                        label-for="occupation"
+                        label-for="monthlyIncome"
                         :label-cols="3"
                         :horizontal="true">
-                        <b-form-select id="occupation" v-model="form.occupation" :options="$store.state.monthlyIncome" class="mb-3" />
+                        <b-form-select id="monthlyIncome" v-model="form.monthlyIncome" :options="$store.state.monthlyIncome" class="mb-3" />
                       </b-form-group>
                     </b-col>
                     <b-col sm="6">
                       <b-form-group
                         label="보유자산 :"
-                        label-for="occupation"
+                        label-for="assets"
                         :label-cols="3"
                         :horizontal="true">
-                        <b-form-select id="occupation" v-model="form.occupation" :options="$store.state.assets" class="mb-3" />
+                        <b-form-select id="assets" v-model="form.assets" :options="$store.state.assets" class="mb-3" />
                       </b-form-group>
                     </b-col>
                   </b-row>
                   <b-row>
                     <b-col sm="12">
-                      <b-form-group label="소득운영현황">
-                        <b-form-radio-group v-model="selected"
-                                            :options="$store.state.assets"
+                      <b-form-group
+                        label="소득운영현황"
+                        label-for="incomeManagement"
+                        :horizontal="true">
+                        <b-form-radio-group v-model="form.incomeManagement"
+                                            :options="$store.state.incomeManagement"
                                             name="radioInline">
                         </b-form-radio-group>
                       </b-form-group>
@@ -96,14 +99,21 @@
                   </b-row>
                   <b-row>
                     <b-col sm="12">
-                      <b-form-textarea id="textarea1"
-                                      v-model="form.description"
-                                      placeholder="질문을 입력하세요."
-                                      :rows="9"
-                                      :max-rows="9">
+                      <b-form-textarea v-model="form.description"
+                                       placeholder="자기소개를 입력하세요."
+                                       :rows="9"
+                                       :max-rows="9">
                       </b-form-textarea>
                     </b-col>
                   </b-row>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col sm="12">
+                  <br/>
+                  <div class="text-right">
+                    <b-button v-on:click="updateProfile">저장</b-button>
+                  </div>
                 </b-col>
               </b-row>
             </b-tab>
@@ -192,19 +202,17 @@ export default {
   name: 'Profile',
   components: {},
   created () {
-    console.log(this.$session.get('user-token'))
-    // TODO: from params
-    let userId = this.$route.params.userId
-    if(!userId) {
-      userId = this.$session.get('user-id')
+    if (!this.$route.params.userId) {
+      let userId = this.$session.get('user-id')
+      this.$router.push('/profiles/' + userId)
     }
 
-    this.fetchProfile(userId)
-    this.fetchTokens(userId)
-    this.fetchQuestions(userId)
-    this.fetchAnswers(userId)
-    this.fetchLikes(userId)
-    this.fetchComments(userId)
+    this.fetchProfile()
+    this.fetchTokens()
+    this.fetchQuestions()
+    this.fetchAnswers()
+    this.fetchLikes()
+    this.fetchComments()
   },
   data () {
     return {
@@ -216,73 +224,90 @@ export default {
       comments: [],
       logs: [],
       form: {
-        subField: '',
-        age: 31,
-        gender: 'female',
         occupation: '',
+        familyType: '',
+        interest: '',
+        monthlyIncome: '',
+        assets: '',
+        incomeManagement: '',
         description: ''
       }
     }
   },
   methods: {
-    fetchProfile (userId) {
-      this.$http.get('/api/users/' + userId)
+    fetchProfile () {
+      this.profile = []
+      this.$http.get('/api/users/' + this.$route.params.userId)
         .then((response) => {
           this.profile = response.data
+
+          this.form.occupation = response.data.occupation
+          this.form.familyType = response.data.familyType
+          this.form.interest = response.data.interest
+          this.form.monthlyIncome = response.data.monthlyIncome
+          this.form.assets = response.data.assets
+          this.form.incomeManagement = response.data.incomeManagement
+          this.form.description = response.data.description
         })
     },
-    fetchTokens (userId) {
-      this.$http.get('/api/users/' + userId + '/tokens')
+    fetchTokens () {
+      this.$http.get('/api/users/' + this.$route.params.userId + '/tokens')
         .then((response) => {
           this.tokens = response.data.tokens
         })
     },
-    fetchQuestions (userId) {
+    fetchQuestions () {
       this.questions = []
       this.$http.get('/api/questions', {
         params: {
-          createdBy: userId
+          createdBy: this.$route.params.userId
         }
       })
         .then((response) => {
           this.questions = response.data
         })
     },
-    fetchAnswers (userId) {
+    fetchAnswers () {
       this.answers = []
       this.$http.get('/api/answers', {
         params: {
-          createdBy: userId
+          createdBy: this.$route.params.userId
         }
       })
         .then((response) => {
           this.answers = response.data
         })
     },
-    fetchLikes (userId) {
+    fetchLikes () {
       this.likes = []
       this.$http.get('/api/likes', {
         params: {
-          createdBy: userId
+          createdBy: this.$route.params.userId
         }
       })
         .then((response) => {
           this.likes = response.data
         })
     },
-    fetchComments (userId) {
+    fetchComments () {
       this.comments = []
     },
-    fetchLogs (userId) {
+    fetchLogs () {
       this.logs = []
       this.$http.get('/api/logs', {
         params: {
-          from: userId,
-          to: userId
+          from: this.$route.params.userId,
+          to: this.$route.params.userId
         }
       })
         .then((response) => {
           this.likes = response.data
+        })
+    },
+    updateProfile () {
+      this.$http.put('/api/users/' + this.$route.params.userId, this.form)
+        .then((response) => {
+          this.fetchProfile()
         })
     }
   }

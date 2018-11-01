@@ -20,18 +20,18 @@ export const store = new Vuex.Store({
       { text: '관리자', value: 0 }
     ],
     interest: [
-      { text: '관리자', value: 0 },
-      { text: '관리자', value: 0 },
-      { text: '관리자', value: 0 },
-      { text: '관리자', value: 0 },
-      { text: '관리자', value: 0 }
+      { text: '내집마련', value: 'myHouse' },
+      { text: '결혼자금', value: 'weddingMoney' },
+      { text: '목돈모으기', value: 'savingMoney' },
+      { text: '자기계발', value: 'selfImprovement' },
+      { text: '건물구입', value: 'buildingPurchase' }
     ],
     monthlyIncome: [
-      { text: '관리자', value: 0 },
-      { text: '관리자', value: 0 },
-      { text: '관리자', value: 0 },
-      { text: '관리자', value: 0 },
-      { text: '관리자', value: 0 }
+      { text: '내집마련', value: 'myHouse' },
+      { text: '결혼자금', value: 'weddingMoney' },
+      { text: '목돈모으기', value: 'savingMoney' },
+      { text: '자기계발', value: 'selfImprovement' },
+      { text: '건물구입', value: 'buildingPurchase' }
     ],
     incomeManagement: [
       { text: '예/적금', value: 'saving' },
