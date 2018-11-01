@@ -173,6 +173,7 @@ export default {
         description: '',
         mainField: 'style',
         subField: '',
+        createdBy: this.$session.get('user-id'),
         age: 31,
         gender: 'female',
         occupation: '',

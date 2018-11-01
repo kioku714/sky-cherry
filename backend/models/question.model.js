@@ -33,7 +33,7 @@ const QuestionSchema = new mongoose.Schema({
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'SkyCherryUser',
-        // required: true
+        required: true
     },
     answers: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -92,6 +92,7 @@ QuestionSchema.statics = {
      */
     list({ skip = 0, limit = 50, q = {} } = {}) {
       return this.find(q)
+        .populate('createdBy')
         .sort({ createdAt: -1 })
         .skip(+skip)
         .limit(+limit)

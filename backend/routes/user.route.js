@@ -1,7 +1,6 @@
 var express = require('express');
 var userCtrl = require('../controllers/user.controller');
 var contractCtrl = require('../controllers/contract.controller');
-var type = require('../helpers/type');
 
 const router = express.Router();
 
