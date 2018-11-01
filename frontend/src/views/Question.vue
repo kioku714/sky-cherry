@@ -6,7 +6,7 @@
           <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
         </b-col>
         <b-col>
-          <a class="question-username-link" v-bind:href="'/profile/' + question._id">yeaseul.moon</a>
+          <a class="question-username-link" v-bind:href="'/profile/' + question._id">{{ question.createdBy[0].name }}</a>
           <small>{{ question.createdBy[0].level }} Cherry</small>
           <br>
           {{ $moment.utc(question.createdAt).local().fromNow() }}
@@ -57,6 +57,24 @@
     </div>
     <hr>
     <h1 class="text-center">{{ question.answers.length }} ANSWERS</h1>
+    <b-list-group v-if="question.answers.length > 0" flush>
+      <b-list-group-item v-for="answer in question.answers" :key="answer._id">
+        <b-row>
+          <b-col cols="2" sm="1">
+            <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
+          </b-col>
+          <b-col>
+            <a class="question-username-link" v-bind:href="'/profile/' + answer._id">{{ answer.createdBy.name }}</a>
+            <small>{{ answer.createdBy.level }} Cherry</small>
+            <br>
+            {{ $moment.utc(answer.createdAt).local().fromNow() }} / SI: {{ answer.createdBy.si}}
+          </b-col>
+        </b-row>
+        <b-row class="answer-description">
+          {{ answer.description }}
+        </b-row>
+      </b-list-group-item>
+    </b-list-group>
   </div>
 </template>
 
@@ -67,6 +85,7 @@ export default {
     this.$http.get('/api/questions/' + this.$route.params.questionId)
       .then((response) => {
         this.question = response.data
+        console.log(JSON.stringify(this.question))
       })
   },
   data () {

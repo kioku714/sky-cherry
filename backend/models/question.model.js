@@ -126,15 +126,29 @@ QuestionSchema.statics = {
                     foreignField: 'question', 
                     as: 'answers' 
                 }
+            },
+            { 
+                $lookup: { 
+                    from: 'skycherryusers', 
+                    localField: 'answers.createdBy', 
+                    foreignField: '_id', 
+                    as: 'answerUser' 
+                }
             }
         ])
         .exec()
         .then((question) => {
-          if (question.length == 1) {
-            return question[0];
-          }
-          const err = new APIError('No such question exists!', httpStatus.NOT_FOUND);
-          return Promise.reject(err);
+            if (question.length == 1) {
+                if ( question[0].answers.length > 0) {
+                    question[0].answers.forEach(function(answer, index) {
+                        answer.createdBy = question[0].answerUser[index];
+                    });
+                }
+                delete question[0].answerUser;
+                return question[0];
+            }
+            const err = new APIError('No such question exists!', httpStatus.NOT_FOUND);
+            return Promise.reject(err);
         });
     }
 };
