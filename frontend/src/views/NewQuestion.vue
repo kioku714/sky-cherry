@@ -56,7 +56,7 @@
             <div class="form-group row" v-if="form.mainField === 'finance'">
               <label class="col-md-2 col-form-label">가족형태</label>
               <div class="col-md-2">
-                <select class="form-control" v-model="form.familtyType">
+                <select class="form-control" v-model="form.familyType">
                   <option value="single">미혼-1인가구</option>
                   <option value="family">미혼-가족과 거주</option>
                   <option value="others">미혼-기타형태 거주</option>
@@ -176,7 +176,7 @@ export default {
         age: 31,
         gender: 'female',
         occupation: '',
-        familtyType: '',
+        familyType: '',
         interest: '',
         montlyIncome: '',
         assets: '',

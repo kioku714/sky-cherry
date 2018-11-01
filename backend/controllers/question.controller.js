@@ -28,7 +28,7 @@ function list(req, res, next) {
    * @property {string} req.body.age
    * @property {string} req.body.gender
    * @property {string} req.body.occupation
-   * @property {string} req.body.familtyType
+   * @property {string} req.body.familyType
    * @property {string} req.body.interest
    * @property {string} req.body.montlyIncome
    * @property {string} req.body.assets
@@ -49,7 +49,7 @@ function list(req, res, next) {
       age: req.body.age,
       gender: req.body.gender,
       occupation: req.body.occupation,
-      familtyType: req.body.familtyType,
+      familyType: req.body.familyType,
       interest: req.body.interest,
       montlyIncome: req.body.montlyIncome,
       assets: req.body.assets,
