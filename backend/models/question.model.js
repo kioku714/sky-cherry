@@ -121,6 +121,14 @@ QuestionSchema.statics = {
             },
             { 
                 $lookup: { 
+                    from: 'likes', 
+                    localField: '_id', 
+                    foreignField: 'questionOrAnswer', 
+                    as: 'likes' 
+                }
+            },
+            { 
+                $lookup: { 
                     from: 'answers', 
                     localField: '_id', 
                     foreignField: 'question', 
@@ -134,18 +142,36 @@ QuestionSchema.statics = {
                     foreignField: '_id', 
                     as: 'answerUser' 
                 }
+            },
+            { 
+                $lookup: { 
+                    from: 'likes', 
+                    localField: 'answers._id', 
+                    foreignField: 'questionOrAnswer', 
+                    as: 'answerLikes' 
+                }
             }
         ])
         .exec()
-        .then((question) => {
-            if (question.length == 1) {
-                if ( question[0].answers.length > 0) {
-                    question[0].answers.forEach(function(answer, index) {
-                        answer.createdBy = question[0].answerUser[index];
+        .then((questions) => {
+            if (questions.length > 0) {
+                var question  = questions[0];
+                if ( question.answers.length > 0) {
+                    question.answers.forEach(function(answer, index) {
+                        answer.createdBy = question.answerUser[index];
+                    });
+                    question.answers.forEach(function(answer) {
+                        question.answerLikes.forEach(function(likes) {
+                            if (answer._id.toString() == likes.questionOrAnswer.toString()) {
+                                answer.likes.push(likes.createdBy);
+                            }
+                        });
                     });
                 }
-                delete question[0].answerUser;
-                return question[0];
+                delete question.answerUser;
+                delete question.answerLikes;
+                // console.log(JSON.stringify(question));
+                return question;
             }
             const err = new APIError('No such question exists!', httpStatus.NOT_FOUND);
             return Promise.reject(err);

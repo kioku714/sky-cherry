@@ -2,7 +2,7 @@
   <div class="animated fadeIn question">
     <div>
       <b-row>
-        <b-col cols="2" sm="1">
+        <b-col sm="1" cols="2">
           <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
         </b-col>
         <b-col>
@@ -13,37 +13,69 @@
         </b-col>
       </b-row>
     </div>
-    <div>
-      ► {{ getMainFieldName() }} | {{ getSubFieldName() }}
+    <div class="field">
+      ► {{ getMainFieldName() }} / {{ getSubFieldName() }}
     </div>
-    <h1>{{ question.title }}</h1>
+    <b-row>
+      <b-col sm="10" cols="9">
+        <h1>{{ question.title }}</h1>
+      </b-col>
+      <b-col>
+        <h1 class="likes text-right">♥ {{ question.likes.length }}</h1>
+      </b-col>
+    </b-row>
     <hr>
-    <div>Profile</div>
-    <div>
-      <label class="col-form-label">성별/나이: </label>
-      <label class="col-form-label">{{ "male" === question.createdBy[0].gender ? "남" : "여"}}/{{ getAge() }}</label>
-      <label class="col-form-label">직업: </label>
-      <label class="col-form-label">{{ getOccupation() }}</label>
-    </div>
-    <div v-if="this.question.mainField === 'finance'">
-      <div>
-        <label class="col-form-label">가족형태: </label>
-        <label class="col-form-label">{{ getFamilyType() }}</label>
-        <label class="col-form-label">관심사: </label>
-        <label class="col-form-label">{{ getInterest() }}</label>
-      </div>
-      <div>
-        <label class="col-form-label">월평균소득: </label>
-        <label class="col-form-label">{{ getMontlyIncome() }}</label>
-        <label class="col-form-label">보유자산: </label>
-        <label class="col-form-label">{{ getAssets() }}</label>
-      </div>
-      <div>
-        <b-form-group label="소득운용현황: ">
-          <b-form-radio-group v-model="question.incomeManagement"
-                              :options="inputItem.incomeManagement">
-          </b-form-radio-group>
-        </b-form-group>
+    <div class="profile-title">Profile</div>
+    <div class="profile-content">
+      <b-row>
+        <b-col sm="2" cols="6">
+          <label>성별/나이:</label>
+        </b-col>
+        <b-col sm="3" cols="6">
+          <label>{{ "male" === question.createdBy[0].gender ? "남" : "여"}}/{{ getAge() }}</label>
+        </b-col>
+        <b-col sm="2" cols="6">
+          <label>직업:</label>
+        </b-col>
+        <b-col sm="3" cols="6">
+          <label>{{ getOccupation() }}</label>
+        </b-col>
+      </b-row>
+      <div v-if="this.question.mainField === 'finance'">
+        <b-row>
+          <b-col sm="2" cols="6">
+            <label>가족형태:</label>
+          </b-col>
+          <b-col sm="3" cols="6">
+            <label>{{ getFamilyType() }}</label>
+          </b-col>
+          <b-col sm="2" cols="6">
+            <label>관심사:</label>
+          </b-col>
+          <b-col sm="3" cols="6">
+            <label>{{ getInterest() }}</label>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col sm="2" cols="6">
+            <label>월평균소득:</label>
+          </b-col>
+          <b-col sm="3" cols="6">
+            <label>{{ getMontlyIncome() }}</label>
+          </b-col>
+          <b-col sm="2" cols="6">
+            <label>보유자산:</label>
+          </b-col>
+          <b-col sm="3" cols="6">
+            <label>{{ getAssets() }}</label>
+          </b-col>
+        </b-row>
+        <div>
+          <b-form-group label="소득운용현황: ">
+            <b-form-radio-group v-model="question.incomeManagement" :options="inputItem.incomeManagement">
+            </b-form-radio-group>
+          </b-form-group>
+        </div>
       </div>
     </div>
     <hr>
@@ -60,37 +92,79 @@
     <b-list-group v-if="question.answers.length > 0" flush>
       <b-list-group-item v-for="answer in question.answers" :key="answer._id">
         <b-row>
-          <b-col cols="2" sm="1">
+          <b-col sm="1" cols="2">
             <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
           </b-col>
-          <b-col>
+          <b-col sm="9" cols="6">
             <a class="question-username-link" v-bind:href="'/profile/' + answer._id">{{ answer.createdBy.name }}</a>
             <small>{{ answer.createdBy.level }} Cherry</small>
             <br>
             {{ $moment.utc(answer.createdAt).local().fromNow() }} / SI: {{ answer.createdBy.si}}
           </b-col>
+          <b-col>
+            <h1 class="likes text-right">♥ {{ answer.likes.length }}</h1>
+          </b-col>
         </b-row>
         <b-row class="answer-description">
           {{ answer.description }}
         </b-row>
+        <b-row class="rating">
+          <b-col sm="9" cols="6">
+            <div>Cherry Guard's Ratings</div>
+          </b-col>
+          <b-col>
+            <div class="text-right">+</div>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col sm="1" cols="2">
+            <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
+          </b-col>
+          <b-col>
+            <b-form-textarea id="comment"
+                     placeholder=""
+                     :rows="2"
+                     :max-rows="6">
+            </b-form-textarea>
+          </b-col>
+        </b-row>
+        <div class="float-right">
+          <b-button variant="secondary" class="button-comment">Add comment</b-button>
+        </div>
       </b-list-group-item>
     </b-list-group>
+    <hr>
+    <h1 class="text-center">YOUR ANSWER</h1>
+    <vue-editor v-model="form.description"></vue-editor>
+    <div class="text-center">
+      <b-button variant="success" class="button-comment">Post Your Answer</b-button>
+    </div>
   </div>
 </template>
 
 <script>
+import { VueEditor } from 'vue2-editor'
+
 export default {
   name: 'Question',
+  components: {
+    VueEditor
+  },
   created () {
     this.$http.get('/api/questions/' + this.$route.params.questionId)
       .then((response) => {
         this.question = response.data
-        console.log(JSON.stringify(this.question))
+        this.form.question = this.question._id
       })
   },
   data () {
     return {
       question: {},
+      form: {
+        description: '',
+        createBy: this.$session.get('user-id'),
+        question: ''
+      },
       fieldItems: [
         {
           mainFieldValue: 'style',
