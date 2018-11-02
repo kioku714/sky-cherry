@@ -23,7 +23,6 @@ function list(req, res, next) {
    * @property {string} req.body.description
    * @property {string} req.body.mainField
    * @property {string} req.body.subField
-   * @property {string} req.body.createdBy
    * @property {Answer[]} req.body.answers
    * @property {like[]} req.body.likes
    * @property {string} req.body.occupation
@@ -42,7 +41,7 @@ function list(req, res, next) {
       mainField: req.body.mainField,
       subField: req.body.subField,
       createdAt: Date.now(),
-      createdBy: req.body.createdBy,
+      createdBy: req.decoded._id,
       answers: req.body.answers,
       likes: req.body.likes,
       occupation: req.body.occupation,
