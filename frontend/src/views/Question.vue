@@ -96,7 +96,7 @@
             <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
           </b-col>
           <b-col sm="9" cols="6">
-            <a class="question-username-link" v-bind:href="'/profile/' + answer._id">{{ answer.createdBy.name }}</a>
+            <a class="question-username-link" v-bind:href="'/profile/' + answer._id">{{ answer.createdBy.name}}</a>
             <small>{{ answer.createdBy.level }} Cherry</small>
             <br>
             {{ $moment.utc(answer.createdAt).local().fromNow() }} / SI: {{ answer.createdBy.si}}
@@ -106,7 +106,7 @@
           </b-col>
         </b-row>
         <b-row class="answer-description">
-          {{ answer.description }}
+          <div v-html="answer.description"></div>
         </b-row>
         <b-row class="rating">
           <b-col sm="9" cols="6">
@@ -158,7 +158,7 @@ export default {
       question: {},
       form: {
         description: '',
-        createBy: this.$session.get('user-id'),
+        createdBy: this.$session.get('user-id'),
         question: ''
       }
     }
@@ -169,10 +169,19 @@ export default {
         .then((response) => {
           this.question = response.data
           this.form.question = this.question._id
+          // console.log(JSON.stringify(this.question))
         })
     },
     createAnswer () {
-
+      if (this.form.description) {
+        this.$http.post('/api/answers', this.form)
+          .then((response) => {
+            this.form.description = ''
+            this.fetchQuestion()
+          })
+      } else {
+        alert('답변을 입력해주세요.')
+      }
     },
     getMainFieldName () {
       return this.$store.state.fieldItems.find(x => x.mainFieldValue === this.question.mainField).mainFieldName

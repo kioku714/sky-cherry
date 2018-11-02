@@ -140,7 +140,7 @@ QuestionSchema.statics = {
                     from: 'skycherryusers', 
                     localField: 'answers.createdBy', 
                     foreignField: '_id', 
-                    as: 'answerUser' 
+                    as: 'answerUsers' 
                 }
             },
             { 
@@ -157,18 +157,24 @@ QuestionSchema.statics = {
             if (questions.length > 0) {
                 var question  = questions[0];
                 if ( question.answers.length > 0) {
+                    // 답변 작성자
                     question.answers.forEach(function(answer, index) {
-                        answer.createdBy = question.answerUser[index];
+                        question.answerUsers.forEach(function(user) {
+                            if (answer.createdBy.toString() == user._id.toString()) {
+                                answer.createdBy = user;
+                            }
+                        });
                     });
+                    // 답변에 좋아요를 누른 user
                     question.answers.forEach(function(answer) {
-                        question.answerLikes.forEach(function(likes) {
-                            if (answer._id.toString() == likes.questionOrAnswer.toString()) {
-                                answer.likes.push(likes.createdBy);
+                        question.answerLikes.forEach(function(like) {
+                            if (answer._id.toString() == like.questionOrAnswer.toString()) {
+                                answer.likes.push(like.createdBy);
                             }
                         });
                     });
                 }
-                delete question.answerUser;
+                delete question.answerUsers;
                 delete question.answerLikes;
                 // console.log(JSON.stringify(question));
                 return question;
