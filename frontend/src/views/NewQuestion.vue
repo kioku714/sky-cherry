@@ -45,7 +45,7 @@
             <div class="form-group row" v-if="form.mainField === 'finance'">
               <label class="col-md-2 col-form-label">가족형태</label>
               <div class="col-md-2">
-                <b-form-select class="form-control" v-model="form.familyType" :options="$store.state.famailyType" />
+                <b-form-select class="form-control" v-model="form.familyType" :options="$store.state.familyType" />
               </div>
               <label class="col-md-2 col-form-label"></label>
               <label class="col-md-2 col-form-label">관심사</label>
