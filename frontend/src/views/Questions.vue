@@ -7,7 +7,7 @@
         <div class="content">
           <!-- 사용자 닉네임, 질문 생성 시간  -->
           <span class="question-owner">
-            <a class="username-link" v-bind:href="'/profile/' + question.createdBy._id">{{ question.createdBy.name }}</a>
+            <a class="username-link" v-bind:href="'/profiles/' + question.createdBy._id">{{ question.createdBy.name }}</a>
             {{ $moment.utc(question.createdAt).local().fromNow() }}
           </span>
           <!-- 질문 제목 -->
