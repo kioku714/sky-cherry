@@ -35,7 +35,7 @@
             <br>
             <div class="form-group row">
               <label class="col-md-2 col-form-label">성별/나이</label>
-              <label class="col-md-2 col-form-label">{{ "male" === form.gender ? "남" : "여"}} / {{ form.age }}</label>
+              <label class="col-md-2 col-form-label">{{ "male" === profile.gender ? "남" : "여"}} / {{ profile.age }}</label>
               <label class="col-md-2 col-form-label"></label>
               <label class="col-md-2 col-form-label">직업</label>
               <div class="col-md-2">
@@ -56,7 +56,7 @@
             <div class="form-group row" v-if="form.mainField === 'finance'">
               <label class="col-md-2 col-form-label">월평균소득</label>
               <div class="col-md-2">
-                <b-form-select class="form-control" v-model="form.montlyIncome" :options="$store.state.monthlyIncome" />
+                <b-form-select class="form-control" v-model="form.monthlyIncome" :options="$store.state.monthlyIncome" />
               </div>
               <label class="col-md-2 col-form-label"></label>
               <label class="col-md-2 col-form-label">보유자산</label>
@@ -114,6 +114,7 @@ export default {
   },
   data () {
     return {
+      profile: {},
       form: {
         title: '',
         description: '',
@@ -124,7 +125,7 @@ export default {
         occupation: '',
         familyType: '',
         interest: '',
-        montlyIncome: '',
+        monthlyIncome: '',
         assets: '',
         incomeManagement: 'deposit',
         tags: []
@@ -138,6 +139,20 @@ export default {
       this.form.tags = this.getTags()
       this.$http.post('/api/questions', this.form)
         .then((response) => {
+        })
+    },
+    fetchProfile () {
+      this.profile = []
+      this.$http.get('/api/users/' + this.$route.params.userId)
+        .then((response) => {
+          this.profile = response.data
+
+          this.form.occupation = response.data.occupation
+          this.form.familyType = response.data.familyType
+          this.form.interest = response.data.interest
+          this.form.monthlyIncome = response.data.monthlyIncome
+          this.form.assets = response.data.assets
+          this.form.incomeManagement = response.data.incomeManagement
         })
     },
     getTags () {

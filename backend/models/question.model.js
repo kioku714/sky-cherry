@@ -57,7 +57,7 @@ const QuestionSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    montlyIncome: {
+    monthlyIncome: {
         type: String,
         required: false
     },
