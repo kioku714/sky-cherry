@@ -159,9 +159,10 @@ QuestionSchema.statics = {
                 if ( question.answers.length > 0) {
                     // 답변 작성자
                     question.answers.forEach(function(answer, index) {
-                        question.answerUsers.forEach(function(user) {
+                        question.answerUsers.some(function(user) {
                             if (answer.createdBy.toString() == user._id.toString()) {
                                 answer.createdBy = user;
+                                return false;
                             }
                         });
                     });
