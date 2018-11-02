@@ -61,7 +61,7 @@
             <label>월평균소득:</label>
           </b-col>
           <b-col sm="3" cols="6">
-            <label>{{ getMontlyIncome() }}</label>
+            <label>{{ getMonthlyIncome() }}</label>
           </b-col>
           <b-col sm="2" cols="6">
             <label>보유자산:</label>
@@ -72,7 +72,7 @@
         </b-row>
         <div>
           <b-form-group label="소득운용현황: ">
-            <b-form-radio-group v-model="question.incomeManagement" :options="inputItem.incomeManagement">
+            <b-form-radio-group v-model="question.incomeManagement" :options="$store.state.incomeManagement">
             </b-form-radio-group>
           </b-form-group>
         </div>
@@ -222,6 +222,7 @@ export default {
         .then((response) => {
           this.question = response.data
           this.form.question = this.question._id
+          console.log(JSON.stringify(this.question))
         })
     },
     createAnswer () {
@@ -260,9 +261,9 @@ export default {
         return ''
       }
     },
-    getMontlyIncome () {
-      if (this.question.montlyIncome) {
-        return this.$store.state.montlyIncome.find(x => x.value === this.question.montlyIncome).text
+    getMonthlyIncome () {
+      if (this.question.monthlyIncome) {
+        return this.$store.state.monthlyIncome.find(x => x.value === this.question.monthlyIncome).text
       } else {
         return ''
       }

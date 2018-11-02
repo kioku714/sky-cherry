@@ -51,7 +51,7 @@ const UserSchema = new mongoose.Schema({
   interest: {
     type: String
   },
-  montlyIncome: {
+  monthlyIncome: {
     type: String
   },
   assets: {
