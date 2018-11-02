@@ -6,27 +6,27 @@ export default {
       icon: 'fa fa-newspaper-o',
       children: [
         {
-          name: 'SKY’s Pick',
+          name: 'SKY’S PICK',
           url: '/news/pick'
         },
         {
-          name: '뷰티',
+          name: 'BEAUTY',
           url: '/news/beauty'
         },
         {
-          name: '고메',
+          name: 'FOOD',
           url: '/news/gourmet'
         },
         {
-          name: '영화',
+          name: 'CULTURE',
           url: '/news/movie'
         },
         {
-          name: '제테크',
+          name: 'FINANCE',
           url: '/news/financial'
         },
         {
-          name: '트랜드',
+          name: 'LIFE STYLE',
           url: '/news/trend'
         }
       ]
