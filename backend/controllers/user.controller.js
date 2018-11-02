@@ -176,8 +176,8 @@ function load(req, res, next, id) {
     if (req.body.occupation) {
       user.occupation = req.body.occupation;
     }
-    if (req.body.familyTtype) {
-        user.familyTtype = req.body.familyTtype;
+    if (req.body.familyType) {
+        user.familyType = req.body.familyType;
     }
     if (req.body.interest) {
         user.interest = req.body.interest;
