@@ -160,60 +160,7 @@ export default {
         description: '',
         createBy: this.$session.get('user-id'),
         question: ''
-      },
-      fieldItems: [
-        {
-          mainFieldValue: 'style',
-          mainFieldName: '스타일',
-          subFields: [
-            {text: '패션/잡화', value: 'fashion'},
-            {text: '메이크업/헤어', value: 'makeup'},
-            {text: '스킨/바디', value: 'skin'}
-          ]
-        },
-        {
-          mainFieldValue: 'place',
-          mainFieldName: '플레이스',
-          subFields: [
-            {text: '맛집', value: 'restaurant'},
-            {text: '카페', value: 'cafe'},
-            {text: '지역', value: 'area'},
-            {text: '여행', value: 'travel'}
-          ]
-        },
-        {
-          mainFieldValue: 'culture',
-          mainFieldName: '컬쳐',
-          subFields: [
-            {text: '영화/TV', value: 'movie'},
-            {text: '음악', value: 'music'},
-            {text: '도서', value: 'books'},
-            {text: '공연', value: 'show'},
-            {text: '스포츠/게임', value: 'sports'}
-          ]
-        },
-        {
-          mainFieldValue: 'finance',
-          mainFieldName: '금융',
-          subFields: [
-            {text: '재태크', value: 'financialTechnology'},
-            {text: '금융상품', value: 'financialProducts'},
-            {text: '세금', value: 'tax'},
-            {text: '부동산', value: 'realty'},
-            {text: '용돈관리', value: 'pocketMoney'}
-          ]
-        },
-        {
-          mainFieldValue: 'life',
-          mainFieldName: '라이프',
-          subFields: [
-            {text: '일상/취미', value: 'hobby'},
-            {text: '리빙/인테리어', value: 'living'},
-            {text: '건강', value: 'health'},
-            {text: '기타', value: 'etc'}
-          ]
-        }
-      ]
+      }
     }
   },
   methods: {
@@ -222,17 +169,16 @@ export default {
         .then((response) => {
           this.question = response.data
           this.form.question = this.question._id
-          console.log(JSON.stringify(this.question))
         })
     },
     createAnswer () {
 
     },
     getMainFieldName () {
-      return this.fieldItems.find(x => x.mainFieldValue === this.question.mainField).mainFieldName
+      return this.$store.state.fieldItems.find(x => x.mainFieldValue === this.question.mainField).mainFieldName
     },
     getSubFieldName (value) {
-      var subFileds = this.fieldItems.find(x => x.mainFieldValue === this.question.mainField).subFields
+      var subFileds = this.$store.state.fieldItems.find(x => x.mainFieldValue === this.question.mainField).subFields
       return subFileds.find(x => x.value === this.question.subField).text
     },
     getAge () {
