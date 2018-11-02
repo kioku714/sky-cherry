@@ -34,11 +34,16 @@ export const store = new Vuex.Store({
       { text: '건물구입', value: 'buildingPurchase' }
     ],
     monthlyIncome: [
-      { text: '내집마련', value: 'myHouse' },
-      { text: '결혼자금', value: 'weddingMoney' },
-      { text: '목돈모으기', value: 'savingMoney' },
-      { text: '자기계발', value: 'selfImprovement' },
-      { text: '건물구입', value: 'buildingPurchase' }
+      {text: '100 이하', value: 'under100'},
+      {text: '100~150', value: '100To150'},
+      {text: '150~200', value: '150To200'},
+      {text: '200~250', value: '200To250'},
+      {text: '250~300', value: '250To300'},
+      {text: '300~350', value: '300To350'},
+      {text: '350~400', value: '350To400'},
+      {text: '400~500', value: '400To500'},
+      {text: '500~600', value: '500To600'},
+      {text: '600 이상', value: 'over600'}
     ],
     assets: [
       {text: '1000 이하', value: 'under1000'},
