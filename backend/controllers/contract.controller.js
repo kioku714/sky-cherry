@@ -52,7 +52,7 @@ async function getReceiptList(req, res) {
 				'block' : events[i].blockHash,
 				'from' : events[i].returnValues.from,
 				'to' : events[i].returnValues.to,
-				'value' : events[i].returnValues.value
+				'value' : web3.utils.fromWei(events[i].returnValues.value)
 			}
 			eventsArray.push(event)
 		}
