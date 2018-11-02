@@ -8,8 +8,7 @@
         <b-tab title="Transfer" active>
         </b-tab>
         <b-tab title="History" active>
-          <c-table sm="9" ref="table" v-if="receipts.length > 0" striped :rows="receipts" :columns="receiptFields" caption="<i class='fa fa-align-justify'></i> Transfer Results"></c-table>
-        </b-tab>
+          <c-table sm="9" ref="table" v-if="receipts.length > 0" striped :rows="receipts" :columns="receiptFields" caption="<i class='fa fa-align-justify'></i> Transfer Results"></c-table>        </b-tab>
       </b-tabs>
     </b-col>
   </div>
@@ -30,7 +29,7 @@ export default {
       receiptFields: [
         {key: 'eventFrom', label: '발신자'},
         {key: 'eventTo', label: '수신자'},
-        {key: 'value', label: '전송토큰', sortable: true},
+        {key: 'value', label: '전송토큰'},
         {key: 'tx', label: '상세이력'}
       ]
     }
@@ -40,7 +39,7 @@ export default {
       this.receipts = []
       this.$http.get('/api/contracts/receipts')
         .then((response) => {
-          this.receipts = response.data
+          this.receipts = response.data.reverse()
         })
     }
   }
