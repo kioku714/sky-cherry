@@ -35,7 +35,7 @@
             <br>
             <div class="form-group row">
               <label class="col-md-2 col-form-label">성별/나이</label>
-              <label class="col-md-2 col-form-label">{{ "male" === profile.gender ? "남" : "여"}} / {{ profile.age }}</label>
+              <label class="col-md-2 col-form-label">{{ "male" === profile.gender ? "남" : "여"}} / {{ form.age }}</label>
               <label class="col-md-2 col-form-label"></label>
               <label class="col-md-2 col-form-label">직업</label>
               <div class="col-md-2">
@@ -111,6 +111,8 @@ export default {
     VueTagsInput
   },
   created () {
+    this.fetchProfile()
+    this.fetchTokens()
   },
   data () {
     return {
@@ -120,7 +122,7 @@ export default {
         description: '',
         mainField: 'style',
         subField: '',
-        age: 31,
+        age: 0,
         gender: 'female',
         occupation: '',
         familyType: '',
@@ -145,10 +147,11 @@ export default {
     },
     fetchProfile () {
       this.profile = []
-      this.$http.get('/api/users/' + this.$route.params.userId)
+      this.$http.get('/api/users/' + this.$session.get('user-id'))
         .then((response) => {
           this.profile = response.data
 
+          this.form.age = this.getAge()
           this.form.occupation = response.data.occupation
           this.form.familyType = response.data.familyType
           this.form.interest = response.data.interest
@@ -157,8 +160,22 @@ export default {
           this.form.incomeManagement = response.data.incomeManagement
         })
     },
+    fetchTokens () {
+      this.$http.get('/api/users/' + this.$session.get('user-id') + '/tokens')
+        .then((response) => {
+          if (response.data.tokens < 4) {
+            alert('Cherry가 부족합니다. (Cherry : ' + response.data.tokens + ')')
+            this.$router.go(-1)
+          }
+        })
+    },
     getTags () {
       return this.tags.map(x => x.text)
+    },
+    getAge () {
+      var ageDifMs = Date.now() - new Date(this.profile.birthday).getTime()
+      var ageDate = new Date(ageDifMs) // miliseconds from epoch
+      return Math.abs(ageDate.getUTCFullYear() - 1970)
     },
     addTagStyle (obj) {
       obj.tag.style = 'font-size: 12px; color: #3c4859; background-color: transparent; border: solid 1px #8894a5; border-radius: .5rem;'
