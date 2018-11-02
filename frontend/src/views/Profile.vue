@@ -48,10 +48,10 @@
                     <b-col sm="6">
                       <b-form-group
                         label="가족형태 :"
-                        label-for="famailyType"
+                        label-for="familyType"
                         :label-cols="3"
                         :horizontal="true">
-                        <b-form-select id="famailyType" v-model="form.famailyType" :options="$store.state.famailyType" class="mb-3" />
+                        <b-form-select id="familyType" v-model="form.familyType" :options="$store.state.familyType" class="mb-3" />
                       </b-form-group>
                     </b-col>
                     <b-col sm="6">
