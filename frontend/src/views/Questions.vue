@@ -109,18 +109,6 @@ export default {
       }
       this.listItems = this.listItems.concat(temp)
     },
-    prettyDate (time) {
-      var diff = (new Date().getTime() - new Date(time).getTime()) / 1000
-      if (diff < 60) {
-        return '방금전'
-      } else if (diff < 3600) {
-        return Math.floor(diff / 60) + '분 전'
-      } else if (diff < 86400) {
-        return Math.floor(diff / 3600) + '시간 전'
-      } else {
-        return Math.floor(diff / 86400) + '일 전'
-      }
-    },
     getDescription (description) {
       if (description.length > this.maxDescriptionLength) {
         return description.substr(0, this.maxDescriptionLength) + '...'
