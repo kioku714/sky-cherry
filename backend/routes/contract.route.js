@@ -3,11 +3,11 @@ var contractCtrl = require('../controllers/contract.controller');
 
 const router = express.Router();
 
-router.route('/:id/tokens')
+router.route('/tokens')
   .get(contractCtrl.getTotalTokens)
   .post(contractCtrl.sendTokens)
 
-router.route('/:id/transfer')
+router.route('/transfer')
   .post(contractCtrl.transfer)
 
 router.route('/:id/approval')

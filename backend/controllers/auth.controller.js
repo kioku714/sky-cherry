@@ -22,7 +22,8 @@ function login(req, res, next) {
       var options = {expiresIn: 60*60*24};
       const token = jwt.sign({
         _id: user._id,
-        address: walletInfo.address
+        address: walletInfo.address,
+        walletInfo: walletInfo
       }, config.jwtSecret, options);
       
       return res.json({

@@ -54,7 +54,10 @@ function list(req, res, next) {
     });
   
     question.save()
-      .then(savedQuestion=> res.json(savedQuestion))
+      .then(savedQuestion=>{
+        res.json(savedQuestion)
+        next()
+      })
       .catch(e => next(e));
   }
   
