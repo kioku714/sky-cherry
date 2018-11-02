@@ -140,6 +140,7 @@ export default {
       this.form.tags = this.getTags()
       this.$http.post('/api/questions', this.form)
         .then((response) => {
+          this.$router.push('/question/' + response.data._id)
         })
     },
     fetchProfile () {
