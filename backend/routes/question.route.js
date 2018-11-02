@@ -11,7 +11,7 @@ router.route('/')
   // GET /api/questions - Get list of question
   .get(questionCtrl.list)
   // POST /api/questions - Create new question
-  .post(auth, questionCtrl.create, contractCtrl.sendTransfer);
+  .post(auth, questionCtrl.create, contractCtrl.sendTokenToSystem);
 
 router.route('/:questionId')
   // GET /api/questions/:questionId - Get question

@@ -212,14 +212,13 @@ function getUpdatedNonce(address, systemNonce) {
 	return nonces[address];
 }
 
-function sendTransfer(req, res, next) {
-	console.log("sendTransfer")
+function sendTokenToSystem(req, res, next) {
 	try{
-		var data = erc20.methods.transfer(config.system.address, web3.utils.toWei("4", 'ether')).encodeABI();
+		var data = erc20.methods.transfer(config.system.address, web3.utils.toWei(req.body.token, 'ether')).encodeABI();
 		_sendTx(req.decoded.walletInfo, config.contractAccount, data, 0)
 	} catch (e) {
 		console.log(e.message)
 	}
 }
 
-module.exports = { getTotalTokens, getReceiptList, load, sendTokens, approval, getUserTokens, sendCoins, getUserCoins, getUserTokensAllowance, transfer, sendTransfer };
+module.exports = { getTotalTokens, getReceiptList, load, sendTokens, approval, getUserTokens, sendCoins, getUserCoins, getUserTokensAllowance, transfer, sendTokenToSystem };

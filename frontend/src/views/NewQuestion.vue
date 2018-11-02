@@ -130,8 +130,7 @@ export default {
         monthlyIncome: '',
         assets: '',
         incomeManagement: 'deposit',
-        tags: [],
-        tokens: 4
+        tags: []
       },
       tag: '',
       tags: []
