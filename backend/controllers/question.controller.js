@@ -54,7 +54,11 @@ function list(req, res, next) {
     });
   
     question.save()
-      .then(savedQuestion=> res.json(savedQuestion))
+      .then(savedQuestion=>{
+        req.body.token = "4";
+        res.json(savedQuestion);
+        next();
+      })
       .catch(e => next(e));
   }
   

@@ -1,5 +1,6 @@
 var express = require('express');
 var questionCtrl = require('../controllers/question.controller');
+var contractCtrl = require('../controllers/contract.controller');
 var expressJwt = require('express-jwt');
 var config = require('../config/config');
 
@@ -10,7 +11,7 @@ router.route('/')
   // GET /api/questions - Get list of question
   .get(questionCtrl.list)
   // POST /api/questions - Create new question
-  .post(auth, questionCtrl.create);
+  .post(auth, questionCtrl.create, contractCtrl.sendTokenToSystem);
 
 router.route('/:questionId')
   // GET /api/questions/:questionId - Get question

@@ -7,8 +7,8 @@
         <div class="content">
           <!-- 사용자 닉네임, 질문 생성 시간  -->
           <span class="question-owner">
-            <a class="username-link" v-bind:href="'/profile/' + question.createdBy._id">{{ question.createdBy.name }}</a>
-            {{ prettyDate($moment.utc(question.createdAt).valueOf()) }}
+            <a class="username-link" v-bind:href="'/profiles/' + question.createdBy._id">{{ question.createdBy.name }}</a>
+            {{ $moment.utc(question.createdAt).local().fromNow() }}
           </span>
           <!-- 질문 제목 -->
           <h4 class="question-header">
@@ -108,18 +108,6 @@ export default {
         temp.push(this.questions[i])
       }
       this.listItems = this.listItems.concat(temp)
-    },
-    prettyDate (time) {
-      var diff = (new Date().getTime() - new Date(time).getTime()) / 1000
-      if (diff < 60) {
-        return '방금전'
-      } else if (diff < 3600) {
-        return Math.floor(diff / 60) + '분 전'
-      } else if (diff < 86400) {
-        return Math.floor(diff / 3600) + '시간 전'
-      } else {
-        return Math.floor(diff / 86400) + '일 전'
-      }
     },
     getDescription (description) {
       if (description.length > this.maxDescriptionLength) {

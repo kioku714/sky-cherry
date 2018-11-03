@@ -52,7 +52,7 @@ async function getReceiptList(req, res) {
 				'block' : events[i].blockHash,
 				'from' : events[i].returnValues.from,
 				'to' : events[i].returnValues.to,
-				'value' : events[i].returnValues.value
+				'value' : web3.utils.fromWei(events[i].returnValues.value)
 			}
 			eventsArray.push(event)
 		}
@@ -212,4 +212,13 @@ function getUpdatedNonce(address, systemNonce) {
 	return nonces[address];
 }
 
-module.exports = { getTotalTokens, getReceiptList, load, sendTokens, approval, getUserTokens, sendCoins, getUserCoins, getUserTokensAllowance, transfer };
+function sendTokenToSystem(req, res, next) {
+	try{
+		var data = erc20.methods.transfer(config.system.address, web3.utils.toWei(req.body.token, 'ether')).encodeABI();
+		_sendTx(req.decoded.walletInfo, config.contractAccount, data, 0)
+	} catch (e) {
+		console.log(e.message)
+	}
+}
+
+module.exports = { getTotalTokens, getReceiptList, load, sendTokens, approval, getUserTokens, sendCoins, getUserCoins, getUserTokensAllowance, transfer, sendTokenToSystem };
