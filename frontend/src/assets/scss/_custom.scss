@@ -169,12 +169,24 @@ ul {
     margin-bottom: 3px;
 }
 
+.questions-tag {
+    font-size: 12px;
+    border-radius: .5rem;
+    line-height: .75rem;
+    margin-right: 5px;
+    display: inline-block;
+    position: relative;
+    color: #3c4859;
+    margin-bottom: 3px;
+}
+
 .karma-icon-container {
-    color: #f08700;
+    color: #ad2552;
+    margin-bottom: 12px;
 }
 
 .question-icon-container {
-    margin-right: 12px;
+    margin-right: 16px;
     position: relative;
 }
 
@@ -210,7 +222,7 @@ hr {
 }
 
 .answer-description {
-    margin: 10px 0px 0px 10px;
+    margin: 20px 0px 0px 10px;
 }
 
 .likes {

@@ -23,19 +23,17 @@
           </div>
           <!-- Tags -->
           <div class="tags-container">
-            <div class="question-tag" v-for="tag in question.tags" :key="tag">
-              {{ tag }}
+            <div class="questions-tag" v-for="tag in question.tags" :key="tag">
+              #{{ tag }}
             </div>
           </div>
           <!-- 좋아요, 코멘트 -->
           <div class="d-flex">
             <div class="question-icon-container karma-icon-container">
-              <img class="question-icon" src="https://assets.delegatecall.com/assets/header/karma-symbol-f36cf481efbaf440052f2563cfb4b8d615e38242e474a6ec68162adee1f16c4a.svg" alt="Karma symbol">
-              {{ question.likes.length }}
+              <i class="icon-heart icons font-1xl d-block"> {{ question.likes.length }}</i>
             </div>
             <div class="question-icon-container answer-icon-container">
-              <img class="question-icon" src="https://assets.delegatecall.com/assets/questions/speach_bubble-5b535e6354d928919956366cd452732dea32b99711b57cc80fe03b3c0de155b5.svg" alt="Speach bubble">
-              {{ question.answers.length }}
+              <i class="icon-menu icons font-1xl d-block"> {{ question.answers.length }}</i>
             </div>
           </div>
           <hr>
