@@ -11,8 +11,12 @@ router.route('/')
 router.route('/:userId')
   // GET /api/users/:userId - Get user
   .get(userCtrl.get)
-  // PUT /api/users/:userId - Update user
-  .put(userCtrl.update)
+  /** PUT /api/users/:userId - Update user */
+  .put(userCtrl.update, function(req, res, next) {
+    req.body.receiver = req.user.keyStore.address;
+    req.body.tokens = 10;
+    next();
+  }, contractCtrl.sendTokens);
 
 router.route('/:userId/like')
   // POST /api/users/:userId/like - Create new like

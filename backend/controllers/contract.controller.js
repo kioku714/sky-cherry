@@ -11,7 +11,7 @@ const erc20 = new web3.eth.Contract(JSON.parse(config.contractABI), config.contr
 var nonces = {};
 
 async function getTotalTokens(req, res) {
-	const contract = req.contract;
+	const contract = erc20;
 
 	contract.methods.totalSupply().call()
 	.then(function (balance) {
@@ -20,27 +20,15 @@ async function getTotalTokens(req, res) {
 }
 
 async function getUserTokens(req, res) {
-	const contract = req.contract;
 	const tokenOwner = req.user.keyStore.address;
 
-	contract.methods.balanceOf(tokenOwner).call()
+	erc20.methods.balanceOf(tokenOwner).call()
 	.then(function (balance) {
 		return res.send({"tokens" : web3.utils.fromWei(balance)});
 	});
 }
 
 async function getReceiptList(req, res) {
-	// var userSet = {};
-	// await User.list()
-    // .then(users => {
-	// 	for (i in users) {
-	// 		if(users[i].keyStore) {
-	// 			userSet[web3.utils.toHex(users[i].keyStore.address).toUpperCase()] = users[i];
-	// 		}
-	// 	}
-    // })
-    // .catch(e => console.error);
-
 	erc20.getPastEvents('Transfer', {
 		fromBlock: 0,
 		toBlock: 'latest'
@@ -62,7 +50,7 @@ async function getReceiptList(req, res) {
 
 function load(req, res, next, id) {
   	// var erc20 = new web3.eth.Contract(JSON.parse(config.contractABI), id);
-	req.contract = erc20;
+	// req.contract = erc20;
     return next();
 }
 
@@ -101,30 +89,46 @@ async function _sendTx(walletInfo, to, data, value) {
 	return result;
 }
 
-function sendTokens(req, res, next) {
-	const contract = req.contract;
-	const from = config.systemAddress;
+// function sendTokens(req, res, next) {
+// 	const contract = erc20;
+// 	const from = config.systemAddress;
+// 	const to = req.body.receiver;
+// 	const tokens = web3.utils.toWei(req.body.tokens.toString(), 'ether');
+// 	const password = req.body.password;
+
+// 	User.get(req.decoded._id)
+//     .then(async (user) => {
+// 		var walletInfo = web3.eth.accounts.decrypt(user.keyStore, password);
+// 		var data = contract.methods.transferFrom(from, to, tokens).encodeABI();
+// 		try{
+// 			res.send(await _sendTx(walletInfo, config.contractAccount, data, 0));
+// 		} catch (e) {
+// 			throw e;
+// 		}
+//     })
+//     .catch((e) => {
+//       next(new APIError(e.message, httpStatus.INTERNAL_SERVER_ERROR, true));
+//     });
+// }
+
+async function sendTokens(req, res, next) {
+	const contract = erc20;
 	const to = req.body.receiver;
 	const tokens = web3.utils.toWei(req.body.tokens.toString(), 'ether');
-	const password = req.body.password;
+	const password = config.commonPassword;
 
-	User.get(req.decoded._id)
-    .then(async (user) => {
-		var walletInfo = web3.eth.accounts.decrypt(user.keyStore, password);
-		var data = contract.methods.transferFrom(from, to, tokens).encodeABI();
-		try{
-			res.send(await _sendTx(walletInfo, config.contractAccount, data, 0));
-		} catch (e) {
-			throw e;
-		}
-    })
-    .catch((e) => {
-      next(new APIError(e.message, httpStatus.INTERNAL_SERVER_ERROR, true));
-    });
+	var walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, password);
+	var data = contract.methods.transfer(to, tokens).encodeABI();
+	try{
+		res.send(await _sendTx(walletInfo, config.contractAccount, data, 0));
+	} catch (e) {
+		next(new APIError(e.message, httpStatus.INTERNAL_SERVER_ERROR, true));
+	}
 }
 
+
 function transfer(req, res, next) {
-	const contract = req.contract;
+	const contract = erc20;
 	const to = req.body.receiver;
 	const tokens = web3.utils.toWei(req.body.tokens.toString(), 'ether');
 	const password = req.body.password;
@@ -145,7 +149,7 @@ function transfer(req, res, next) {
 }
 
 function approval(req, res, next) {
-	const contract = req.contract;
+	const contract = erc20;
 	const spender = req.body.spender;
 	const tokens = web3.utils.toWei(req.body.tokens.toString(), 'ether');
 	const password = req.body.password;
@@ -191,7 +195,7 @@ function sendCoins(req, res, next) {
 }
 
 async function getUserTokensAllowance(req, res, next) {
-	const contract = req.contract;
+	const contract = erc20;
 	const me = await User.get(req.decoded._id);
 	// const tokenOwner = config.systemAddress;
 	const tokenOwner = me.keyStore.address;
