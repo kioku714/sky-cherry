@@ -31,7 +31,7 @@
                         label-for="genderAndAge"
                         :label-cols="3"
                         :horizontal="true">
-                        <b-form-input plaintext id="genderAndAge" type="text" value="여/31"></b-form-input>
+                        <b-form-input plaintext id="genderAndAge" type="text" v-bind:value="('male' === profile.gender ? '남' : '여') + '/' + age"></b-form-input>
                       </b-form-group>
                     </b-col>
                     <b-col sm="6">
@@ -231,7 +231,8 @@ export default {
         assets: '',
         incomeManagement: '',
         description: ''
-      }
+      },
+      age: 0
     }
   },
   methods: {
@@ -248,6 +249,7 @@ export default {
           this.form.assets = response.data.assets
           this.form.incomeManagement = response.data.incomeManagement
           this.form.description = response.data.description
+          this.age = this.getAge()
         })
     },
     fetchTokens () {
@@ -309,6 +311,11 @@ export default {
         .then((response) => {
           this.fetchProfile()
         })
+    },
+    getAge () {
+      var ageDifMs = Date.now() - new Date(this.profile.birthday).getTime()
+      var ageDate = new Date(ageDifMs) // miliseconds from epoch
+      return Math.abs(ageDate.getUTCFullYear() - 1970)
     }
   }
 }

@@ -7,7 +7,7 @@
         <div class="content">
           <!-- 사용자 닉네임, 질문 생성 시간  -->
           <span class="question-owner">
-            <a class="username-link" v-bind:href="'/profiles/' + question.createdBy._id">{{ question.createdBy.name }}</a>
+            <a class="username-link" v-bind:href="'/profiles/' + question.createdBy[0]._id">{{ question.createdBy[0].name }}</a>
             {{ $moment.utc(question.createdAt).local().fromNow() }}
           </span>
           <!-- 질문 제목 -->
@@ -23,28 +23,26 @@
           </div>
           <!-- Tags -->
           <div class="tags-container">
-            <div class="question-tag" v-for="tag in question.tags" :key="tag">
-              {{ tag }}
+            <div class="questions-tag" v-for="tag in question.tags" :key="tag">
+              #{{ tag }}
             </div>
           </div>
           <!-- 좋아요, 코멘트 -->
           <div class="d-flex">
             <div class="question-icon-container karma-icon-container">
-              <img class="question-icon" src="https://assets.delegatecall.com/assets/header/karma-symbol-f36cf481efbaf440052f2563cfb4b8d615e38242e474a6ec68162adee1f16c4a.svg" alt="Karma symbol">
-              {{ question.likes.length }}
+              <i class="icon-heart icons font-1xl d-block"> {{ question.likes.length }}</i>
             </div>
             <div class="question-icon-container answer-icon-container">
-              <img class="question-icon" src="https://assets.delegatecall.com/assets/questions/speach_bubble-5b535e6354d928919956366cd452732dea32b99711b57cc80fe03b3c0de155b5.svg" alt="Speach bubble">
-              {{ question.answers.length }}
+              <i class="icon-menu icons font-1xl d-block"> {{ question.answers.length }}</i>
             </div>
           </div>
           <hr>
         </div>
       </div>
-
     </div>
-
-    <a class="load-more-btn" v-show="distance < questions.length" @click="manualLoad">Load more</a>
+    <div class="col-6 col-sm-4 col-md mb-3 mb-xl-0 text-center">
+      <button class="btn btn-secondary btn-lg btn-block" type="button" v-show="distance < questions.length" @click="manualLoad" >Load more</button>
+    </div>
     <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading">
         <span slot="no-more"/>
         <span slot="no-results"/>
