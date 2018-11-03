@@ -6,7 +6,9 @@
           <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
         </b-col>
         <b-col>
-          <a class="question-username-link" v-bind:href="'/profile/' + question._id">{{ question.createdBy[0].name }}</a>
+          <a class="username-link" v-bind:href="'/profiles/' + question.createdBy[0]._id">
+            {{ question.createdBy[0].name }}
+          </a>
           <small>{{ question.createdBy[0].level }} Cherry</small>
           <br>
           {{ $moment.utc(question.createdAt).local().fromNow() }}
@@ -96,7 +98,9 @@
             <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
           </b-col>
           <b-col sm="9" cols="6">
-            <a class="question-username-link" v-bind:href="'/profile/' + answer._id">{{ answer.createdBy.name}}</a>
+            <a class="username-link" v-bind:href="'/profiles/' + answer.createdBy._id">
+              {{ answer.createdBy.name}}
+            </a>
             <small>{{ answer.createdBy.level }} Cherry</small>
             <br>
             {{ $moment.utc(answer.createdAt).local().fromNow() }} / SI: {{ answer.createdBy.si}}
