@@ -11,11 +11,15 @@ router.route('/')
 router.route('/:userId')
   // GET /api/users/:userId - Get user
   .get(userCtrl.get)
-  /** PUT /api/users/:userId - Update user */
-  .put(userCtrl.update);
+  // PUT /api/users/:userId - Update user
+  .put(userCtrl.update)
+
+router.route('/:userId/like')
+  // POST /api/users/:userId/like - Create new like
+  .post(userCtrl.like);
 
   router.route('/:userId/tokens')
-  /** GET /api/users/:userId/tokens - Get user tokens */
+  // GET /api/users/:userId/tokens - Get user tokens
   .get((req, res, next) => contractCtrl.load(req, res, next), contractCtrl.getUserTokens)
 
 // Load user when API with userId route parameter is hit
