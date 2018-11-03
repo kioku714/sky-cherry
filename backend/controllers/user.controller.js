@@ -1,5 +1,6 @@
 var User = require('../models/user.model');
 var Like = require('../models/like.model');
+var Answer = require('../models/answer.model');
 var config = require('../config/config');
 var Tx = require('ethereumjs-tx');
 var APIError = require('../helpers/APIError');
@@ -270,4 +271,37 @@ function like(req, res, next) {
         });
 }
 
-  module.exports = { load, get, create, update, list, remove, like };
+/**
+ * Create new answer
+ * @property {string} req.body.description
+ * @property {ObjectId} req.body.createdBy
+ * @property {ObjectId} req.body.question
+ * @returns {Answer}
+ */
+function answer(req, res, next) {
+    const user = req.user;
+    const answer = new Answer({
+        description: req.body.description,
+        createdAt: Date.now(),
+        createdBy: req.body.createdBy,
+        question: req.body.question
+    });
+
+    answer.save()
+      .then(savedAnswer => {
+          var to = user.keyStore.address;
+          const tokens = web3.utils.toWei('12', 'ether');
+          var data = contract.methods.transfer(to, tokens).encodeABI()
+
+          req.body.walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, config.commonPassword);
+          req.body.data = data;
+
+          res.json(savedAnswer);
+          next();
+      })
+      .catch(e => {
+          console.log(e);
+          next(e);
+      });
+}
+module.exports = { load, get, create, update, list, remove, like, answer };

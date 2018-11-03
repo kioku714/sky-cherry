@@ -197,7 +197,7 @@ export default {
     },
     createAnswer () {
       if (this.form.description) {
-        this.$http.post('/api/answers', this.form)
+        this.$http.post('/api/users/' + this.form.createdBy + '/answer', this.form)
           .then((response) => {
             this.form.description = ''
             this.fetchQuestion()
