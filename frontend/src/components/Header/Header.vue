@@ -33,6 +33,11 @@
           <span class="fa fa-user-o"></span>
         </router-link>
       </li>
+      <li class="nav-item d-md-down-none">
+        <b-link @click="logout">
+          <span class="fa fa-lock"></span>
+        </b-link>
+      </li>
       <li class="nav-item dropdown d-lg-none">
         <HeaderDropdown/>
       </li>
@@ -66,6 +71,11 @@ export default {
     asideToggle (e) {
       e.preventDefault()
       document.body.classList.toggle('aside-menu-hidden')
+    },
+    logout (e) {
+      e.preventDefault()
+      this.$session.destroy()
+      this.$router.push('/login')
     }
   }
 }

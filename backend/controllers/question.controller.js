@@ -23,6 +23,7 @@ function list(req, res, next) {
    * @property {string} req.body.description
    * @property {string} req.body.mainField
    * @property {string} req.body.subField
+   * @property {ObjectId} req.body.createdBy
    * @property {Answer[]} req.body.answers
    * @property {like[]} req.body.likes
    * @property {string} req.body.occupation

@@ -6,7 +6,9 @@
           <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
         </b-col>
         <b-col>
-          <a class="question-username-link" v-bind:href="'/profile/' + question._id">{{ question.createdBy[0].name }}</a>
+          <a class="username-link" v-bind:href="'/profiles/' + question.createdBy[0]._id">
+            {{ question.createdBy[0].name }}
+          </a>
           <small>{{ question.createdBy[0].level }} Cherry</small>
           <br>
           {{ $moment.utc(question.createdAt).local().fromNow() }}
@@ -21,7 +23,14 @@
         <h1>{{ question.title }}</h1>
       </b-col>
       <b-col>
-        <h1 class="likes text-right">♥ {{ question.likes.length }}</h1>
+        <h1 class="likes text-right">
+          <div v-if="question.createdBy[0]._id !== signInUserId" >
+            <b-link v-on:click="clickedLike(question._id, question.createdBy[0]._id)">♥ {{ question.likes.length }}</b-link>
+          </div>
+          <div v-else>
+            ♥ {{ question.likes.length }}
+          </div>
+        </h1>
       </b-col>
     </b-row>
     <hr>
@@ -96,13 +105,22 @@
             <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
           </b-col>
           <b-col sm="9" cols="6">
-            <a class="question-username-link" v-bind:href="'/profile/' + answer._id">{{ answer.createdBy.name}}</a>
+            <a class="username-link" v-bind:href="'/profiles/' + answer.createdBy._id">
+              {{ answer.createdBy.name}}
+            </a>
             <small>{{ answer.createdBy.level }} Cherry</small>
             <br>
             {{ $moment.utc(answer.createdAt).local().fromNow() }} / SI: {{ answer.createdBy.si}}
           </b-col>
           <b-col>
-            <h1 class="likes text-right">♥ {{ answer.likes.length }}</h1>
+            <h1 class="likes text-right">
+              <div v-if="answer.createdBy._id !== signInUserId" >
+                <b-link v-on:click="clickedLike(answer._id, answer.createdBy._id)">♥ {{ answer.likes.length }}</b-link>
+              </div>
+              <div v-else>
+                ♥ {{ answer.likes.length }}
+              </div>
+            </h1>
           </b-col>
         </b-row>
         <b-row class="answer-description">
@@ -155,11 +173,14 @@ export default {
   },
   data () {
     return {
+      signInUserId: '',
       question: {},
       form: {
         description: '',
-        createdBy: this.$session.get('user-id'),
-        question: ''
+        createdBy: '',
+        question: '',
+        questionOrAnswer: '',
+        questionOrAnswerCreatedBy: ''
       }
     }
   },
@@ -168,13 +189,15 @@ export default {
       this.$http.get('/api/questions/' + this.$route.params.questionId)
         .then((response) => {
           this.question = response.data
+          this.signInUserId = this.$session.get('user-id')
+          this.form.createdBy = this.$session.get('user-id')
           this.form.question = this.question._id
-          // console.log(JSON.stringify(this.question))
+          // console.log(JSON.stringify(this.form))
         })
     },
     createAnswer () {
       if (this.form.description) {
-        this.$http.post('/api/answers', this.form)
+        this.$http.post('/api/users/' + this.form.createdBy + '/answer', this.form)
           .then((response) => {
             this.form.description = ''
             this.fetchQuestion()
@@ -229,6 +252,14 @@ export default {
       } else {
         return ''
       }
+    },
+    clickedLike (questionOrAnswerId, questionOrAnswerCreatedBy) {
+      this.form.questionOrAnswer = questionOrAnswerId
+      this.form.questionOrAnswerCreatedBy = questionOrAnswerCreatedBy
+      this.$http.post('/api/users/' + this.form.createdBy + '/like', this.form)
+        .then((response) => {
+          this.fetchQuestion()
+        })
     }
   }
 }

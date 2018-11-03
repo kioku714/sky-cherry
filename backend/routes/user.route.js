@@ -18,8 +18,16 @@ router.route('/:userId')
     next();
   }, contractCtrl.sendTokens);
 
+router.route('/:userId/like')
+  // POST /api/users/:userId/like - Create new like
+  .post(userCtrl.like);
+
+router.route('/:userId/answer')
+  // POST /api/users/:userId/answer - Create new answer
+  .post(userCtrl.answer, contractCtrl.sendToken);
+
   router.route('/:userId/tokens')
-  /** GET /api/users/:userId/tokens - Get user tokens */
+  // GET /api/users/:userId/tokens - Get user tokens
   .get((req, res, next) => contractCtrl.load(req, res, next), contractCtrl.getUserTokens)
 
 // Load user when API with userId route parameter is hit
