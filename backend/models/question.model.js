@@ -91,8 +91,48 @@ QuestionSchema.statics = {
      * @returns {Promise<Question[]>}
      */
     list({ skip = 0, limit = 50, q = {} } = {}) {
-      return this.find(q)
-        .populate('createdBy')
+        return this.aggregate([
+            { 
+                $lookup: { 
+                    from: 'skycherryusers', 
+                    localField: 'createdBy', 
+                    foreignField: '_id', 
+                    as: 'createdBy' 
+                }
+            },
+            { 
+                $lookup: { 
+                    from: 'likes', 
+                    localField: '_id', 
+                    foreignField: 'questionOrAnswer', 
+                    as: 'likes' 
+                }
+            },
+            { 
+                $lookup: { 
+                    from: 'answers', 
+                    localField: '_id', 
+                    foreignField: 'question', 
+                    as: 'answers' 
+                }
+            },
+            { 
+                $lookup: { 
+                    from: 'skycherryusers', 
+                    localField: 'answers.createdBy', 
+                    foreignField: '_id', 
+                    as: 'answerUsers' 
+                }
+            },
+            { 
+                $lookup: { 
+                    from: 'likes', 
+                    localField: 'answers._id', 
+                    foreignField: 'questionOrAnswer', 
+                    as: 'answerLikes' 
+                }
+            }
+        ])
         .sort({ createdAt: -1 })
         .skip(+skip)
         .limit(+limit)
