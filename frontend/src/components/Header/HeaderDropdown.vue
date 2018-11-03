@@ -22,6 +22,9 @@
       <b-dropdown-item :to="{name: '프로필', query: { tab: 'info' }}">
         <i class="fa fa-user-o" /> 프로필
       </b-dropdown-item>
+      <b-dropdown-item @click="logout">
+        <i class="fa fa-lock" /> 로그아웃
+      </b-dropdown-item>
     </template>
   </AppHeaderDropdown>
 </template>
@@ -35,6 +38,13 @@ export default {
   },
   data () {
     return {}
+  },
+  methods: {
+    logout (e) {
+      e.preventDefault()
+      this.$session.destroy()
+      this.$router.push('/login')
+    }
   }
 }
 </script>
