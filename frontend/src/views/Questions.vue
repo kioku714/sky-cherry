@@ -39,10 +39,10 @@
           <hr>
         </div>
       </div>
-
     </div>
-
-    <a class="load-more-btn" v-show="distance < questions.length" @click="manualLoad">Load more</a>
+    <div class="col-6 col-sm-4 col-md mb-3 mb-xl-0 text-center">
+      <button class="btn btn-secondary btn-lg btn-block" type="button" v-show="distance < questions.length" @click="manualLoad" >Load more</button>
+    </div>
     <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading">
         <span slot="no-more"/>
         <span slot="no-results"/>
