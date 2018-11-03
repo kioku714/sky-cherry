@@ -22,6 +22,24 @@
         <b-col sm="10">
           <b-tabs>
             <b-tab title="CJONE" active>
+              <h4 class="text-center transfer-title">TRANSFER GATEWAY</h4>
+              <div class="col-sm-6 transfer-content">
+                <b-row class="text-center">
+                  <b-col sm="4" cols="4">
+                    <div><img src="/static/img/logo-symbol.png" class="trasfer-cherry"></div>
+                    <div class="transfer-text">{{ tokens }} CHERRY</div>
+                    <div><b-form-input type="text" class="transfer-input"></b-form-input></div>
+                  </b-col>
+                  <b-col sm="4" cols="4">
+                    <div><img src="/static/img/arrow.png" class="trasfer-arrow"></div>
+                  </b-col>
+                  <b-col sm="4" cols="4">
+                    <div><img src="/static/img/money.png" class="trasfer-money"></div>
+                    <div class="transfer-text">1200 POINT</div>
+                    <div><b-form-input type="text" class="transfer-input"></b-form-input></div>
+                  </b-col>
+                </b-row>
+              </div>
             </b-tab>
             <b-tab title="Transfer">
             </b-tab>

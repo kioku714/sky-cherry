@@ -27,7 +27,7 @@ app-header.navbar .navbar-brand {
     background-color: #FEFBF4;
 }
 
-h1 { 
+h1, h2, h3, h4 { 
     color: #4c3926; 
 }
 
@@ -251,4 +251,39 @@ hr {
 
 .profile-content .row {
     padding: 3px 0px;
+}
+
+.transfer-title {
+    margin-top: 20px;
+}
+
+.transfer-content {
+    margin: auto;
+    padding-top: 20px;
+}
+
+.trasfer-cherry {
+    width: 70px;
+}
+
+.trasfer-arrow {
+    width: 90px;
+    margin-top: 15px;
+}
+
+.trasfer-money {
+    width: 80px;
+}
+
+.transfer-text {
+    margin-top: 15px;
+}
+
+.transfer-content input {
+    width: 70px;
+}
+
+.transfer-input {
+    margin-top: 10px;
+    display: inline-block;
 }
