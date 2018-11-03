@@ -167,11 +167,12 @@ function load(req, res, next, id) {
   
   /**
    * Update existing user
-   * @property {string} req.body.email - The email of user.
-   * @returns {User}
    */
   function update(req, res, next) {
     const user = new User(req.user);
+    const firstUpdate = user.modifiedAt ? false : true;
+    
+    user.modifiedAt = Date.now();
     
     if (req.body.occupation) {
       user.occupation = req.body.occupation;
@@ -194,9 +195,15 @@ function load(req, res, next, id) {
     if (req.body.description) {
         user.description = req.body.description;
     }
-  
+
     User.update({_id: user.id}, user)
-      .then(savedUser => res.json(savedUser))
+      .then(savedUser =>  {
+          if(firstUpdate) {
+            next();
+          } else {
+            res.json(savedUser);
+          }
+      })
       .catch(e => next(e));
   }
   
