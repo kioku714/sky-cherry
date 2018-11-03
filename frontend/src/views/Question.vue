@@ -174,7 +174,11 @@ export default {
   data () {
     return {
       signInUserId: '',
-      question: {},
+      question: {
+        createdBy: [''],
+        likes: [],
+        answers: []
+      },
       form: {
         description: '',
         createdBy: '',
@@ -186,6 +190,11 @@ export default {
   },
   methods: {
     fetchQuestion () {
+      this.question = {
+        createdBy : [''],
+        likes: [],
+        answers: []
+      }
       this.$http.get('/api/questions/' + this.$route.params.questionId)
         .then((response) => {
           this.question = response.data
@@ -207,11 +216,11 @@ export default {
       }
     },
     getMainFieldName () {
-      return this.$store.state.fieldItems.find(x => x.mainFieldValue === this.question.mainField).mainFieldName
+      var mainField = this.$store.state.fieldItems.find(x => x.mainFieldValue === this.question.mainField);
+      return mainField ? mainField.mainFieldName : ''
     },
     getSubFieldName (value) {
-      var subFileds = this.$store.state.fieldItems.find(x => x.mainFieldValue === this.question.mainField).subFields
-      return subFileds.find(x => x.value === this.question.subField).text
+      return '';
     },
     getAge () {
       var ageDifMs = Date.now() - new Date(this.question.createdBy[0].birthday).getTime()
