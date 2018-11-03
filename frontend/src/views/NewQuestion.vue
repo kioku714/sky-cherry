@@ -88,7 +88,7 @@
           </div>
           <div class="form-group row">
             <div class="col-md-12 text-center">
-              <b-button class="button-comment" variant="success" type="submit" v-on:click="createQuestion">Post Your Question</b-button>
+              <b-button class="button-comment" variant="success" v-on:click="createQuestion">Post Your Question</b-button>
             </div>
           </div>
         </form>
