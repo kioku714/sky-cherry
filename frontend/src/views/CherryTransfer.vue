@@ -39,6 +39,7 @@
                     <div><b-form-input type="text" class="transfer-input"></b-form-input></div>
                   </b-col>
                 </b-row>
+                <div class="text-center"><b-button variant="success" class="transfer-button">Got it!</b-button></div>
               </div>
             </b-tab>
             <b-tab title="Transfer">
