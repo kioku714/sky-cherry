@@ -16,7 +16,7 @@
       </b-row>
     </div>
     <div class="field">
-      ► {{ getMainFieldName() }} / {{ getSubFieldName() }}
+      ► {{ getMainFieldName() }} | {{ getSubFieldName() }}
     </div>
     <b-row>
       <b-col sm="10" cols="9">
@@ -220,7 +220,15 @@ export default {
       return mainField ? mainField.mainFieldName : ''
     },
     getSubFieldName (value) {
-      return '';
+      // var subFileds = this.$store.state.fieldItems.find(x => x.mainFieldValue === this.question.mainField).subFields
+      // return subFileds.find(x => x.value === this.question.subField).text
+      var subFields = this.$store.state.fieldItems.find(x => x.mainFieldValue === this.question.mainField).subFields;
+      if (subFields) {
+        var subField = subFields.find(x => x.value === this.question.subField)
+        return subField ? subField.text : ''
+      } else {
+        return '';
+      }
     },
     getAge () {
       var ageDifMs = Date.now() - new Date(this.question.createdBy[0].birthday).getTime()
