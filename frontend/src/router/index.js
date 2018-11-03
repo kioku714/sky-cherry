@@ -84,7 +84,7 @@ export default new Router({
           component: Tags
         },
         {
-          path: '/cherry-transfer',
+          path: '/cherry-transfer/:userId',
           name: 'Cherry Transfer',
           component: CherryTransfer,
           beforeEnter: requireAuth
