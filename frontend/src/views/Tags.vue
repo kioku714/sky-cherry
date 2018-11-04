@@ -22,7 +22,7 @@ export default {
   },
   computed: {
     filteredList () {
-      return this.$store.state.tags.filter(tas => { 
+      return this.$store.state.tags.filter(tas => {
         return tas.toLowerCase().includes(this.search.toLowerCase())
       })
     }
