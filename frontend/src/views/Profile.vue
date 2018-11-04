@@ -3,7 +3,7 @@
       <b-row>
         <b-col sm="2">
           <div>
-            <b-img center rounded="circle" blank width="175" height="175" blank-color="#777" alt="img" class="m-1" />
+            <b-img center rounded="circle" blank fluid width="175" height="175" blank-color="#777" alt="img" class="m-1" />
             <p class="text-center"><strong>{{ profile.name }}</strong></p>
           </div>
           <div>
