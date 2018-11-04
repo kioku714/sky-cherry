@@ -80,6 +80,7 @@ async function _sendTx(walletInfo, to, data, value) {
 
 	await web3.eth.sendSignedTransaction('0x' + tx.serialize().toString('hex'), function(error, hash) {
 		if (!error) {
+			console.info('tx=>', hash)
 			result.txHash = hash;
 		} else {
 			throw new APIError('Transaction error: ' + error);
@@ -140,8 +141,9 @@ async function sendMultipleTokens(req, res, next) {
 	var walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, password);
 
 	try {
-		await _sendTx(walletInfo, config.contractAccount, clickData, 0);
-		res.send(await _sendTx(walletInfo, config.contractAccount, receiveData, 0));
+		var tx1 = await _sendTx(walletInfo, config.contractAccount, clickData, 0)
+		var tx2 = await _sendTx(walletInfo, config.contractAccount, receiveData, 0);
+		return res.send({'txs': [tx1, tx2]})
 	} catch (e) {
 		next(new APIError(e.message, httpStatus.INTERNAL_SERVER_ERROR, true));
 	}

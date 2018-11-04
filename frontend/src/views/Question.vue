@@ -25,7 +25,7 @@
       <b-col>
         <h1 class="likes text-right">
           <div v-if="question.createdBy[0]._id !== signInUserId" >
-            <b-link v-on:click="clickedLike(question._id, question.createdBy[0]._id)">♥ {{ question.likes.length }}</b-link>
+            <b-link v-on:click="likeQuestion(question._id)">♥ {{ question.likes.length }}</b-link>
           </div>
           <div v-else>
             ♥ {{ question.likes.length }}
@@ -113,7 +113,7 @@
           <b-col>
             <h1 class="likes text-right">
               <div v-if="answer.createdBy._id !== signInUserId" >
-                <b-link v-on:click="clickedLike(answer._id, answer.createdBy._id)">♥ {{ answer.likes.length }}</b-link>
+                <b-link v-on:click="likeAnswer(answer._id)">♥ {{ answer.likes.length }}</b-link>
               </div>
               <div v-else>
                 ♥ {{ answer.likes.length }}
@@ -200,10 +200,7 @@ export default {
       },
       form: {
         description: '',
-        createdBy: '',
-        question: '',
-        questionOrAnswer: '',
-        questionOrAnswerCreatedBy: ''
+        createdBy: ''
       }
     }
   },
@@ -218,14 +215,14 @@ export default {
         .then((response) => {
           this.question = response.data
           this.signInUserId = this.$session.get('user-id')
-          this.form.createdBy = this.$session.get('user-id')
-          this.form.question = this.question._id
-          // console.log(JSON.stringify(this.form))
         })
     },
     createAnswer () {
       if (this.form.description) {
-        this.$http.post('/api/answers', this.form)
+        this.$http.post('/api/answers', {
+          questionId: this.question._id,
+          description: this.form.description
+        })
           .then((response) => {
             this.form.description = ''
             this.fetchQuestion()
@@ -292,10 +289,14 @@ export default {
         return ''
       }
     },
-    clickedLike (questionOrAnswerId, questionOrAnswerCreatedBy) {
-      this.form.questionOrAnswer = questionOrAnswerId
-      this.form.questionOrAnswerCreatedBy = questionOrAnswerCreatedBy
-      this.$http.post('/api/likes', this.form)
+    likeQuestion (questionId) {
+      this.$http.post('/api/likes', {questionId: questionId})
+        .then((response) => {
+          this.fetchQuestion()
+        })
+    },
+    likeAnswer (answerId) {
+      this.$http.post('/api/likes', {answerId: answerId})
         .then((response) => {
           this.fetchQuestion()
         })
