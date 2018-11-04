@@ -5,7 +5,16 @@ var contractCtrl = require('../controllers/contract.controller');
 const router = express.Router();
 
 router.route('/')
-  // PUT /api/likes - Create like
+  // GET /api/likes - Get list of like
+  .get(likeCtrl.list)
+  // POST /api/likes - Create like
   .post(likeCtrl.create, contractCtrl.sendMultipleTokens);
 
-  module.exports = router;
+router.route('/:likeId')
+  // GET /api/users/:userId - Get user
+  .get(likeCtrl.get)
+
+// Load user when API with userId route parameter is hit
+router.param('likeId', likeCtrl.load);
+
+module.exports = router;
