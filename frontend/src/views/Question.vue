@@ -20,17 +20,17 @@
     </div>
     <b-row>
       <b-col sm="10" cols="9">
-        <h1>{{ question.title }}</h1>
+        <h3>{{ question.title }}</h3>
       </b-col>
       <b-col>
-        <h1 class="likes text-right">
+        <h3 class="likes text-right">
           <div v-if="question.createdBy[0]._id !== signInUserId" >
-            <b-link v-on:click="clickedLike(question._id, question.createdBy[0]._id)">♥ {{ question.likes.length }}</b-link>
+            <b-link v-on:click="clickedLike(question._id, question.createdBy[0]._id)"><i class="fa fa-heart" /> {{ question.likes.length }}</b-link>
           </div>
           <div v-else>
-            ♥ {{ question.likes.length }}
+            <i class="fa fa-heart" /> {{ question.likes.length }}
           </div>
-        </h1>
+        </h3>
       </b-col>
     </b-row>
     <hr>
@@ -95,7 +95,7 @@
       </div>
     </div>
     <hr>
-    <h1 class="text-center">{{ question.answers.length }} ANSWERS</h1>
+    <h2 class="text-center">{{ question.answers.length }} ANSWERS</h2>
     <b-list-group v-if="question.answers.length > 0" flush>
       <b-list-group-item v-for="answer in question.answers" :key="answer._id">
         <b-row>
@@ -111,14 +111,14 @@
             {{ $moment.utc(answer.createdAt).local().fromNow() }} / SI: {{ answer.createdBy.si}}
           </b-col>
           <b-col>
-            <h1 class="likes text-right">
+            <h3 class="likes text-right">
               <div v-if="answer.createdBy._id !== signInUserId" >
-                <b-link v-on:click="clickedLike(answer._id, answer.createdBy._id)">♥ {{ answer.likes.length }}</b-link>
+                <b-link v-on:click="clickedLike(answer._id, answer.createdBy._id)"><i class="fa fa-heart" /> {{ answer.likes.length }}</b-link>
               </div>
               <div v-else>
-                ♥ {{ answer.likes.length }}
+                <i class="fa fa-heart" /> {{ answer.likes.length }}
               </div>
-            </h1>
+            </h3>
           </b-col>
         </b-row>
         <b-row class="answer-description">
@@ -152,7 +152,7 @@
     </b-list-group>
     <div v-if="question.createdBy[0]._id !== signInUserId" >
       <hr>
-      <h1 class="text-center">YOUR ANSWER</h1>
+      <h2 class="text-center">YOUR ANSWER</h2>
       <vue-editor v-model="form.description"></vue-editor>
       <div class="text-center">
         <b-button variant="success" class="button-comment" @click="createAnswer()">Post Your Answer</b-button>
