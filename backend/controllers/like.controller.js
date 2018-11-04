@@ -8,8 +8,9 @@ var Answer = require('../models/answer.model');
 /**
  * Create new like
  * @property {string} req.body.createdBy
- * @property {string} req.body.questionOrAnswer
- * @returns {Answer}
+ * @property {string} req.body.questionId
+ * @property {string} req.body.answerId
+ * @returns {Like}
  */
 async function create(req, res, next) {
     const questionId = req.body.questionId

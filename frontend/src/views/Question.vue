@@ -200,10 +200,7 @@ export default {
       },
       form: {
         description: '',
-        createdBy: '',
-        question: '',
-        questionOrAnswer: '',
-        questionOrAnswerCreatedBy: ''
+        createdBy: ''
       }
     }
   },
@@ -218,14 +215,14 @@ export default {
         .then((response) => {
           this.question = response.data
           this.signInUserId = this.$session.get('user-id')
-          this.form.createdBy = this.$session.get('user-id')
-          this.form.question = this.question._id
-          // console.log(JSON.stringify(this.form))
         })
     },
     createAnswer () {
       if (this.form.description) {
-        this.$http.post('/api/answers', this.form)
+        this.$http.post('/api/answers', {
+          questionId: this.question._id,
+          description: this.form.description
+        })
           .then((response) => {
             this.form.description = ''
             this.fetchQuestion()
@@ -293,14 +290,12 @@ export default {
       }
     },
     likeQuestion (questionId) {
-      this.form.questionId = questionId
       this.$http.post('/api/likes', {questionId: questionId})
         .then((response) => {
           this.fetchQuestion()
         })
     },
     likeAnswer (answerId) {
-      this.form.answerId = answerId
       this.$http.post('/api/likes', {answerId: answerId})
         .then((response) => {
           this.fetchQuestion()
