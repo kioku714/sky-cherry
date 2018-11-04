@@ -79,7 +79,7 @@ export default {
       if (this.search.length == 0) {
         return this.listItems
       }
-      return this.questions.filter(question => { 
+      return this.questions.filter(question => {
         return question.title.toLowerCase().includes(this.search.toLowerCase()) || question.description.toLowerCase().includes(this.search.toLowerCase()) || question.createdBy[0].name.toLowerCase().includes(this.search.toLowerCase())
       })
     }
