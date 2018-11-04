@@ -31,7 +31,7 @@
           <br>
           <div class="form-group row">
             <label class="col-md-2 col-form-label">성별/나이</label>
-            <label class="col-md-2 col-form-label">{{ "male" === profile.gender ? "남" : "여"}} / {{ form.age }}</label>
+            <label class="col-md-2 col-form-label">{{ "male" === profile.gender ? "남" : "여" }} / {{ form.age }}</label>
             <label class="col-md-2 col-form-label"></label>
             <label class="col-md-2 col-form-label">직업</label>
             <div class="col-md-2">
