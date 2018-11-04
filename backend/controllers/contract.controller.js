@@ -119,13 +119,33 @@ async function sendTokens(req, res, next) {
 
 	var walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, password);
 	var data = contract.methods.transfer(to, tokens).encodeABI();
-	try{
+	try {
 		res.send(await _sendTx(walletInfo, config.contractAccount, data, 0));
 	} catch (e) {
 		next(new APIError(e.message, httpStatus.INTERNAL_SERVER_ERROR, true));
 	}
 }
 
+async function sendMultipleTokens(req, res, next) {
+	const contract = erc20;
+	const password = config.commonPassword;
+	// 좋아요를 클릭한 사람 + 1
+    const clickTo = req.decoded.address;
+    const clickTokens = web3.utils.toWei('1', 'ether');
+    const clickData = contract.methods.transfer(clickTo, clickTokens).encodeABI();
+    // 좋아요를 받은 사람 +2
+    const receiveTo = req.body.reqreceiveUser.keyStore.address;
+    const receiveTokens = web3.utils.toWei('2', 'ether');
+	const receiveData = contract.methods.transfer(receiveTo, receiveTokens).encodeABI();
+	var walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, password);
+
+	try {
+		await _sendTx(walletInfo, config.contractAccount, clickData, 0);
+		res.send(await _sendTx(walletInfo, config.contractAccount, receiveData, 0));
+	} catch (e) {
+		next(new APIError(e.message, httpStatus.INTERNAL_SERVER_ERROR, true));
+	}
+}
 
 function transfer(req, res, next) {
 	const contract = erc20;
@@ -225,14 +245,4 @@ function sendTokenToSystem(req, res, next) {
 	}
 }
 
-function sendToken(req, res, next) {
-	try {
-		var walletInfo = req.body.walletInfo;
-		var data = req.body.data;
-		_sendTx(walletInfo, config.contractAccount, data, 0)
-	} catch (e) {
-		console.log(e.message)
-	}
-}
-
-module.exports = { getTotalTokens, getReceiptList, load, sendTokens, approval, getUserTokens, sendCoins, getUserCoins, getUserTokensAllowance, transfer, sendTokenToSystem, sendToken };
+module.exports = { getTotalTokens, getReceiptList, load, sendTokens, sendMultipleTokens, approval, getUserTokens, sendCoins, getUserCoins, getUserTokensAllowance, transfer, sendTokenToSystem };
