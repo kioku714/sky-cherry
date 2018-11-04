@@ -1,8 +1,7 @@
 <template>
   <div class="animated fadeIn">
-    <h1>질문하기</h1>
-    <div v-for="question in listItems" class="movie" :key="question">
-
+    <b-form-input class="search-input" type="text" v-model="search" placeholder="Search for questions"></b-form-input>
+    <div v-for="question in filteredList" class="movie" :key="question._id">
       <div class="new-question grid-item">
         <div class="content">
           <!-- 사용자 닉네임, 질문 생성 시간  -->
@@ -41,7 +40,7 @@
       </div>
     </div>
     <div class="col-6 col-sm-4 col-md mb-3 mb-xl-0 text-center">
-      <button class="btn btn-secondary btn-lg btn-block" type="button" v-show="distance < questions.length" @click="manualLoad" >Load more</button>
+      <button class="btn btn-secondary btn-lg btn-block" type="button" v-show="(distance < questions.length) && (search.length == 0)" @click="manualLoad" >Load more</button>
     </div>
     <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading">
         <span slot="no-more"/>
@@ -67,12 +66,23 @@ export default {
       listItems: [],
       pageCount: 3,
       distance: 0,
-      maxDescriptionLength: 50
+      maxDescriptionLength: 50,
+      search: ''
     }
   },
   beforeRouteUpdate (to, from, next) {
     this.featchQuestionList(to.query.sort)
     next()
+  },
+  computed: {
+    filteredList () {
+      if (this.search.length == 0) {
+        return this.listItems
+      }
+      return this.questions.filter(question => { 
+        return question.title.toLowerCase().includes(this.search.toLowerCase()) || question.description.toLowerCase().includes(this.search.toLowerCase()) || question.createdBy[0].name.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }
   },
   methods: {
     infiniteHandler (state) {
