@@ -135,7 +135,9 @@
               </b-list-group>
               <b-list-group v-for="question in questions" :key="question.id" flush>
                 <b-list-group-item>
-                  "{{ question.title }}" <span class="text-muted" v-readMore:50="question.description"></span> <span class="text-warning">{{ $moment.utc(question.createdAt).local().fromNow() }}</span>
+                  "<b-link :to="{ name: '질문 상세', params: { questionId: question._id }}">{{ question.title }}</b-link>"
+                  <span class="text-muted">{{ getDescription(question.description) }}<b-link v-show="question.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: question._id }}">more</b-link>
+                  </span> <span class="text-warning">{{ $moment.utc(question.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
             </b-tab>
@@ -216,6 +218,7 @@ export default {
   },
   data () {
     return {
+      maxDescriptionLength: 50,
       profile: {},
       tokens: 0,
       questions: [],
@@ -236,6 +239,12 @@ export default {
     }
   },
   methods: {
+    getDescription (description) {
+      if (description.length > this.maxDescriptionLength) {
+        return description.substr(0, this.maxDescriptionLength) + '...'
+      }
+      return description
+    },
     fetchProfile () {
       this.profile = []
       this.$http.get('/api/users/' + this.$route.params.userId)
