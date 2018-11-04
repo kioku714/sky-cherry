@@ -20,7 +20,7 @@
              :bordered="bordered"
              :small="small"
              :fixed="fixed"
-             responsive="sm"
+             responsive
              :items="items"
              :fields="fields"
              :current-page="currentPage"
