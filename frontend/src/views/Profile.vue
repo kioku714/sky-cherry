@@ -7,7 +7,7 @@
             <p class="text-center"><strong>{{ profile.name }}</strong></p>
           </div>
           <div>
-            <p class="text-center">LV 1 / SI : <strong>{{ profile.si }}</strong></p>
+            <p class="text-center">LV <strong>{{ profile.level }}</strong> / SI : <strong>{{ profile.si }}</strong></p>
             <p class="text-center">Cherry : <strong>{{ tokens }}</strong></p>
             <p class="text-center">Questions : <strong>{{ questions.length }}</strong></p>
             <p class="text-center">Answers : <strong>{{ answers.length }}</strong></p>
