@@ -8,7 +8,6 @@ import axios from 'axios'
 import VueSession from 'vue-session'
 import HttpStatus from 'http-status'
 import moment from 'moment'
-import ReadMore from 'vue-read-more'
 import { store } from './store'
 
 axios.defaults.baseURL = 'http://localhost:3000'
@@ -20,7 +19,6 @@ Vue.use(BootstrapVue)
 Vue.use(VueSession, {persist: true})
 moment.locale('ko')
 Vue.use(require('vue-moment'), {moment})
-Vue.use(ReadMore)
 
 /* eslint-disable no-new */
 new Vue({

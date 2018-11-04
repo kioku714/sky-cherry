@@ -3,11 +3,11 @@
       <b-row>
         <b-col sm="2">
           <div>
-            <b-img center rounded="circle" blank width="175" height="175" blank-color="#777" alt="img" class="m-1" />
+            <b-img center rounded="circle" blank fluid width="175" height="175" blank-color="#777" alt="img" class="m-1" />
             <p class="text-center"><strong>{{ profile.name }}</strong></p>
           </div>
           <div>
-            <p class="text-center">LV 1 / SI : <strong>{{ profile.si }}</strong></p>
+            <p class="text-center">LV <strong>{{ profile.level }}</strong> / SI : <strong>{{ profile.si }}</strong></p>
             <p class="text-center">Cherry : <strong>{{ tokens }}</strong></p>
             <p class="text-center">Questions : <strong>{{ questions.length }}</strong></p>
             <p class="text-center">Answers : <strong>{{ answers.length }}</strong></p>
@@ -135,7 +135,9 @@
               </b-list-group>
               <b-list-group v-for="question in questions" :key="question.id" flush>
                 <b-list-group-item>
-                  "{{ question.title }}" <span class="text-muted" v-readMore:50="question.description"></span> <span class="text-warning">{{ $moment.utc(question.createdAt).local().fromNow() }}</span>
+                  "<b-link :to="{ name: '질문 상세', params: { questionId: question._id }}">{{ question.title }}</b-link>"
+                  <span class="text-muted">{{ getDescription(question.description) }}<b-link v-show="question.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: question._id }}">more</b-link>
+                  </span> <span class="text-warning">{{ $moment.utc(question.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
             </b-tab>
@@ -216,6 +218,7 @@ export default {
   },
   data () {
     return {
+      maxDescriptionLength: 50,
       profile: {},
       tokens: 0,
       questions: [],
@@ -236,6 +239,12 @@ export default {
     }
   },
   methods: {
+    getDescription (description) {
+      if (description.length > this.maxDescriptionLength) {
+        return description.substr(0, this.maxDescriptionLength) + '...'
+      }
+      return description
+    },
     fetchProfile () {
       this.profile = []
       this.$http.get('/api/users/' + this.$route.params.userId)
