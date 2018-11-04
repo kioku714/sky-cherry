@@ -1,6 +1,4 @@
 var User = require('../models/user.model');
-var Like = require('../models/like.model');
-var Answer = require('../models/answer.model');
 var config = require('../config/config');
 var Tx = require('ethereumjs-tx');
 var APIError = require('../helpers/APIError');
@@ -139,47 +137,47 @@ function load(req, res, next, id) {
         return next();
       })
       .catch(e => next(e));
-  }
-  
-  /**
-   * Get user
-   * @returns {User}
-   */
-  function get(req, res) {
+}
+
+/**
+ * Get user
+ * @returns {User}
+ */
+function get(req, res) {
     return res.json(req.user);
-  }
-  
-  /**
-   * Create new user
-   * @property {string} req.body.name - The name of user.
-   * @property {string} req.body.email - The email of user.
-   * @returns {User}
-   */
-  function create(req, res, next) {
+}
+
+/**
+ * Create new user
+ * @property {string} req.body.name - The name of user.
+ * @property {string} req.body.email - The email of user.
+ * @returns {User}
+ */
+function create(req, res, next) {
     const user = new User({
-      email: req.body.email,
-      role: req.body.role,
-      status: req.body.status
+        email: req.body.email,
+        role: req.body.role,
+        status: req.body.status
     });
-  
+
     user.save()
-      .then(savedUser => res.json(savedUser))
-      .catch((e) => {
+        .then(savedUser => res.json(savedUser))
+        .catch((e) => {
         next(new APIError(e.message, httpStatus.BAD_REQUEST));
-      });
-  }
-  
-  /**
-   * Update existing user
-   */
-  function update(req, res, next) {
+        });
+}
+
+/**
+ * Update existing user
+ */
+function update(req, res, next) {
     const user = new User(req.user);
     const firstUpdate = user.modifiedAt ? false : true;
-    
+
     user.modifiedAt = Date.now();
-    
+
     if (req.body.occupation) {
-      user.occupation = req.body.occupation;
+        user.occupation = req.body.occupation;
     }
     if (req.body.familyType) {
         user.familyType = req.body.familyType;
@@ -201,114 +199,38 @@ function load(req, res, next, id) {
     }
 
     User.update({_id: user.id}, user)
-      .then(savedUser =>  {
-          if(firstUpdate) {
+        .then(savedUser =>  {
+            if(firstUpdate) {
             next();
-          } else {
+            } else {
             res.json(savedUser);
-          }
-      })
-      .catch(e => next(e));
-  }
-  
-  /**
-   * Get user list.
-   * @property {number} req.query.skip - Number of users to be skipped.
-   * @property {number} req.query.limit - Limit number of users to be returned.
-   * @returns {User[]}
-   */
-  function list(req, res, next) {
-    const { limit = 50, skip = 0, q = {}} = req.query;
-    User.list({ limit, skip, q })
-      .then(users => res.json(users))
-      .catch(e => next(e));
-  }
-  
-  /**
-   * Delete user.
-   * @returns {User}
-   */
-  function remove(req, res, next) {
-    const user = req.user;
-    user.remove()
-      .then(deletedUser => res.json(deletedUser))
-      .catch(e => next(e));
-  }
-
-  /**
- * Create new like
- * @property {string} req.body.createdBy
- * @property {string} req.body.questionOrAnswer
- * @returns {Like}
- */
-function like(req, res, next) {
-    const user = req.user;
-    const receiveUserId = req.body.questionOrAnswerCreatedBy
-    var receiveUser = null;
-    const like = new Like({
-        createdAt: Date.now(),
-        createdBy: req.body.createdBy,
-        questionOrAnswer: req.body.questionOrAnswer
-    });
-
-    User.get(receiveUserId)
-      .then((user) => {
-        receiveUser = user;
-      })
-      .catch(e => next(e));
-
-    like.save()
-        .then(async() => {
-            var walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, config.commonPassword);
-            // 좋아요를 클릭한 사람 + 1
-            var clickTo = user.keyStore.address;
-            const clickTokens = web3.utils.toWei('1', 'ether');
-            var clickData = contract.methods.transfer(clickTo, clickTokens).encodeABI();
-            // 좋아요를 받은 사람 +2
-            var receiveTo = receiveUser.keyStore.address;
-            const receiveTokens = web3.utils.toWei('2', 'ether');
-            var receiveData = contract.methods.transfer(receiveTo, receiveTokens).encodeABI();
-
-            await sendTransaction(walletInfo, config.contractAccount, clickData, 0);
-            await sendTransaction(walletInfo, config.contractAccount, receiveData, 0);
+            }
         })
-        .catch(e => {
-            console.log(e);
-            next(e);
-        });
+        .catch(e => next(e));
 }
 
 /**
- * Create new answer
- * @property {string} req.body.description
- * @property {ObjectId} req.body.createdBy
- * @property {ObjectId} req.body.question
- * @returns {Answer}
+ * Get user list.
+ * @property {number} req.query.skip - Number of users to be skipped.
+ * @property {number} req.query.limit - Limit number of users to be returned.
+ * @returns {User[]}
  */
-function answer(req, res, next) {
-    const user = req.user;
-    const answer = new Answer({
-        description: req.body.description,
-        createdAt: Date.now(),
-        createdBy: req.body.createdBy,
-        question: req.body.question
-    });
-
-    answer.save()
-      .then(savedAnswer => {
-          var to = user.keyStore.address;
-          const tokens = web3.utils.toWei('12', 'ether');
-          var data = contract.methods.transfer(to, tokens).encodeABI()
-
-          req.body.walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, config.commonPassword);
-          req.body.data = data;
-
-          res.json(savedAnswer);
-          next();
-      })
-      .catch(e => {
-          console.log(e);
-          next(e);
-      });
+function list(req, res, next) {
+    const { limit = 50, skip = 0, q = {}} = req.query;
+    User.list({ limit, skip, q })
+        .then(users => res.json(users))
+        .catch(e => next(e));
 }
-module.exports = { load, get, create, update, list, remove, like, answer };
+
+/**
+ * Delete user.
+ * @returns {User}
+ */
+function remove(req, res, next) {
+    const user = req.user;
+    user.remove()
+        .then(deletedUser => res.json(deletedUser))
+        .catch(e => next(e));
+}
+
+module.exports = { load, get, create, update, list, remove };

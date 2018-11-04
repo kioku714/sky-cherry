@@ -88,9 +88,7 @@
       </div>
     </div>
     <hr>
-    <div>
-      {{ question.description }}
-    </div>
+    <div v-html="question.description"></div>
     <div class="tags-container">
       <div class="question-tag" v-for="tag in question.tags" :key="tag">
         {{ tag }}
@@ -140,9 +138,10 @@
           </b-col>
           <b-col>
             <b-form-textarea id="comment"
-                     placeholder=""
                      :rows="2"
-                     :max-rows="6">
+                     :max-rows="4"
+                     v-model="text"
+                     @input = "$emit('input', value)">
             </b-form-textarea>
           </b-col>
         </b-row>
@@ -151,11 +150,13 @@
         </div>
       </b-list-group-item>
     </b-list-group>
-    <hr>
-    <h1 class="text-center">YOUR ANSWER</h1>
-    <vue-editor v-model="form.description"></vue-editor>
-    <div class="text-center">
-      <b-button variant="success" class="button-comment" @click="createAnswer()">Post Your Answer</b-button>
+    <div v-if="question.createdBy[0]._id !== signInUserId" >
+      <hr>
+      <h1 class="text-center">YOUR ANSWER</h1>
+      <vue-editor v-model="form.description"></vue-editor>
+      <div class="text-center">
+        <b-button variant="success" class="button-comment" @click="createAnswer()">Post Your Answer</b-button>
+      </div>
     </div>
   </div>
 </template>
@@ -171,8 +172,26 @@ export default {
   created () {
     this.fetchQuestion()
   },
+  computed: {
+    textTrimed () {
+      return this.text.trim()
+    },
+    value: {
+      // Computed prop used as the v-model of this component
+      get () {
+        return {
+          text: this.text.trim(),
+          checked: checked
+        }
+      },
+      set (val) {
+        this.text = val.text === this.textTrimmed ? this.text : val.text
+      }
+    }
+  },
   data () {
     return {
+      text: '',
       signInUserId: '',
       question: {
         createdBy: [''],
@@ -191,7 +210,7 @@ export default {
   methods: {
     fetchQuestion () {
       this.question = {
-        createdBy : [''],
+        createdBy: [''],
         likes: [],
         answers: []
       }
@@ -206,7 +225,7 @@ export default {
     },
     createAnswer () {
       if (this.form.description) {
-        this.$http.post('/api/users/' + this.form.createdBy + '/answer', this.form)
+        this.$http.post('/api/answers', this.form)
           .then((response) => {
             this.form.description = ''
             this.fetchQuestion()
@@ -216,18 +235,21 @@ export default {
       }
     },
     getMainFieldName () {
-      var mainField = this.$store.state.fieldItems.find(x => x.mainFieldValue === this.question.mainField);
+      var mainField = this.$store.state.fieldItems.find(x => x.mainFieldValue === this.question.mainField)
       return mainField ? mainField.mainFieldName : ''
     },
     getSubFieldName (value) {
-      // var subFileds = this.$store.state.fieldItems.find(x => x.mainFieldValue === this.question.mainField).subFields
-      // return subFileds.find(x => x.value === this.question.subField).text
-      var subFields = this.$store.state.fieldItems.find(x => x.mainFieldValue === this.question.mainField).subFields;
-      if (subFields) {
-        var subField = subFields.find(x => x.value === this.question.subField)
-        return subField ? subField.text : ''
+      var mainField = this.$store.state.fieldItems.find(x => x.mainFieldValue === this.question.mainField)
+      if (mainField) {
+        var subFields = mainField.subFields
+        if (subFields) {
+          var subField = subFields.find(x => x.value === this.question.subField)
+          return subField ? subField.text : ''
+        } else {
+          return ''
+        }
       } else {
-        return '';
+        return ''
       }
     },
     getAge () {
@@ -273,7 +295,7 @@ export default {
     clickedLike (questionOrAnswerId, questionOrAnswerCreatedBy) {
       this.form.questionOrAnswer = questionOrAnswerId
       this.form.questionOrAnswerCreatedBy = questionOrAnswerCreatedBy
-      this.$http.post('/api/users/' + this.form.createdBy + '/like', this.form)
+      this.$http.post('/api/likes', this.form)
         .then((response) => {
           this.fetchQuestion()
         })
