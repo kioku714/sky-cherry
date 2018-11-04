@@ -16,15 +16,9 @@ function create(req, res, next) {
     });
 
     User.get(receiveUserId)
-        .then((user) => {
-            req.body.reqreceiveUser = user;
-        })
-        .then(() => {
-            like.save()
-                .then(() => {
-                    next();
-                });
-        })
+        .then((user) => req.body.reqreceiveUser = user)
+        .then(() => like.save())
+        .then(() => next())
         .catch(e => next(e));
 }
 

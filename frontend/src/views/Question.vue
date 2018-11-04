@@ -180,8 +180,7 @@ export default {
       // Computed prop used as the v-model of this component
       get () {
         return {
-          text: this.text.trim(),
-          checked: checked
+          text: this.text.trim()
         }
       },
       set (val) {
