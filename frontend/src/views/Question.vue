@@ -25,7 +25,7 @@
       <b-col>
         <h3 class="likes text-right">
           <div v-if="question.createdBy[0]._id !== signInUserId" >
-            <b-link v-on:click="clickedLike(question._id, question.createdBy[0]._id)"><i class="fa fa-heart" /> {{ question.likes.length }}</b-link>
+            <b-link v-on:click="clickLike(question._id, question.createdBy[0]._id, 'Q')"><i class="fa fa-heart" /> {{ question.likes.length }}</b-link>
           </div>
           <div v-else>
             <i class="fa fa-heart" /> {{ question.likes.length }}
@@ -113,7 +113,7 @@
           <b-col>
             <h3 class="likes text-right">
               <div v-if="answer.createdBy._id !== signInUserId" >
-                <b-link v-on:click="clickedLike(answer._id, answer.createdBy._id)"><i class="fa fa-heart" /> {{ answer.likes.length }}</b-link>
+                <b-link v-on:click="clickLike(answer._id, answer.createdBy._id, 'A')"><i class="fa fa-heart" /> {{ answer.likes.length }}</b-link>
               </div>
               <div v-else>
                 <i class="fa fa-heart" /> {{ answer.likes.length }}
@@ -219,7 +219,7 @@ export default {
           this.signInUserId = this.$session.get('user-id')
           this.form.createdBy = this.$session.get('user-id')
           this.form.question = this.question._id
-          // console.log(JSON.stringify(this.form))
+          // console.log(JSON.stringify(this.question))
         })
     },
     createAnswer () {
@@ -291,13 +291,37 @@ export default {
         return ''
       }
     },
-    clickedLike (questionOrAnswerId, questionOrAnswerCreatedBy) {
+    clickLike (questionOrAnswerId, questionOrAnswerCreatedBy, type) {
+      if (this.isAlredyClickLike(type)) {
+        alert('이미 좋아요를 눌렀습니다.')
+        return
+      }
       this.form.questionOrAnswer = questionOrAnswerId
       this.form.questionOrAnswerCreatedBy = questionOrAnswerCreatedBy
       this.$http.post('/api/likes', this.form)
         .then((response) => {
           this.fetchQuestion()
         })
+    },
+    isAlredyClickLike (type) {
+      var clickedUserId = ''
+      var self = this
+      // 이미 좋아요를 누른 사용자인지 체크
+      if (type === 'Q') {
+        clickedUserId = this.question.likes.filter(function (like) {
+          return self.signInUserId === like.createdBy
+        })
+      } else {
+        this.question.answers.some(answer => {
+          if (clickedUserId.length !== 0) return false
+
+          clickedUserId = answer.likes.filter(function (like) {
+            return self.signInUserId === like
+          })
+        })
+      }
+
+      return clickedUserId.length !== 0
     }
   }
 }
