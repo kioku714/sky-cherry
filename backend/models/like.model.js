@@ -48,9 +48,9 @@ LikeSchema.statics = {
         .populate('createdBy')
         .populate({
           path: 'questionOrAnswer',
-          populate: { path: 'createdBy' }
+          populate: [{ path: 'createdBy' }, { path: 'question' }]
         })
-        .sort({ createdAt: 1 })
+        .sort({ createdAt: -1 })
         .skip(+skip)
         .limit(+limit)
         .exec();
