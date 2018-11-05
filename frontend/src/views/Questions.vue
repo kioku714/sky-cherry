@@ -51,6 +51,7 @@
 
 <script>
 import InfiniteLoading from 'vue-infinite-loading'
+import striptags from 'striptags'
 
 export default {
   name: 'Questions',
@@ -80,7 +81,7 @@ export default {
         return this.listItems
       }
       return this.questions.filter(question => {
-        return question.title.toLowerCase().includes(this.search.toLowerCase()) || question.description.toLowerCase().includes(this.search.toLowerCase()) || question.createdBy[0].name.toLowerCase().includes(this.search.toLowerCase())
+        return question.title.toLowerCase().includes(this.search.toLowerCase()) || striptags(question.description).toLowerCase().includes(this.search.toLowerCase()) || question.createdBy[0].name.toLowerCase().includes(this.search.toLowerCase())
       })
     }
   },
@@ -118,6 +119,7 @@ export default {
       this.listItems = this.listItems.concat(temp)
     },
     getDescription (description) {
+      description = striptags(description)
       if (description.length > this.maxDescriptionLength) {
         return description.substr(0, this.maxDescriptionLength) + '...'
       }
