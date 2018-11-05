@@ -20,7 +20,7 @@ router.route('/:userId')
   
   router.route('/:userId/tokens')
   // GET /api/users/:userId/tokens - Get user tokens
-  .get((req, res, next) => contractCtrl.load(req, res, next), contractCtrl.getUserTokens)
+  .get(contractCtrl.getUserTokens)
 
 // Load user when API with userId route parameter is hit
 router.param('userId', userCtrl.load);

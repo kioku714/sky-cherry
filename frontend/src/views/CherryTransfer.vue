@@ -43,6 +43,9 @@
               </div>
             </b-tab>
             <b-tab title="Transfer">
+              <div class="text-center">
+                <b-button class="transfer-button" @click="sendTx()">Send</b-button>
+              </div>
             </b-tab>
             <b-tab title="History">
               <c-table sm="9" ref="table" v-if="receipts.length > 0" striped :rows="receipts" :columns="receiptFields" caption="<i class='fa fa-align-justify'></i> Transfer Results"></c-table>
@@ -156,6 +159,15 @@ export default {
       this.$http.get('/api/contracts/receipts')
         .then((response) => {
           this.receipts = response.data.reverse()
+        })
+    },
+    sendTx () {
+      var request = {
+        token: '220'
+      }
+      this.$http.post('/api/contracts/tokenExchange', request)
+        .then((response) => {
+          
         })
     }
   }
