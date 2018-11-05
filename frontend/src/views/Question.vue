@@ -213,7 +213,6 @@ export default {
         .then((response) => {
           this.question = response.data
           this.signInUserId = this.$session.get('user-id')
-          this.form.question = this.question._id
           // console.log(JSON.stringify(this.question))
         })
     },
@@ -292,7 +291,7 @@ export default {
     likeQuestion (questionId) {
       var self = this
       var clickUserId = this.question.likes.filter(function (like) {
-        return self.signInUserId === like.createdBy
+        return like.createdBy === self.signInUserId
       })
       if (clickUserId.length !== 0) {
         alert('이미 좋아요를 누르셨어요.')
@@ -306,8 +305,8 @@ export default {
     likeAnswer (answerId) {
       var answer = this.question.answers.find(x => x._id === answerId)
       var self = this
-      var clickUserId = answer.likes.filter(function (like) {
-        return self.signInUserId === like
+      var clickUserId = answer.likes.filter(function (_id) {
+        return _id === self.signInUserId
       })
       if (clickUserId.length !== 0) {
         alert('이미 좋아요를 누르셨어요.')
