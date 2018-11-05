@@ -76,7 +76,7 @@ export default {
   },
   computed: {
     filteredList () {
-      if (this.search.length == 0) {
+      if (this.search.length === 0) {
         return this.listItems
       }
       return this.questions.filter(question => {

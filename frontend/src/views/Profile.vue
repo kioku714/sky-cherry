@@ -7,7 +7,7 @@
             <p class="text-center"><strong>{{ profile.name }}</strong></p>
           </div>
           <div>
-            <p class="text-center">LV <strong>{{ profile.level }}</strong> / SI : <strong>{{ profile.si }}</strong></p>
+            <p class="text-center">LV: <strong>{{ profile.level }}</strong> / SI : <strong>{{ profile.si }}</strong></p>
             <p class="text-center">Cherry : <strong>{{ tokens }}</strong></p>
             <p class="text-center">Questions : <strong>{{ questions.length }}</strong></p>
             <p class="text-center">Answers : <strong>{{ answers.length }}</strong></p>
@@ -135,9 +135,9 @@
               </b-list-group>
               <b-list-group v-for="question in questions" :key="question.id" flush>
                 <b-list-group-item>
-                  "<b-link :to="{ name: '질문 상세', params: { questionId: question._id }}">{{ question.title }}</b-link>"
-                  <span class="text-muted">{{ getDescription(question.description) }}<b-link v-show="question.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: question._id }}">more</b-link>
-                  </span> <span class="text-warning">{{ $moment.utc(question.createdAt).local().fromNow() }}</span>
+                  <b-link :to="{ name: '질문 상세', params: { questionId: question._id }}">{{ question.title }}</b-link>
+                  <span class="text-muted">{{ getDescription(question.description) }}<b-link v-show="question.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: question._id }}">more</b-link></span>
+                  <span class="text-warning">{{ $moment.utc(question.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
             </b-tab>
@@ -149,7 +149,9 @@
               </b-list-group>
               <b-list-group v-for="answer in answers" :key="answer.id" flush>
                 <b-list-group-item>
-                    "{{ answer.question.title }}" <span class="text-muted" v-readMore:50="answer.description"></span> <span class="text-warning">{{ $moment.utc(answer.createdAt).local().fromNow() }}</span>
+                  <b-link :to="{ name: '질문 상세', params: { questionId: answer.question._id }}">{{ answer.question.title }}</b-link>
+                  <span class="text-muted">{{ getDescription(answer.description) }}<b-link v-show="answer.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: answer.question._id }}">more</b-link></span>
+                  <span class="text-warning">{{ $moment.utc(answer.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
             </b-tab>
@@ -160,11 +162,17 @@
                 </b-list-group-item>
               </b-list-group>
               <b-list-group v-for="like in likes" :key="like.id" flush>
-                <b-list-group-item v-if="like.onModel === 'Question'">
-                    <span class="text-success">{{ like.on.createdBy.name }}</span><span class="text-muted">님의 질문을 좋아합니다.</span>"{{ like.on.title }}"<span class="text-muted" v-readMore:50="like.on.description"></span><span class="text-warning">{{ $moment.utc(like.createdAt).local().fromNow() }}</span>
+                <b-list-group-item v-if="like.questionOrAnswerModel === 'Question'">
+                    <span class="text-success">{{ like.questionOrAnswer.createdBy.name }}</span><span class="text-muted">님의 질문을 좋아합니다.</span>
+                    <b-link :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer._id }}">"{{ like.questionOrAnswer.title }}"</b-link>
+                    <span class="text-muted">{{ getDescription(like.questionOrAnswer.description) }}<b-link v-show="like.questionOrAnswer.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer._id }}">more</b-link></span>
+                    <span class="text-warning">{{ $moment.utc(like.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
                 <b-list-group-item v-else>
-                    <span class="text-success">{{ like.on.createdBy.name }}</span><span class="text-muted">님의 답변을 좋아합니다.</span>"{{ like.on.qustion.title }}"<span class="text-muted" v-readMore:50="like.on.description"></span><span class="text-warning">{{ $moment.utc(like.createdAt).local().fromNow() }}</span>
+                    <span class="text-success">{{ like.questionOrAnswer.createdBy.name }}</span><span class="text-muted">님의 답변을 좋아합니다.</span>
+                    <b-link :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer.question._id }}">"{{ like.questionOrAnswer.question.title }}"</b-link>
+                    <span class="text-muted">{{ getDescription(like.questionOrAnswer.description) }}<b-link v-show="like.questionOrAnswer.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer.question._id }}">more</b-link></span>
+                    <span class="text-warning">{{ $moment.utc(like.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
             </b-tab>
@@ -199,6 +207,7 @@
 </template>
 
 <script>
+import striptags from 'striptags'
 
 export default {
   name: 'Profile',
@@ -240,6 +249,7 @@ export default {
   },
   methods: {
     getDescription (description) {
+      description = striptags(description)
       if (description.length > this.maxDescriptionLength) {
         return description.substr(0, this.maxDescriptionLength) + '...'
       }
@@ -312,7 +322,7 @@ export default {
         }
       })
         .then((response) => {
-          this.likes = response.data
+          this.logs = response.data
         })
     },
     updateProfile () {
