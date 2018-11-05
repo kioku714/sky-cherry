@@ -20,17 +20,17 @@
     </div>
     <b-row>
       <b-col sm="10" cols="9">
-        <h1>{{ question.title }}</h1>
+        <h3>{{ question.title }}</h3>
       </b-col>
       <b-col>
-        <h1 class="likes text-right">
+        <h3 class="likes text-right">
           <div v-if="question.createdBy[0]._id !== signInUserId" >
-            <b-link v-on:click="likeQuestion(question._id)">♥ {{ question.likes.length }}</b-link>
+            <b-link v-on:click="likeQuestion(question._id)"><i class="fa fa-heart" /> {{ question.likes.length }}</b-link>
           </div>
           <div v-else>
-            ♥ {{ question.likes.length }}
+            <i class="fa fa-heart" /> {{ question.likes.length }}
           </div>
-        </h1>
+        </h3>
       </b-col>
     </b-row>
     <hr>
@@ -95,7 +95,7 @@
       </div>
     </div>
     <hr>
-    <h1 class="text-center">{{ question.answers.length }} ANSWERS</h1>
+    <h2 class="text-center">{{ question.answers.length }} ANSWERS</h2>
     <b-list-group v-if="question.answers.length > 0" flush>
       <b-list-group-item v-for="answer in question.answers" :key="answer._id">
         <b-row>
@@ -111,14 +111,14 @@
             {{ $moment.utc(answer.createdAt).local().fromNow() }} / SI: {{ answer.createdBy.si}}
           </b-col>
           <b-col>
-            <h1 class="likes text-right">
+            <h3 class="likes text-right">
               <div v-if="answer.createdBy._id !== signInUserId" >
-                <b-link v-on:click="likeAnswer(answer._id)">♥ {{ answer.likes.length }}</b-link>
+                <b-link v-on:click="likeAnswer(answer._id)"><i class="fa fa-heart" /> {{ answer.likes.length }}</b-link>
               </div>
               <div v-else>
-                ♥ {{ answer.likes.length }}
+                <i class="fa fa-heart" /> {{ answer.likes.length }}
               </div>
-            </h1>
+            </h3>
           </b-col>
         </b-row>
         <b-row class="answer-description">
@@ -152,7 +152,7 @@
     </b-list-group>
     <div v-if="question.createdBy[0]._id !== signInUserId" >
       <hr>
-      <h1 class="text-center">YOUR ANSWER</h1>
+      <h2 class="text-center">YOUR ANSWER</h2>
       <vue-editor v-model="form.description"></vue-editor>
       <div class="text-center">
         <b-button variant="success" class="button-comment" @click="createAnswer()">Post Your Answer</b-button>
@@ -180,8 +180,7 @@ export default {
       // Computed prop used as the v-model of this component
       get () {
         return {
-          text: this.text.trim(),
-          checked: checked
+          text: this.text.trim()
         }
       },
       set (val) {
@@ -199,8 +198,7 @@ export default {
         answers: []
       },
       form: {
-        description: '',
-        createdBy: ''
+        description: ''
       }
     }
   },
@@ -215,6 +213,7 @@ export default {
         .then((response) => {
           this.question = response.data
           this.signInUserId = this.$session.get('user-id')
+          // console.log(JSON.stringify(this.question))
         })
     },
     createAnswer () {
@@ -290,12 +289,29 @@ export default {
       }
     },
     likeQuestion (questionId) {
+      var self = this
+      var clickUserId = this.question.likes.filter(function (like) {
+        return like.createdBy === self.signInUserId
+      })
+      if (clickUserId.length !== 0) {
+        alert('이미 좋아요를 누르셨어요.')
+        return
+      }
       this.$http.post('/api/likes', {questionId: questionId})
         .then((response) => {
           this.fetchQuestion()
         })
     },
     likeAnswer (answerId) {
+      var answer = this.question.answers.find(x => x._id === answerId)
+      var self = this
+      var clickUserId = answer.likes.filter(function (_id) {
+        return _id === self.signInUserId
+      })
+      if (clickUserId.length !== 0) {
+        alert('이미 좋아요를 누르셨어요.')
+        return
+      }
       this.$http.post('/api/likes', {answerId: answerId})
         .then((response) => {
           this.fetchQuestion()
