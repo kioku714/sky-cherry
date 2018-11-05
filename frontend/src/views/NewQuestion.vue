@@ -176,7 +176,9 @@ export default {
       obj.addTag()
     },
     getSubFieldItems (mainField) {
-      return this.$store.state.fieldItems.find(x => x.mainFieldValue === mainField).subFields
+      var subFields = this.$store.state.fieldItems.find(x => x.mainFieldValue === mainField).subFields
+      this.form.subField = subFields[0].value
+      return subFields
     }
   }
 }
