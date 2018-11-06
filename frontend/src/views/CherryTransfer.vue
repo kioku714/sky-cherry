@@ -43,8 +43,30 @@
               </div>
             </b-tab>
             <b-tab title="Transfer">
+              <h4 class="text-center transfer-title">TRANSFER GATEWAY</h4>
+              <div class="col-sm-6 transfer-content">
+                <b-row class="text-center">
+                  <b-col sm="4" cols="4">
+                    <div><img src="/static/img/logo-symbol.png" class="trasfer-cherry"></div>
+                    <div class="transfer-text">{{ tokens }} CHERRY</div>
+                  </b-col>
+                  <b-col sm="4" cols="4">
+                    <div><img src="/static/img/arrow.png" class="trasfer-arrow"></div>
+                  </b-col>
+                  <b-col sm="4" cols="4">
+                    <div><img src="/static/img/money.png" class="trasfer-money"></div>
+                    <div class="transfer-text">{{ tokens / 2200 }} ETH</div>
+                  </b-col>
+                </b-row>
+              </div>
+              <b-row class="text-center">
+                {{ profile.keyStore.address }}
+              </b-row>
+              <b-row class="text-center">
+                {{ coins }}
+              </b-row>
               <div class="text-center">
-                <b-button class="transfer-button" @click="sendTx()">Send</b-button>
+                <b-button class="transfer-button" @click="sendTokenExchange()">Preview</b-button>
               </div>
             </b-tab>
             <b-tab title="History">
@@ -69,6 +91,7 @@ export default {
     }
     this.fetchProfile()
     this.fetchTokens()
+    this.fetchCoins()
     this.fetchQuestions()
     this.fetchAnswers()
     this.fetchLikes()
@@ -87,6 +110,7 @@ export default {
         description: ''
       },
       tokens: 0,
+      coins: 0,
       receipts: [],
       receiptFields: [
         {key: 'eventFrom', label: '발신자'},
@@ -116,6 +140,12 @@ export default {
       this.$http.get('/api/users/' + this.$route.params.userId + '/tokens')
         .then((response) => {
           this.tokens = response.data.tokens
+        })
+    },
+    fetchCoins () {
+      this.$http.get('/api/users/' + this.$route.params.userId + '/coins')
+        .then((response) => {
+          this.coins = response.data.coins
         })
     },
     fetchQuestions () {
@@ -161,13 +191,13 @@ export default {
           this.receipts = response.data.reverse()
         })
     },
-    sendTx () {
+    sendTokenExchange () {
       var request = {
-        token: '220'
+        token: this.tokens
       }
       this.$http.post('/api/contracts/tokenExchange', request)
         .then((response) => {
-          
+          alert('토큰 전송 완료')
         })
     }
   }

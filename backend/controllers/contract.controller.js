@@ -185,7 +185,7 @@ function approval(req, res, next) {
 
 function getUserCoins(req, res, next) {
 	web3.eth.getBalance(req.user.keyStore.address, function(err, result) {
-		return res.send({"coins" : result});
+		return res.send({"coins" : web3.utils.fromWei(result)});
 	});
 }
 
