@@ -44,27 +44,27 @@
             </b-tab>
             <b-tab title="Transfer">
               <h4 class="text-center transfer-title">TRANSFER GATEWAY</h4>
-              <div class="col-sm-6 transfer-content">
-                <b-row class="text-center">
-                  <b-col sm="4" cols="4">
-                    <div><img src="/static/img/logo-symbol.png" class="trasfer-cherry"></div>
-                    <div class="transfer-text">{{ tokens }} CHERRY</div>
-                  </b-col>
-                  <b-col sm="4" cols="4">
-                    <div><img src="/static/img/arrow.png" class="trasfer-arrow"></div>
-                  </b-col>
-                  <b-col sm="4" cols="4">
-                    <div><img src="/static/img/money.png" class="trasfer-money"></div>
-                    <div class="transfer-text">{{ tokens / 2200 }} ETH</div>
-                  </b-col>
-                </b-row>
+              <div class="d-flex">
+                <div class="d-flex flex-column col-4">
+                  <img src="/static/img/logo-symbol.png" class="img-thumbnail w-100">
+                  <div class="align-self-center">{{ tokens }} CHERRY</div>
+                </div>
+                <img src="/static/img/arrow.png" class="img-thumbnail align-self-center col-4">
+                <div class="d-flex flex-column col-4">
+                  <img src="/static/img/ethereum.png" class="img-thumbnail w-100">
+                  <div class="align-self-center">{{ tokens / 2200 }} ETH</div>
+                </div>
               </div>
-              <b-row class="text-center">
-                {{ profile.keyStore.address }}
-              </b-row>
-              <b-row class="text-center">
-                {{ coins }}
-              </b-row>
+              <div class="d-flex flex-column">
+                <div class="d-flex col-12 justify-content-center">
+                  <img src="/static/img/wallet.png" class="img-thumbnail">
+                  <div class="align-self-center col-4 m-1">{{ profile.keyStore.address }}</div>
+                </div>
+                <div class="d-flex col-12 justify-content-center">
+                  <img src="/static/img/ethereum-thumbnail.png" class="img-thumbnail">
+                  <div class="align-self-center col-4 m-1">{{ coins }}</div>
+                </div>
+              </div>
               <div class="text-center">
                 <b-button class="transfer-button" @click="sendTokenExchange()">Preview</b-button>
               </div>
@@ -198,6 +198,8 @@ export default {
       this.$http.post('/api/contracts/tokenExchange', request)
         .then((response) => {
           alert('토큰 전송 완료')
+          this.fetchTokens()
+          this.fetchCoins()
         })
     }
   }
