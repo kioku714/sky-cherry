@@ -1,7 +1,6 @@
 var APIError = require('../helpers/APIError');
 var httpStatus = require('http-status');
 var Like = require('../models/like.model');
-var User = require('../models/user.model');
 var Question = require('../models/question.model');
 var Answer = require('../models/answer.model');
 
@@ -22,12 +21,12 @@ async function create(req, res, next) {
         questionOrAnswer = questionId;
         questionOrAnswerModel = 'Question';
         const question = await Question.get(questionId);
-        req.body.reqreceiveUser = question.createdBy[0];
+        req.body.reqReceiveUser = question.createdBy[0];
     } else if(answerId) {
         questionOrAnswer = answerId;
         questionOrAnswerModel = 'Answer';
         const answer = await Answer.get(answerId);
-        req.body.reqreceiveUser = answer.createdBy;
+        req.body.reqReceiveUser = answer.createdBy;
     } else {
         next(new APIError('answerId or questionId required.', httpStatus.INTERNAL_SERVER_ERROR, true));
     }

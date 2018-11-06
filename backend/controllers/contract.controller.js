@@ -127,7 +127,7 @@ async function sendMultipleTokens(req, res, next) {
     const clickTokens = web3.utils.toWei('1', 'ether');
     const clickData = contract.methods.transfer(clickTo, clickTokens).encodeABI();
     // 좋아요를 받은 사람 +2
-    const receiveTo = req.body.reqreceiveUser.keyStore.address;
+    const receiveTo = req.body.reqReceiveUser.keyStore.address;
     const receiveTokens = web3.utils.toWei('2', 'ether');
 	const receiveData = contract.methods.transfer(receiveTo, receiveTokens).encodeABI();
 	var walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, password);
