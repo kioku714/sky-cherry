@@ -72,7 +72,7 @@
             </div>
           <div class="form-group row">
             <div class="col-md-12">
-              <textarea class="form-control" v-model="form.description" rows="9" placeholder="질문을 입력하세요."></textarea>
+              <vue-editor v-model="form.description" rows="9" placeholder="질문을 입력하세요."></vue-editor>
             </div>
           </div>
           <div class="form-group row">
@@ -99,11 +99,13 @@
 
 <script>
 import VueTagsInput from '@johmun/vue-tags-input'
+import { VueEditor } from 'vue2-editor'
 
 export default {
   name: 'NewQuestion',
   components: {
-    VueTagsInput
+    VueTagsInput,
+    VueEditor
   },
   created () {
     this.fetchProfile()
@@ -176,7 +178,9 @@ export default {
       obj.addTag()
     },
     getSubFieldItems (mainField) {
-      return this.$store.state.fieldItems.find(x => x.mainFieldValue === mainField).subFields
+      var subFields = this.$store.state.fieldItems.find(x => x.mainFieldValue === mainField).subFields
+      this.form.subField = subFields[0].value
+      return subFields
     }
   }
 }

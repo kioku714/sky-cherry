@@ -11,9 +11,7 @@ const erc20 = new web3.eth.Contract(JSON.parse(config.contractABI), config.contr
 var nonces = {};
 
 async function getTotalTokens(req, res) {
-	const contract = erc20;
-
-	contract.methods.totalSupply().call()
+	erc20.methods.totalSupply().call()
 	.then(function (balance) {
 		return res.send({"tokens" : web3.utils.fromWei(balance)});
 	});
@@ -46,12 +44,6 @@ async function getReceiptList(req, res) {
 		}
 		return res.send(eventsArray);
 	})
-}
-
-function load(req, res, next, id) {
-  	// var erc20 = new web3.eth.Contract(JSON.parse(config.contractABI), id);
-	// req.contract = erc20;
-    return next();
 }
 
 async function _sendTx(walletInfo, to, data, value) {
@@ -193,7 +185,7 @@ function approval(req, res, next) {
 
 function getUserCoins(req, res, next) {
 	web3.eth.getBalance(req.user.keyStore.address, function(err, result) {
-		return res.send({"coins" : result});
+		return res.send({"coins" : web3.utils.fromWei(result)});
 	});
 }
 
@@ -247,4 +239,16 @@ function sendTokenToSystem(req, res, next) {
 	}
 }
 
-module.exports = { getTotalTokens, getReceiptList, load, sendTokens, sendMultipleTokens, approval, getUserTokens, sendCoins, getUserCoins, getUserTokensAllowance, transfer, sendTokenToSystem };
+async function tokenExchange(req, res, next) {
+	try {
+		var ether = String(req.body.token / 2200)
+		await sendTokenToSystem(req, res, next);
+
+		var walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, config.commonPassword);
+		res.send(await _sendTx(walletInfo, req.decoded.walletInfo.address, '0x00', web3.utils.toWei(ether, 'ether')))
+	} catch (e) {
+		next(new APIError(e.message, httpStatus.INTERNAL_SERVER_ERROR, true));
+	}
+}
+
+module.exports = { getTotalTokens, getReceiptList, sendTokens, sendMultipleTokens, approval, getUserTokens, sendCoins, getUserCoins, getUserTokensAllowance, transfer, sendTokenToSystem, tokenExchange };
