@@ -81,7 +81,7 @@ export default {
         return this.listItems
       }
       return this.questions.filter(question => {
-        return question.title.toLowerCase().includes(this.search.toLowerCase()) || striptags(question.description).toLowerCase().includes(this.search.toLowerCase()) || question.createdBy[0].name.toLowerCase().includes(this.search.toLowerCase())
+        return question.title.toLowerCase().includes(this.search.toLowerCase()) || striptags(question.description).toLowerCase().includes(this.search.toLowerCase()) || question.createdBy[0].name.toLowerCase().includes(this.search.toLowerCase()) || question.tags.includes(this.search.toLowerCase())
       })
     }
   },
