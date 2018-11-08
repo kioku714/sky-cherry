@@ -6,10 +6,10 @@
           <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
         </b-col>
         <b-col>
-          <a class="username-link" v-bind:href="'/profiles/' + question.createdBy[0]._id">
-            {{ question.createdBy[0].name }}
+          <a class="username-link" v-bind:href="'/profiles/' + question.createdBy._id">
+            {{ question.createdBy.name }}
           </a>
-          <small>{{ question.createdBy[0].level }} Cherry</small>
+          <small>{{ question.createdBy.level }} Cherry</small>
           <br>
           {{ $moment.utc(question.createdAt).local().fromNow() }}
         </b-col>
@@ -24,7 +24,7 @@
       </b-col>
       <b-col>
         <h3 class="likes text-right">
-          <div v-if="question.createdBy[0]._id !== signInUserId" >
+          <div v-if="question.createdBy._id !== signInUserId" >
             <b-link v-on:click="likeQuestion(question._id)"><i class="fa fa-heart" /> {{ question.likes.length }}</b-link>
           </div>
           <div v-else>
@@ -41,7 +41,7 @@
           <label>성별/나이:</label>
         </b-col>
         <b-col sm="3" cols="6">
-          <label>{{ "male" === question.createdBy[0].gender ? "남" : "여"}}/{{ getAge() }}</label>
+          <label>{{ "male" === question.createdBy.gender ? "남" : "여"}}/{{ getAge() }}</label>
         </b-col>
         <b-col sm="2" cols="6">
           <label>직업:</label>
@@ -95,9 +95,9 @@
       </div>
     </div>
     <hr>
-    <h2 class="text-center">{{ question.answers.length }} ANSWERS</h2>
-    <b-list-group v-if="question.answers.length > 0" flush>
-      <b-list-group-item v-for="answer in question.answers" :key="answer._id">
+    <h2 class="text-center">{{ answers.length }} ANSWERS</h2>
+    <b-list-group v-if="answers.length > 0" flush>
+      <b-list-group-item v-for="answer in answers" :key="answer._id">
         <b-row>
           <b-col sm="1" cols="2">
             <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
@@ -150,7 +150,7 @@
         </div>
       </b-list-group-item>
     </b-list-group>
-    <div v-if="question.createdBy[0]._id !== signInUserId" >
+    <div v-if="question.createdBy._id !== signInUserId" >
       <hr>
       <h2 class="text-center">YOUR ANSWER</h2>
       <vue-editor v-model="form.description"></vue-editor>
@@ -171,6 +171,7 @@ export default {
   },
   created () {
     this.fetchQuestion()
+    this.fetchAnswers()
   },
   computed: {
     textTrimed () {
@@ -197,6 +198,7 @@ export default {
         likes: [],
         answers: []
       },
+      answers: [],
       form: {
         description: ''
       }
@@ -214,6 +216,18 @@ export default {
           this.question = response.data
           this.signInUserId = this.$session.get('user-id')
           // console.log(JSON.stringify(this.question))
+        })
+    },
+    fetchAnswers () {
+      this.answers = []
+      this.$http.get('/api/questions/' + this.$route.params.questionId + '/answers', {
+      // this.$http.get('/api/answers', {
+        // params: {
+        //   createdBy: this.$route.params.userId
+        // }
+      })
+        .then((response) => {
+          this.answers = response.data
         })
     },
     createAnswer () {
@@ -249,7 +263,7 @@ export default {
       }
     },
     getAge () {
-      var ageDifMs = Date.now() - new Date(this.question.createdBy[0].birthday).getTime()
+      var ageDifMs = Date.now() - new Date(this.question.createdBy.birthday).getTime()
       var ageDate = new Date(ageDifMs) // miliseconds from epoch
       return Math.abs(ageDate.getUTCFullYear() - 1970)
     },
@@ -303,7 +317,7 @@ export default {
         })
     },
     likeAnswer (answerId) {
-      var answer = this.question.answers.find(x => x._id === answerId)
+      var answer = this.answers.find(x => x._id === answerId)
       var self = this
       var clickUserId = answer.likes.filter(function (_id) {
         return _id === self.signInUserId
