@@ -1,7 +1,7 @@
 <template>
   <div class="animated fadeIn">
     <div class="col-sm-12">
-      <div class="row">
+      <div class="d-flex">
         <b-carousel id="carousel1"
                   style="z-index:0;margin: 0 auto;position: relative;max-width: 500px;"
                   controls
@@ -11,11 +11,8 @@
           <div v-for="item in cherryCard.coverflow" :key="item">
               <b-carousel-slide v-bind:img-src="item"/>
           </div>
-          <div class="photo_info">
-            <span class="source">Imagetoday</span>
-            <span class="num_page">
-              {{ slide + 1 }} / {{ cherryCard.coverflow.length }}
-            </span>
+          <div class="d-flex justify-content-end">
+            Imagetoday {{ slide + 1 }} / {{ cherryCard.coverflow.length }}
           </div>
         </b-carousel>
       </div>

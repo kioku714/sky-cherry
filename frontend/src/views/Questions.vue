@@ -1,39 +1,33 @@
 <template>
   <div class="animated fadeIn">
-    <b-form-input class="search-input" type="text" v-model="search" placeholder="Search for questions"></b-form-input>
-    <div v-for="question in filteredList" class="movie" :key="question._id">
+    <b-form-input class="mb-4" type="text" v-model="search" placeholder="Search for questions"></b-form-input>
+    <div v-for="question in filteredList" :key="question._id">
       <div class="new-question grid-item">
         <div class="content">
           <!-- 사용자 닉네임, 질문 생성 시간  -->
-          <span class="question-owner">
+          <span class="question-owner text-muted">
             <a class="username-link" v-bind:href="'/profiles/' + question.createdBy[0]._id">{{ question.createdBy[0].name }}</a>
             {{ $moment.utc(question.createdAt).local().fromNow() }}
           </span>
           <!-- 질문 제목 -->
-          <h4 class="question-header">
-            <a v-bind:href="'/question/' + question._id">{{ question.title }}</a>
+          <h4 class="mt-2">
+            <a class="text-body" v-bind:href="'/question/' + question._id">{{ question.title }}</a>
           </h4>
           <!-- 질문 상세 내용, more 링크 -->
-          <div class="question-body-container">
-            <p class="question-body">
-              {{ getDescription(question.description) }}
-              <a v-show="question.description.length > maxDescriptionLength" class="more-link" v-bind:href="'/question/' + question._id">more</a>
-            </p>
+          <div class="mt-2">
+            {{ getDescription(question.description) }}
+            <a v-show="question.description.length > maxDescriptionLength" class="more-link" v-bind:href="'/question/' + question._id">more</a>
           </div>
           <!-- Tags -->
-          <div class="tags-container">
-            <div class="questions-tag" v-for="tag in question.tags" :key="tag">
+          <div class="d-flex">
+            <div class="mr-1" v-for="tag in question.tags" :key="tag">
               #{{ tag }}
             </div>
           </div>
           <!-- 좋아요, 코멘트 -->
-          <div class="d-flex">
-            <div class="question-icon-container karma-icon-container">
-              <i class="icon-heart icons font-1xl d-block"> {{ question.likes.length }}</i>
-            </div>
-            <div class="question-icon-container answer-icon-container">
-              <i class="icon-menu icons font-1xl d-block"> {{ question.answers.length }}</i>
-            </div>
+          <div class="d-flex mt-3">
+            <i class="icon-heart icons font-1xl d-block mr-3 text-danger"> {{ question.likes.length }}</i>
+            <i class="icon-menu icons font-1xl d-block text-muted"> {{ question.answers.length }}</i>
           </div>
           <hr>
         </div>
