@@ -43,8 +43,8 @@ LikeSchema.statics = {
      * @param {number} limit - Limit number of likes to be returned.
      * @returns {Promise<Like[]>}
      */
-    list({ skip = 0, limit = 50 } = {}) {
-      return this.find()
+    list({ skip = 0, limit = 50, q = {} } = {}) {
+      return this.find(q)
         .populate('createdBy')
         .populate({
           path: 'questionOrAnswer',

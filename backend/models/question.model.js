@@ -35,16 +35,6 @@ const QuestionSchema = new mongoose.Schema({
         ref: 'SkyCherryUser',
         required: true
     },
-    answers: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Answer',
-        required: false
-    }],
-    likes: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Like',
-        required: false
-    }],
     occupation: {
         type: String,
         required: false
@@ -97,15 +87,13 @@ QuestionSchema.statics = {
                     from: 'skycherryusers', 
                     localField: 'createdBy', 
                     foreignField: '_id', 
-                    as: 'createdBy' 
+                    as: 'createdBy'
                 }
             },
-            { 
-                $lookup: { 
-                    from: 'likes', 
-                    localField: '_id', 
-                    foreignField: 'questionOrAnswer', 
-                    as: 'likes' 
+            {
+                $unwind: {
+                    path: '$createdBy',
+                    preserveNullAndEmptyArrays: true
                 }
             },
             { 
@@ -118,20 +106,53 @@ QuestionSchema.statics = {
             },
             { 
                 $lookup: { 
-                    from: 'skycherryusers', 
-                    localField: 'answers.createdBy', 
-                    foreignField: '_id', 
-                    as: 'answerUsers' 
+                    from: 'likes', 
+                    localField: '_id', 
+                    foreignField: 'questionOrAnswer', 
+                    as: 'likes' 
                 }
             },
-            { 
-                $lookup: { 
-                    from: 'likes', 
-                    localField: 'answers._id', 
-                    foreignField: 'questionOrAnswer', 
-                    as: 'answerLikes' 
-                }
-            }
+            // {
+            //     $unwind: '$answers'
+            // },
+            // { 
+            //     $lookup: { 
+            //         from: 'skycherryusers', 
+            //         localField: 'likes.createdBy', 
+            //         foreignField: '_id', 
+            //         as: 'likes.createdBy' 
+            //     }
+            // },
+            // {
+            //     $unwind: {
+            //         path: '$likes.createdby',
+            //         preserveNullAndEmptyArrays: true
+            //     }
+            // },
+            // { "$project": { 
+            //     'title': 1,
+            //     'description': 1,
+            //     'mainField': 1,
+            //     'subField': 1,
+            //     'createdAt': 1,
+            //     "createdBy": 1,
+            //     // "createdBy": { "$arrayElemAt": [ "$createdBy", 0 ] },
+            //     'occupation': 1,
+            //     'familyType': 1,
+            //     'interest': 1,
+            //     'monthlyIncome': 1,
+            //     'assets': 1,
+            //     'incomeManagement': 1,
+            //     'tags': 1,
+            //     'answers': 1,
+            //     'likes': 1
+            //     // 'likes': {
+            //     //     'createdAt': 1,
+            //     //     'createdBy': { "$arrayElemAt": [ "$createdBy", 0 ] },
+            //     //     'questionOrAnswer': 1,
+            //     //     'questionOrAnswerModel': 1
+            //     // }
+            // }}
         ])
         .sort({ createdAt: -1 })
         .skip(+skip)
@@ -159,6 +180,12 @@ QuestionSchema.statics = {
                     as: 'createdBy' 
                 }
             },
+            {
+                $unwind: {
+                    path: '$createdBy',
+                    preserveNullAndEmptyArrays: true
+                }
+            },
             { 
                 $lookup: { 
                     from: 'likes', 
@@ -174,50 +201,12 @@ QuestionSchema.statics = {
                     foreignField: 'question', 
                     as: 'answers' 
                 }
-            },
-            { 
-                $lookup: { 
-                    from: 'skycherryusers', 
-                    localField: 'answers.createdBy', 
-                    foreignField: '_id', 
-                    as: 'answerUsers' 
-                }
-            },
-            { 
-                $lookup: { 
-                    from: 'likes', 
-                    localField: 'answers._id', 
-                    foreignField: 'questionOrAnswer', 
-                    as: 'answerLikes' 
-                }
             }
         ])
         .exec()
         .then((questions) => {
             if (questions.length > 0) {
                 var question  = questions[0];
-                if ( question.answers.length > 0) {
-                    // 답변 작성자
-                    question.answers.forEach(function(answer, index) {
-                        question.answerUsers.some(function(user) {
-                            if (answer.createdBy.toString() == user._id.toString()) {
-                                answer.createdBy = user;
-                                return false;
-                            }
-                        });
-                    });
-                    // 답변에 좋아요를 누른 user
-                    question.answers.forEach(function(answer) {
-                        question.answerLikes.forEach(function(like) {
-                            if (answer._id.toString() == like.questionOrAnswer.toString()) {
-                                answer.likes.push(like.createdBy);
-                            }
-                        });
-                    });
-                }
-                delete question.answerUsers;
-                delete question.answerLikes;
-                // console.log(JSON.stringify(question));
                 return question;
             }
             const err = new APIError('No such question exists!', httpStatus.NOT_FOUND);
