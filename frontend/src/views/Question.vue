@@ -3,7 +3,12 @@
     <div>
       <b-row>
         <b-col sm="1" cols="2">
-          <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
+          <div v-if="question.createdBy.name === ''">
+            <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
+          </div>
+          <div v-else class="header-icon-text" v-bind:style="{ background: getBgColor(question.createdBy.email) }">
+              {{ question.createdBy.name.substring(0, 1) }}
+          </div>
         </b-col>
         <b-col>
           <a class="username-link" v-bind:href="'/profiles/' + question.createdBy._id">
@@ -100,7 +105,12 @@
       <b-list-group-item v-for="answer in answers" :key="answer._id">
         <b-row>
           <b-col sm="1" cols="2">
-            <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
+            <div v-if="answer.createdBy.name === ''">
+              <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
+            </div>
+            <div v-else class="header-icon-text" v-bind:style="{ background: getBgColor(answer.createdBy.email) }">
+              {{ answer.createdBy.name.substring(0, 1) }}
+            </div>
           </b-col>
           <b-col sm="9" cols="6">
             <a class="username-link" v-bind:href="'/profiles/' + answer.createdBy._id">
@@ -134,7 +144,12 @@
         </b-row>
         <b-row>
           <b-col sm="1" cols="2">
-            <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
+            <div v-if="question.createdBy.name === ''">
+              <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
+            </div>
+            <div v-else class="header-icon-text" v-bind:style="{ background: getBgColor(email) }">
+              {{ name }}
+            </div>
           </b-col>
           <b-col>
             <b-form-textarea id="comment"
@@ -170,6 +185,8 @@ export default {
     VueEditor
   },
   created () {
+    this.name = (this.$session.get('user-name') !== undefined) ? this.$session.get('user-name') : ''
+    this.email = (this.$session.get('user-email') !== undefined) ? this.$session.get('user-email') : ''
     this.fetchQuestion()
     this.fetchAnswers()
   },
@@ -191,6 +208,8 @@ export default {
   },
   data () {
     return {
+      name: '',
+      email: '',
       text: '',
       signInUserId: '',
       question: {
@@ -229,6 +248,29 @@ export default {
         .then((response) => {
           this.answers = response.data
         })
+    },
+    getBgColor (email) {
+      var color = ''
+      switch (email) {
+        case 'test01@cj.net':
+          color = '#6d0592'
+          break
+        case 'test02@cj.net':
+          color = '#026466'
+          break
+        case 'test03@cj.net':
+          color = '#d34836'
+          break
+        case 'test04@cj.net':
+          color = '#ff0084'
+          break
+        case 'test05@cj.net':
+          color = '#1769ff'
+          break
+        default:
+          color = '#ad2552'
+      }
+      return color
     },
     createAnswer () {
       if (this.form.description) {
