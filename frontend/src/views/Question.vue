@@ -239,6 +239,7 @@ export default {
           .then((response) => {
             this.form.description = ''
             this.fetchQuestion()
+            this.fetchAnswers()
           })
       } else {
         alert('답변을 입력해주세요.')
@@ -329,6 +330,7 @@ export default {
       this.$http.post('/api/likes', {answerId: answerId})
         .then((response) => {
           this.fetchQuestion()
+          this.fetchAnswers()
         })
     }
   }
