@@ -74,21 +74,18 @@ async function createAccount(email) {
         keyStore: encryption
     });
 
-    console.log("======================")
-    console.log(user)
-
-    // user.save()
-    //     .then(async(savedUser) => {
-    //         var walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, config.commonPassword);
-    //         var to = savedUser.keyStore.address;
-    //         const tokens = web3.utils.toWei('50', 'ether');
-    //         const coins = web3.utils.toWei('0.01', 'ether');
-    //         var data = contract.methods.transfer(to, tokens).encodeABI();
+    user.save()
+        .then(async(savedUser) => {
+            var walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, config.commonPassword);
+            var to = savedUser.keyStore.address;
+            const tokens = web3.utils.toWei('50', 'ether');
+            const coins = web3.utils.toWei('0.01', 'ether');
+            var data = contract.methods.transfer(to, tokens).encodeABI();
             
-    //         await sendTransaction(walletInfo, config.contractAccount, data, 0);
-    //         await sendTransaction(walletInfo, to, '0x00', coins)
-    //     })
-    //     .catch(e => console.error);
+            await sendTransaction(walletInfo, config.contractAccount, data, 0);
+            await sendTransaction(walletInfo, to, '0x00', coins)
+        })
+        .catch(e => console.error);
 }
 
 async function sendTransaction(walletInfo, to, data, value) {
