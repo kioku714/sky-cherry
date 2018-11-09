@@ -21,7 +21,7 @@ async function create(req, res, next) {
         questionOrAnswer = questionId;
         questionOrAnswerModel = 'Question';
         const question = await Question.get(questionId);
-        req.body.reqReceiveUser = question.createdBy[0];
+        req.body.reqReceiveUser = question.createdBy;
     } else if(answerId) {
         questionOrAnswer = answerId;
         questionOrAnswerModel = 'Answer';

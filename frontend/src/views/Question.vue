@@ -239,6 +239,7 @@ export default {
           .then((response) => {
             this.form.description = ''
             this.fetchQuestion()
+            this.fetchAnswers()
           })
       } else {
         alert('답변을 입력해주세요.')
@@ -319,8 +320,8 @@ export default {
     likeAnswer (answerId) {
       var answer = this.answers.find(x => x._id === answerId)
       var self = this
-      var clickUserId = answer.likes.filter(function (_id) {
-        return _id === self.signInUserId
+      var clickUserId = answer.likes.filter(function (like) {
+        return like.createdBy === self.signInUserId
       })
       if (clickUserId.length !== 0) {
         alert('이미 좋아요를 누르셨어요.')
@@ -329,6 +330,7 @@ export default {
       this.$http.post('/api/likes', {answerId: answerId})
         .then((response) => {
           this.fetchQuestion()
+          this.fetchAnswers()
         })
     }
   }
