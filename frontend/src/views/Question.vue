@@ -14,7 +14,9 @@
           <a class="username-link" v-bind:href="'/profiles/' + question.createdBy._id">
             {{ question.createdBy.name }}
           </a>
-          <small>{{ question.createdBy.level }} Cherry</small>
+          <div v-bind:style="{ color: getLevelColor(question.createdBy.level) }">
+            <small>{{ question.createdBy.level }} Cherry</small>
+          </div>
           <br>
           {{ $moment.utc(question.createdAt).local().fromNow() }}
         </b-col>
@@ -116,7 +118,9 @@
             <a class="username-link" v-bind:href="'/profiles/' + answer.createdBy._id">
               {{ answer.createdBy.name}}
             </a>
-            <small>{{ answer.createdBy.level }} Cherry</small>
+            <div v-bind:style="{ color: getLevelColor(answer.createdBy.level) }">
+              <small>{{ answer.createdBy.level }} Cherry</small>
+            </div>
             <br>
             {{ $moment.utc(answer.createdAt).local().fromNow() }} / SI: {{ answer.createdBy.si}}
           </b-col>
@@ -269,6 +273,23 @@ export default {
           break
         default:
           color = '#ad2552'
+      }
+      return color
+    },
+    getLevelColor (level) {
+      var color = ''
+      switch (level) {
+        case 'Black':
+          color = 'black'
+          break
+        case 'Red':
+          color = 'red'
+          break
+        case 'Green':
+          color = 'green'
+          break
+        default:
+          color = 'blue'
       }
       return color
     },
