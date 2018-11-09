@@ -50,34 +50,45 @@ function createTestUsers() {
 }
 
 async function createAccount(email) {
+    /*
+     * gender, level 결과가 다양하게 나오도록 중복 데이터 입력.
+     */
+    var gender = new Array("male", "female", "male", "female", "male", "female");
+    var level = new Array("Black", "Red", "Green", "Blue", "Black", "Red", "Green", "Blue");
+    // Math.floor(Math.random() * (max - min)) + min
+    var gender_index = Math.floor(Math.random() * (5 - 0)) + 0;
+    var level_index  = Math.floor(Math.random() * (7 - 0)) + 0;
     var name = email.split('@')[0];
     var account = web3.eth.accounts.create();
     var encryption = web3.eth.accounts.encrypt(account.privateKey, config.commonPassword);
     var date = new Date();
-    date.setMonth(date.getMonth() - 12 * 20);
+    var age_random = Math.floor(Math.random() * (45 - 20)) + 20;
+    date.setMonth(date.getMonth() - 12 * age_random);
     const user = new User({
         email: email,
         name: name,
         si: (Math.floor(Math.random() * 20) + 1),
-        gender: 'male',
+        gender: gender[gender_index],
+        level: level[level_index],
         birthday: date,
         keyStore: encryption
     });
 
-    user.save()
-        .then(async(savedUser) => {
-            console.log(savedUser.email);
+    console.log("======================")
+    console.log(user)
 
-            var walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, config.commonPassword);
-            var to = savedUser.keyStore.address;
-            const tokens = web3.utils.toWei('50', 'ether');
-            const coins = web3.utils.toWei('0.01', 'ether');
-            var data = contract.methods.transfer(to, tokens).encodeABI();
+    // user.save()
+    //     .then(async(savedUser) => {
+    //         var walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, config.commonPassword);
+    //         var to = savedUser.keyStore.address;
+    //         const tokens = web3.utils.toWei('50', 'ether');
+    //         const coins = web3.utils.toWei('0.01', 'ether');
+    //         var data = contract.methods.transfer(to, tokens).encodeABI();
             
-            await sendTransaction(walletInfo, config.contractAccount, data, 0);
-            await sendTransaction(walletInfo, to, '0x00', coins)
-        })
-        .catch(e => console.error);
+    //         await sendTransaction(walletInfo, config.contractAccount, data, 0);
+    //         await sendTransaction(walletInfo, to, '0x00', coins)
+    //     })
+    //     .catch(e => console.error);
 }
 
 async function sendTransaction(walletInfo, to, data, value) {
