@@ -5,18 +5,18 @@
       <div class="new-question grid-item">
         <div class="content">
           <!-- 사용자 닉네임, 질문 생성 시간  -->
-          <span class="question-owner text-muted">
-            <a class="username-link" v-bind:href="'/profiles/' + question.createdBy._id">{{ question.createdBy.name }}</a>
+          <span class="question-owner">
+            <a class="text-success" v-bind:href="'/profiles/' + question.createdBy._id">{{ question.createdBy.name }}</a>
             {{ $moment.utc(question.createdAt).local().fromNow() }}
           </span>
           <!-- 질문 제목 -->
-          <h4 class="mt-2">
-            <a class="text-body" v-bind:href="'/question/' + question._id">{{ question.title }}</a>
-          </h4>
+          <h3 class="mt-2">
+            <a class="text-dark" v-bind:href="'/question/' + question._id">{{ question.title }}</a>
+          </h3>
           <!-- 질문 상세 내용, more 링크 -->
           <div class="mt-2">
             {{ getDescription(question.description) }}
-            <a v-show="question.description.length > maxDescriptionLength" class="more-link" v-bind:href="'/question/' + question._id">more</a>
+            <a v-show="question.description.length > maxDescriptionLength" class="text-info" v-bind:href="'/question/' + question._id">more</a>
           </div>
           <!-- Tags -->
           <div class="d-flex">
