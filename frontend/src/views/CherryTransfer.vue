@@ -44,28 +44,28 @@
             </b-tab>
             <b-tab title="Transfer">
               <h4 class="text-center transfer-title">TRANSFER GATEWAY</h4>
-              <div class="d-flex">
-                <div class="d-flex flex-column col-4">
-                  <img src="/static/img/logo-symbol.png" class="img-thumbnail w-100">
+              <div class="d-flex justify-content-center">
+                <div class="d-flex flex-column col-2">
+                  <img src="/static/img/logo-symbol.png" class="w-100">
                   <div class="align-self-center">{{ tokens }} CHERRY</div>
                 </div>
-                <img src="/static/img/arrow.png" class="img-thumbnail align-self-center col-4">
-                <div class="d-flex flex-column col-4">
-                  <img src="/static/img/ethereum.png" class="img-thumbnail w-100">
+                <img src="/static/img/arrow.png" class="align-self-center col-2">
+                <div class="d-flex flex-column col-2">
+                  <img src="/static/img/ethereum.png" class="w-100">
                   <div class="align-self-center">{{ tokens / 2200 }} ETH</div>
                 </div>
               </div>
-              <div class="d-flex flex-column">
+              <div class="d-flex flex-column mt-5">
                 <div class="d-flex col-12 justify-content-center">
-                  <img src="/static/img/wallet.png" class="img-thumbnail">
+                  <img src="/static/img/wallet.png">
                   <div class="align-self-center col-4 m-1">{{ profile.keyStore.address }}</div>
                 </div>
                 <div class="d-flex col-12 justify-content-center">
-                  <img src="/static/img/ethereum-thumbnail.png" class="img-thumbnail">
+                  <img src="/static/img/ethereum-thumbnail.png">
                   <div class="align-self-center col-4 m-1">{{ coins }}</div>
                 </div>
               </div>
-              <div class="text-center">
+              <div class="text-center mt-5">
                 <b-button class="transfer-button" @click="sendTokenExchange()">Preview</b-button>
               </div>
             </b-tab>
