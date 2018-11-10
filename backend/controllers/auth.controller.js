@@ -28,7 +28,9 @@ function login(req, res, next) {
       
       return res.json({
         token,
-        _id: user._id
+        _id: user._id,
+        name: user.name,
+        email: user.email
       });
     })
     .catch((e) => {

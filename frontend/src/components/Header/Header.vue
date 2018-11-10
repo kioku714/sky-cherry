@@ -20,7 +20,7 @@
       </li>
       <li class="nav-item d-md-down-none">
         <router-link :to="{name: 'Cherry Transfer'}">
-          <span class="fa fa-bitcoin"></span>
+          <span class="fa fa-dollar"></span>
         </router-link>
       </li>
       <li class="nav-item d-md-down-none">
