@@ -1,7 +1,7 @@
 <template>
   <AppHeaderDropdown right no-caret>
     <template slot="header">
-      <div v-if="userName === ''">
+      <div v-if="name === ''">
         <img src="/static/img/header-cherry.png" class="header-icon"/>
       </div>
       <div v-else class="header-icon-text" v-bind:style="{ background: getBgColor() }">
