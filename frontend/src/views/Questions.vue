@@ -1,6 +1,6 @@
 <template>
   <div class="animated fadeIn">
-    <b-form-input class="mb-4" type="text" v-model="search" placeholder="Search for questions"></b-form-input>
+    <b-form-input class="border-success mb-4" type="text" v-model="search" placeholder="Search for questions"></b-form-input>
     <div v-for="question in filteredList" :key="question._id">
       <div class="new-question grid-item">
         <div class="content">
