@@ -47,10 +47,29 @@ AnswerSchema.statics = {
      */
     list({ skip = 0, limit = 50, q = {} } = {}) {
         var aggr = [];
+        if(q.createdBy) {
+            aggr.push({
+                $match: {'createdBy': mongoose.Types.ObjectId(q.createdBy)}
+            })
+        }
+        if(q.question) {
+            aggr.push({
+                $match: {'question': mongoose.Types.ObjectId(q.question)}
+            })
+        }
         aggr.push({
-            $match: q
-        })
-        aggr.push({
+            $lookup: { 
+                from: 'questions', 
+                localField: 'question', 
+                foreignField: '_id', 
+                as: 'question' 
+            }
+        },{
+            $unwind: {
+                path: '$question',
+                preserveNullAndEmptyArrays: true
+            }
+        },{
             $lookup: { 
                 from: 'skycherryusers', 
                 localField: 'createdBy', 

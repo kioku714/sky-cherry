@@ -81,79 +81,43 @@ QuestionSchema.statics = {
      * @returns {Promise<Question[]>}
      */
     list({ skip = 0, limit = 50, q = {} } = {}) {
-        return this.aggregate([
-            { 
-                $lookup: { 
-                    from: 'skycherryusers', 
-                    localField: 'createdBy', 
-                    foreignField: '_id', 
-                    as: 'createdBy'
-                }
-            },
-            {
-                $unwind: {
-                    path: '$createdBy',
-                    preserveNullAndEmptyArrays: true
-                }
-            },
-            { 
-                $lookup: { 
-                    from: 'answers', 
-                    localField: '_id', 
-                    foreignField: 'question', 
-                    as: 'answers' 
-                }
-            },
-            { 
-                $lookup: { 
-                    from: 'likes', 
-                    localField: '_id', 
-                    foreignField: 'questionOrAnswer', 
-                    as: 'likes' 
-                }
-            },
-            // {
-            //     $unwind: '$answers'
-            // },
-            // { 
-            //     $lookup: { 
-            //         from: 'skycherryusers', 
-            //         localField: 'likes.createdBy', 
-            //         foreignField: '_id', 
-            //         as: 'likes.createdBy' 
-            //     }
-            // },
-            // {
-            //     $unwind: {
-            //         path: '$likes.createdby',
-            //         preserveNullAndEmptyArrays: true
-            //     }
-            // },
-            // { "$project": { 
-            //     'title': 1,
-            //     'description': 1,
-            //     'mainField': 1,
-            //     'subField': 1,
-            //     'createdAt': 1,
-            //     "createdBy": 1,
-            //     // "createdBy": { "$arrayElemAt": [ "$createdBy", 0 ] },
-            //     'occupation': 1,
-            //     'familyType': 1,
-            //     'interest': 1,
-            //     'monthlyIncome': 1,
-            //     'assets': 1,
-            //     'incomeManagement': 1,
-            //     'tags': 1,
-            //     'answers': 1,
-            //     'likes': 1
-            //     // 'likes': {
-            //     //     'createdAt': 1,
-            //     //     'createdBy': { "$arrayElemAt": [ "$createdBy", 0 ] },
-            //     //     'questionOrAnswer': 1,
-            //     //     'questionOrAnswerModel': 1
-            //     // }
-            // }}
-        ])
+        var aggr = [];
+        if(q.createdBy) {
+            aggr.push({
+                $match: {'createdBy': mongoose.Types.ObjectId(q.createdBy)}
+            })
+        }
+        aggr.push({ 
+            $lookup: { 
+                from: 'skycherryusers', 
+                localField: 'createdBy', 
+                foreignField: '_id', 
+                as: 'createdBy'
+            }
+        },
+        {
+            $unwind: {
+                path: '$createdBy',
+                preserveNullAndEmptyArrays: true
+            }
+        },
+        { 
+            $lookup: { 
+                from: 'answers', 
+                localField: '_id', 
+                foreignField: 'question', 
+                as: 'answers' 
+            }
+        },
+        { 
+            $lookup: { 
+                from: 'likes', 
+                localField: '_id', 
+                foreignField: 'questionOrAnswer', 
+                as: 'likes' 
+            }
+        })
+        return this.aggregate(aggr)
         .sort({ createdAt: -1 })
         .skip(+skip)
         .limit(+limit)
