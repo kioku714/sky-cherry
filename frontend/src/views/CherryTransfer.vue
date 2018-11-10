@@ -43,29 +43,31 @@
               </div>
             </b-tab>
             <b-tab title="Transfer">
-              <h4 class="text-center transfer-title">TRANSFER GATEWAY</h4>
-              <div class="d-flex">
-                <div class="d-flex flex-column col-4">
-                  <img src="/static/img/logo-symbol.png" class="img-thumbnail w-100">
+              <h4 class="text-center">TRANSFER GATEWAY</h4>
+              <b-row class="d-flex justify-content-center">
+                <b-col class="d-flex flex-column" sm="3" cols="4">
+                  <b-img src="/static/img/logo-symbol.png" center width="100" height="100" />
                   <div class="align-self-center">{{ tokens }} CHERRY</div>
-                </div>
-                <img src="/static/img/arrow.png" class="img-thumbnail align-self-center col-4">
-                <div class="d-flex flex-column col-4">
-                  <img src="/static/img/ethereum.png" class="img-thumbnail w-100">
+                </b-col>
+                <b-col sm="2" cols="4" class="align-self-center">
+                  <b-img src="/static/img/arrow.png" fluid center width="100" height="100" />
+                </b-col>
+                <b-col class="d-flex flex-column" sm="3" cols="4">
+                  <b-img src="/static/img/ethereum.png" fluid center width="100" height="100" />
                   <div class="align-self-center">{{ tokens / 2200 }} ETH</div>
-                </div>
-              </div>
-              <div class="d-flex flex-column">
-                <div class="d-flex col-12 justify-content-center">
-                  <img src="/static/img/wallet.png" class="img-thumbnail">
-                  <div class="align-self-center col-4 m-1">{{ profile.keyStore.address }}</div>
-                </div>
-                <div class="d-flex col-12 justify-content-center">
-                  <img src="/static/img/ethereum-thumbnail.png" class="img-thumbnail">
-                  <div class="align-self-center col-4 m-1">{{ coins }}</div>
-                </div>
-              </div>
-              <div class="text-center">
+                </b-col>
+              </b-row>
+              <b-row class="d-flex flex-column mt-5">
+                <b-col sm="12" cols="12" class="d-flex justify-content-center">
+                  <img src="/static/img/wallet.png">
+                  <b-col sm="4" cols="10" class="align-self-center m-1">{{ profile.keyStore.address }}</b-col>
+                </b-col>
+                <b-col sm="12" cols="12" class="d-flex justify-content-center">
+                  <img src="/static/img/ethereum-thumbnail.png">
+                  <b-col sm="4" cols="10" class="align-self-center m-1">{{ coins }}</b-col>
+                </b-col>
+              </b-row>
+              <div class="text-center mt-5 mb-3">
                 <b-button class="transfer-button" @click="sendTokenExchange()">Preview</b-button>
               </div>
             </b-tab>
