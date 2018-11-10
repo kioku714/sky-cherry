@@ -89,7 +89,7 @@
         <div>
           <b-form-group label="소득운용현황: "
                         :horizontal="true">
-            <b-form-radio-group v-model="question.incomeManagement" 
+            <b-form-radio-group v-model="question.incomeManagement"
                                 :options="$store.state.incomeManagement">
             </b-form-radio-group>
           </b-form-group>
