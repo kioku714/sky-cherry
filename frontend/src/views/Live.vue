@@ -1,5 +1,5 @@
 <template>
-  <div class="animated fadeIn">
+  <div class="animated fadeIn live">
     <b-row>
       <b-col sm="10">
         <div class="mb-3">
@@ -11,7 +11,7 @@
         <h3>[Live] 현직은행원이 말해주는 2030 재테크...</h3>
         <div class="text-right">
           <span class="mr-2">참여자 35명</span>
-          <span class="likes"><i class="fa fa-heart-o" /> 93</span>
+          <span class="like"><i class="fa fa-heart-o" /> 93</span>
         </div>
         <hr>
         <div v-bind:style="{ background: 'white' }">

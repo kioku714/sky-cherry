@@ -2,9 +2,9 @@
   <AppHeaderDropdown right no-caret>
     <template slot="header">
       <div v-if="name === ''">
-        <img src="/static/img/header-cherry.png" class="header-icon"/>
+        <img src="/static/img/header-cherry.png" class="mr-2" v-bind:style="{ width: '30px' }"/>
       </div>
-      <div v-else class="header-icon-text" v-bind:style="{ background: getBgColor() }">
+      <div v-else class="header-icon-text mr-2" v-bind:style="{ background: getBgColor() }">
         {{ name.substring(0, 1) }}
       </div>
     </template>

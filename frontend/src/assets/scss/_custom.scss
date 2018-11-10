@@ -1,4 +1,4 @@
-// // Here you can add other styles
+// Here you can add other styles
 body { 
     background-color: #FEFBF4;
 }
@@ -7,12 +7,19 @@ body {
     margin-bottom: 30px;
 }
 
-// .nav { 
-//     background-color: #FEFBF4;
-// }
+.main .breadcrumb {
+    color: #4c3926;
+}
 
+.app-footer {
+    display: none;
+}
 .app .app-header, .app-header.navbar .navbar-brand {
     background-color: #FEFBF4;
+}
+
+.app-header.navbar .nav-item {
+    min-width: 30px;
 }
 
 .brand-minimized .app-header.navbar .navbar-brand {
@@ -31,10 +38,6 @@ body {
     background-color: #FEFBF4;
 }
 
-.header-icon {
-    width: 30px;
-}
-
 .header-icon-text {
     border-radius: 100%;
     color: white;
@@ -44,17 +47,30 @@ body {
     text-align: center;
 }
 
-// h1, h2, h3, h4 { 
-//     color: #4c3926; 
-// }
+h1, h2, h3, h4 { 
+    color: #4c3926; 
+}
 
-// // .sidebar .nav-link {
-// //     color: #4c3926;
-// // }
+.question .like, .live .like {
+    color: #ad2552;
+}
 
-// .sidebar-nav a {
-//     color: #ad2552;
-// }
+.question .like a:hover {
+    text-decoration: none;
+}
+
+.question .question-tag {
+    border-radius: .25rem;
+    border: solid 1px #8894a5;
+    line-height: .75rem;
+    margin-bottom: 3px;
+    margin-right: 5px;
+    padding: .25rem 1.35rem .25rem 1rem;
+    display: inline-block;
+    position: relative;
+    font-size: 12px;
+    color: #3c4859;
+}
 
 // .list_p1 .a {
 //     text-decoration: none;
@@ -133,21 +149,6 @@ body {
 //     margin-top: 30px;
 // }
 
-// .username-link {
-//     font-weight: bold;
-//     color: #17BEBB;
-// }
-
-// .question {
-//     margin: auto;
-// }
-
-// .question-username-link {
-//     font-weight: bold;
-//     color: #17BEBB;
-//     font-size: 18px;
-// }
-
 // .question-owner {
 //     font-size: 14px;
 //     display: block;
@@ -169,21 +170,8 @@ body {
 //     line-height: 23px;
 // }
 
-// .tags-container, .oq_tags_container {
+// .oq_tags_container {
 //     margin-bottom: 12px;
-// }
-
-// .question-tag {
-//     font-size: 12px;
-//     border-radius: .5rem;
-//     border: solid 1px #8894a5;
-//     padding: .25rem 1.35rem .25rem 1rem;
-//     line-height: .75rem;
-//     margin-right: 5px;
-//     display: inline-block;
-//     position: relative;
-//     color: #3c4859;
-//     margin-bottom: 3px;
 // }
 
 // .questions-tag {
@@ -207,40 +195,6 @@ body {
 //     position: relative;
 // }
 
-// .main .breadcrumb {
-//     color: #4c3926;
-// }
-
-// .app-header.navbar .nav-item {
-//     min-width: 30px;
-// }
-
-// hr {
-//     border: 0.5px solid lightgrey;
-//     margin-top: 0px;
-// }
-
-// .field {
-//     margin-top: 5px;
-//     color: #0170ba;
-// }
-
-// .answer-description {
-//     margin: 20px 0px 0px 10px;
-// }
-
-// .likes {
-//     color: #ad2552;
-// }
-
-// .likes a:hover {
-//     text-decoration: none;
-// }
-
-// .rating {
-//     margin: 40px 0px;
-// }
-
 // .list-group-flush .list-group-item {
 //     border: 0;
 // }
@@ -250,27 +204,8 @@ body {
 //     padding: 0px;
 // }
 
-// .button-comment {
-//     margin: 10px 0px 20px 0px;
-//     border-radius: .3rem
-// }
-
 // .quillWrapper {
 //     background-color: white;
-// }
-
-// .profile-title {
-//     font-weight: bold;
-//     font-size: 18px;
-//     color: #ad2552;
-// }
-
-// .profile-content {
-//     padding: 0px 20px;
-// }
-
-// .profile-content .row {
-//     padding: 3px 0px;
 // }
 
 // .transfer-title {
