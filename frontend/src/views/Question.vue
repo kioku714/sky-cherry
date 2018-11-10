@@ -152,7 +152,7 @@
               <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
             </div>
             <div v-else class="header-icon-text" v-bind:style="{ background: getBgColor(email) }">
-              {{ name }}
+              {{ name.substring(0, 1) }}
             </div>
           </b-col>
           <b-col>

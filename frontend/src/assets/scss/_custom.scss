@@ -3,6 +3,10 @@ body {
     background-color: #FEFBF4;
 }
 
+.main {
+    margin-bottom: 30px;
+}
+
 // .nav { 
 //     background-color: #FEFBF4;
 // }
@@ -38,6 +42,36 @@ body {
     height: 40px;
     font-size: 24px;
     text-align: center;
+}
+
+.column-content img {
+    width: 100%;
+}
+
+.column-content .row {
+    padding: 10px 0px;
+}
+
+.column-content .title {
+    padding-right: 10px;
+}
+
+.live-content {
+    width: 80%;
+    // margin: auto;
+}
+
+.live-content .participant {
+    padding-right: 20px;
+}
+
+.live-iframe {
+    padding-bottom: 20px;
+}
+
+.live-comment {
+    padding: 20px;
+    background-color: white;
 }
 
 // h1, h2, h3, h4 { 
