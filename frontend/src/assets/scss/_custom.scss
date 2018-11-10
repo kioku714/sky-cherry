@@ -72,6 +72,21 @@ h1, h2, h3, h4 {
     color: #3c4859;
 }
 
+.transfer-button {
+    width: 150px;
+    margin-top: 30px;
+    border: 0px;
+    background-color: #4c3926;
+    color: white;
+    border-radius: .3rem
+}
+
+.word-wrap {
+    word-wrap: break-word;         /* All browsers since IE 5.5+ */
+    overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+    width: 100%;
+}
+
 // .list_p1 .a {
 //     text-decoration: none;
 //     text-decoration-line: none;
@@ -138,13 +153,6 @@ h1, h2, h3, h4 {
 //     height: 28px;
 // }
 
-// .photo_info {
-//     padding: 10px 0 0 15px;
-//     font-size: 13px;
-//     text-align: right;
-//     color: #999;
-// }
-
 // .textBody {
 //     margin-top: 30px;
 // }
@@ -154,112 +162,4 @@ h1, h2, h3, h4 {
 //     display: block;
 //     margin-bottom: 5px;
 //     color: #7E8184;
-// }
-
-// .question-header a {
-//     text-decoration: none;
-//     background-color: transparent;
-//     color: #222933;
-// }
-
-// .question-body {
-//     color: #3c4859;
-//     margin-top: 0px;
-//     font-size: 18px;
-//     word-break: break-word;
-//     line-height: 23px;
-// }
-
-// .oq_tags_container {
-//     margin-bottom: 12px;
-// }
-
-// .questions-tag {
-//     font-size: 12px;
-//     border-radius: .5rem;
-//     line-height: .75rem;
-//     margin-right: 5px;
-//     display: inline-block;
-//     position: relative;
-//     color: #3c4859;
-//     margin-bottom: 3px;
-// }
-
-// .karma-icon-container {
-//     color: #ad2552;
-//     margin-bottom: 12px;
-// }
-
-// .question-icon-container {
-//     margin-right: 16px;
-//     position: relative;
-// }
-
-// .list-group-flush .list-group-item {
-//     border: 0;
-// }
-
-// .list-group-item {
-//     background-color: #FEFBF4;
-//     padding: 0px;
-// }
-
-// .quillWrapper {
-//     background-color: white;
-// }
-
-// .transfer-title {
-//     margin-top: 20px;
-// }
-
-// .transfer-content {
-//     margin: auto;
-//     padding-top: 20px;
-// }
-
-// .trasfer-cherry {
-//     width: 70px;
-// }
-
-// .trasfer-arrow {
-//     width: 90px;
-//     margin-top: 15px;
-// }
-
-// .trasfer-money {
-//     width: 80px;
-// }
-
-// .transfer-text {
-//     margin-top: 15px;
-// }
-
-// .transfer-content input {
-//     width: 70px;
-// }
-
-// .transfer-input {
-//     margin-top: 10px;
-//     display: inline-block;
-// }
-
-// .transfer-button {
-//     width: 150px;
-//     margin-top: 30px;
-//     border: 0px;
-//     background-color: #4c3926;
-//     color: white;
-//     border-radius: .3rem
-// }
-
-// .search-input {
-//     width: 100%;
-//     font-size: 20px;
-//     background: url('/static/img/logo-symbol.png') no-repeat center;
-//     background-size: 26px 26px;
-//     background-position: right 13px center;
-//     padding: 8px 48px 8px 8px;
-//     border: solid 2px #17BEBB;
-//     line-height: 23px;
-//     margin-bottom: 20px
 // }
