@@ -1,9 +1,12 @@
 <template>
   <AppHeaderDropdown right no-caret>
     <template slot="header">
-      <img
-        src="/static/img/avatars/profile_thumbnail.jpg"
-        class="img-avatar" />
+      <div v-if="userName === ''">
+        <img src="/static/img/header-cherry.png" class="header-icon"/>
+      </div>
+      <div v-else class="header-icon-text" v-bind:style="{ background: getBgColor() }">
+        {{ name.substring(0, 1) }}
+      </div>
     </template>
     <template slot="dropdown">
       <b-dropdown-item :to="{name: '질문하기', query: { sort: 'like' }}">
@@ -13,7 +16,7 @@
         <i class="fa fa-quora" /> 질문하기
       </b-dropdown-item>
       <b-dropdown-item :to="{name: 'Cherry Transfer'}">
-        <i class="fa fa-bitcoin" /> Cherry Transfer
+        <i class="fa fa-dollar" /> Cherry Transfer
       </b-dropdown-item>
       <b-dropdown-item :to="{name: '프로필', query: { tab: 'notification' }}">
         <i class="fa fa-bell-o" /> 알림
@@ -36,10 +39,40 @@ export default {
   components: {
     AppHeaderDropdown
   },
+  created () {
+    this.name = (this.$session.get('user-name') !== undefined) ? this.$session.get('user-name') : ''
+    this.email = (this.$session.get('user-email') !== undefined) ? this.$session.get('user-email') : ''
+  },
   data () {
-    return {}
+    return {
+      name: '',
+      email: ''
+    }
   },
   methods: {
+    getBgColor () {
+      var color = ''
+      switch (this.email) {
+        case 'test01@cj.net':
+          color = '#6d0592'
+          break
+        case 'test02@cj.net':
+          color = '#026466'
+          break
+        case 'test03@cj.net':
+          color = '#d34836'
+          break
+        case 'test04@cj.net':
+          color = '#ff0084'
+          break
+        case 'test05@cj.net':
+          color = '#1769ff'
+          break
+        default:
+          color = '#ad2552'
+      }
+      return color
+    },
     logout (e) {
       e.preventDefault()
       this.$session.destroy()

@@ -57,6 +57,9 @@ function list(req, res, next) {
     if(req.query.createdBy) {
       q.createdBy = req.query.createdBy
     }
+    if(req.query.question) {
+      q.question = req.query.question
+    }
     Answer.list({ limit, skip, q })
       .then(answers => res.json(answers))
       .catch(e => next(e));

@@ -3,13 +3,20 @@
     <div>
       <b-row>
         <b-col sm="1" cols="2">
-          <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
+          <div v-if="question.createdBy.name === ''">
+            <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
+          </div>
+          <div v-else class="header-icon-text" v-bind:style="{ background: getBgColor(question.createdBy.email) }">
+              {{ question.createdBy.name.substring(0, 1) }}
+          </div>
         </b-col>
         <b-col>
-          <a class="username-link" v-bind:href="'/profiles/' + question.createdBy[0]._id">
-            {{ question.createdBy[0].name }}
+          <a class="username-link" v-bind:href="'/profiles/' + question.createdBy._id">
+            {{ question.createdBy.name }}
           </a>
-          <small>{{ question.createdBy[0].level }} Cherry</small>
+          <div v-bind:style="{ color: getLevelColor(question.createdBy.level) }">
+            <small>{{ question.createdBy.level }} Cherry</small>
+          </div>
           <br>
           {{ $moment.utc(question.createdAt).local().fromNow() }}
         </b-col>
@@ -24,7 +31,7 @@
       </b-col>
       <b-col>
         <h3 class="likes text-right">
-          <div v-if="question.createdBy[0]._id !== signInUserId" >
+          <div v-if="question.createdBy._id !== signInUserId" >
             <b-link v-on:click="likeQuestion(question._id)"><i class="fa fa-heart" /> {{ question.likes.length }}</b-link>
           </div>
           <div v-else>
@@ -41,7 +48,7 @@
           <label>성별/나이:</label>
         </b-col>
         <b-col sm="3" cols="6">
-          <label>{{ "male" === question.createdBy[0].gender ? "남" : "여"}}/{{ getAge() }}</label>
+          <label>{{ "male" === question.createdBy.gender ? "남" : "여"}}/{{ getAge() }}</label>
         </b-col>
         <b-col sm="2" cols="6">
           <label>직업:</label>
@@ -95,18 +102,25 @@
       </div>
     </div>
     <hr>
-    <h2 class="text-center">{{ question.answers.length }} ANSWERS</h2>
-    <b-list-group v-if="question.answers.length > 0" flush>
-      <b-list-group-item v-for="answer in question.answers" :key="answer._id">
+    <h2 class="text-center">{{ answers.length }} ANSWERS</h2>
+    <b-list-group v-if="answers.length > 0" flush>
+      <b-list-group-item v-for="answer in answers" :key="answer._id">
         <b-row>
           <b-col sm="1" cols="2">
-            <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
+            <div v-if="answer.createdBy.name === ''">
+              <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
+            </div>
+            <div v-else class="header-icon-text" v-bind:style="{ background: getBgColor(answer.createdBy.email) }">
+              {{ answer.createdBy.name.substring(0, 1) }}
+            </div>
           </b-col>
           <b-col sm="9" cols="6">
             <a class="username-link" v-bind:href="'/profiles/' + answer.createdBy._id">
               {{ answer.createdBy.name}}
             </a>
-            <small>{{ answer.createdBy.level }} Cherry</small>
+            <div v-bind:style="{ color: getLevelColor(answer.createdBy.level) }">
+              <small>{{ answer.createdBy.level }} Cherry</small>
+            </div>
             <br>
             {{ $moment.utc(answer.createdAt).local().fromNow() }} / SI: {{ answer.createdBy.si}}
           </b-col>
@@ -134,7 +148,12 @@
         </b-row>
         <b-row>
           <b-col sm="1" cols="2">
-            <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
+            <div v-if="question.createdBy.name === ''">
+              <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
+            </div>
+            <div v-else class="header-icon-text" v-bind:style="{ background: getBgColor(email) }">
+              {{ name }}
+            </div>
           </b-col>
           <b-col>
             <b-form-textarea id="comment"
@@ -150,7 +169,7 @@
         </div>
       </b-list-group-item>
     </b-list-group>
-    <div v-if="question.createdBy[0]._id !== signInUserId" >
+    <div v-if="question.createdBy._id !== signInUserId" >
       <hr>
       <h2 class="text-center">YOUR ANSWER</h2>
       <vue-editor v-model="form.description"></vue-editor>
@@ -170,7 +189,10 @@ export default {
     VueEditor
   },
   created () {
+    this.name = (this.$session.get('user-name') !== undefined) ? this.$session.get('user-name') : ''
+    this.email = (this.$session.get('user-email') !== undefined) ? this.$session.get('user-email') : ''
     this.fetchQuestion()
+    this.fetchAnswers()
   },
   computed: {
     textTrimed () {
@@ -190,6 +212,8 @@ export default {
   },
   data () {
     return {
+      name: '',
+      email: '',
       text: '',
       signInUserId: '',
       question: {
@@ -197,6 +221,7 @@ export default {
         likes: [],
         answers: []
       },
+      answers: [],
       form: {
         description: ''
       }
@@ -216,6 +241,58 @@ export default {
           // console.log(JSON.stringify(this.question))
         })
     },
+    fetchAnswers () {
+      this.answers = []
+      this.$http.get('/api/questions/' + this.$route.params.questionId + '/answers', {
+      // this.$http.get('/api/answers', {
+        // params: {
+        //   createdBy: this.$route.params.userId
+        // }
+      })
+        .then((response) => {
+          this.answers = response.data
+        })
+    },
+    getBgColor (email) {
+      var color = ''
+      switch (email) {
+        case 'test01@cj.net':
+          color = '#6d0592'
+          break
+        case 'test02@cj.net':
+          color = '#026466'
+          break
+        case 'test03@cj.net':
+          color = '#d34836'
+          break
+        case 'test04@cj.net':
+          color = '#ff0084'
+          break
+        case 'test05@cj.net':
+          color = '#1769ff'
+          break
+        default:
+          color = '#ad2552'
+      }
+      return color
+    },
+    getLevelColor (level) {
+      var color = ''
+      switch (level) {
+        case 'Black':
+          color = 'black'
+          break
+        case 'Red':
+          color = 'red'
+          break
+        case 'Green':
+          color = 'green'
+          break
+        default:
+          color = 'blue'
+      }
+      return color
+    },
     createAnswer () {
       if (this.form.description) {
         this.$http.post('/api/answers', {
@@ -225,6 +302,7 @@ export default {
           .then((response) => {
             this.form.description = ''
             this.fetchQuestion()
+            this.fetchAnswers()
           })
       } else {
         alert('답변을 입력해주세요.')
@@ -249,7 +327,7 @@ export default {
       }
     },
     getAge () {
-      var ageDifMs = Date.now() - new Date(this.question.createdBy[0].birthday).getTime()
+      var ageDifMs = Date.now() - new Date(this.question.createdBy.birthday).getTime()
       var ageDate = new Date(ageDifMs) // miliseconds from epoch
       return Math.abs(ageDate.getUTCFullYear() - 1970)
     },
@@ -303,10 +381,10 @@ export default {
         })
     },
     likeAnswer (answerId) {
-      var answer = this.question.answers.find(x => x._id === answerId)
+      var answer = this.answers.find(x => x._id === answerId)
       var self = this
-      var clickUserId = answer.likes.filter(function (_id) {
-        return _id === self.signInUserId
+      var clickUserId = answer.likes.filter(function (like) {
+        return like.createdBy === self.signInUserId
       })
       if (clickUserId.length !== 0) {
         alert('이미 좋아요를 누르셨어요.')
@@ -315,6 +393,7 @@ export default {
       this.$http.post('/api/likes', {answerId: answerId})
         .then((response) => {
           this.fetchQuestion()
+          this.fetchAnswers()
         })
     }
   }

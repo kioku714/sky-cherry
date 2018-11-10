@@ -6,7 +6,7 @@
         <div class="content">
           <!-- 사용자 닉네임, 질문 생성 시간  -->
           <span class="question-owner text-muted">
-            <a class="username-link" v-bind:href="'/profiles/' + question.createdBy[0]._id">{{ question.createdBy[0].name }}</a>
+            <a class="username-link" v-bind:href="'/profiles/' + question.createdBy._id">{{ question.createdBy.name }}</a>
             {{ $moment.utc(question.createdAt).local().fromNow() }}
           </span>
           <!-- 질문 제목 -->
@@ -75,7 +75,7 @@ export default {
         return this.listItems
       }
       return this.questions.filter(question => {
-        return question.title.toLowerCase().includes(this.search.toLowerCase()) || striptags(question.description).toLowerCase().includes(this.search.toLowerCase()) || question.createdBy[0].name.toLowerCase().includes(this.search.toLowerCase()) || question.tags.includes(this.search.toLowerCase())
+        return question.title.toLowerCase().includes(this.search.toLowerCase()) || striptags(question.description).toLowerCase().includes(this.search.toLowerCase()) || question.createdBy.name.toLowerCase().includes(this.search.toLowerCase()) || question.tags.includes(this.search.toLowerCase())
       })
     }
   },
