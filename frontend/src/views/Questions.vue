@@ -1,6 +1,6 @@
 <template>
   <div class="animated fadeIn">
-    <b-form-input class="border-success mb-4" type="text" v-model="search" placeholder="Search for questions"></b-form-input>
+    <b-form-input class="border-success mb-4" type="text" v-model="search" placeholder="Search for questions" style="background: url('/static/img/magnifying-glass.png') no-repeat center; background-size: 26px 26px; background-position: right 13px center; padding: 8px 48px 8px 8px;"></b-form-input>
     <div v-for="question in filteredList" :key="question._id">
       <div class="new-question grid-item">
         <div class="content">
