@@ -16,7 +16,7 @@
       <b-row>
         <b-col sm="1" cols="2">
           <div class="header-icon-text" v-bind:style="{ background: '#1769ff' }">
-            Y
+            O
           </div>
         </b-col>
         <b-col>
@@ -28,7 +28,7 @@
       <b-row>
         <b-col sm="1" cols="2">
           <div class="header-icon-text" v-bind:style="{ background: '#026466' }">
-            Y
+            현
           </div>
         </b-col>
         <b-col>
