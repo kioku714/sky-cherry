@@ -8,6 +8,7 @@ var contractRoutes = require('./contract.route');
 var userRoutes = require('./user.route');
 var answerRoutes = require('./answer.route');
 var likeRoutes = require('./like.route');
+var notificationRoutes = require('./notification.route');
 
 const router = express.Router(); // eslint-disable-line new-cap
 const auth = expressJwt({secret: config.jwtSecret, requestProperty: 'decoded'})
@@ -37,5 +38,8 @@ router.use('/answers', auth, answerRoutes);
 
 // mount like routes at /likes
 router.use('/likes', auth, likeRoutes);
+
+// mount notification routes at /notifications
+router.use('/notifications', auth, notificationRoutes);
 
 module.exports = router;

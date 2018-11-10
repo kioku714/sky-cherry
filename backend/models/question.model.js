@@ -101,8 +101,8 @@ QuestionSchema.statics = {
                 preserveNullAndEmptyArrays: true
             }
         },
-        { 
-            $lookup: { 
+        {
+            $lookup: {
                 from: 'answers', 
                 localField: '_id', 
                 foreignField: 'question', 
@@ -176,7 +176,112 @@ QuestionSchema.statics = {
             const err = new APIError('No such question exists!', httpStatus.NOT_FOUND);
             return Promise.reject(err);
         });
+    },
+
+    /**
+     * @param {number} skip - Number of question to be skipped.
+     * @param {number} limit - Limit number of question to be returned.
+     * @returns {Promise<Question[]>}
+     */
+    listQeustionsAnswers({ skip = 0, limit = 50, q = {} } = {}) {
+        var aggr = [];
+        if(q.createdBy) {
+            aggr.push({
+                $match: {'createdBy': mongoose.Types.ObjectId(q.createdBy)}
+            })
+        }
+        aggr.push(
+        {
+            $lookup: {
+                from: 'answers', 
+                localField: '_id', 
+                foreignField: 'question', 
+                as: 'answer' 
+            }
+        },
+        { 
+            $unwind: "$answer" 
+        },
+        { 
+            $lookup: {
+                from: 'skycherryusers', 
+                localField: 'answer.createdBy', 
+                foreignField: '_id', 
+                as: 'answer.createdBy'
+            }
+        },
+        {
+            $unwind: {
+                path: '$answer.createdBy',
+                preserveNullAndEmptyArrays: true
+            }
+        },
+        { 
+            $project: { 
+                'title': 1,
+                'answer': 1
+            }
+        }
+        )
+        return this.aggregate(aggr)
+        .sort({ 'answer.createdAt': -1 })
+        .skip(+skip)
+        .limit(+limit)
+        .exec();
+    },
+
+    /**
+     * @param {number} skip - Number of question to be skipped.
+     * @param {number} limit - Limit number of question to be returned.
+     * @returns {Promise<Question[]>}
+     */
+    listQeustionsLikes({ skip = 0, limit = 50, q = {} } = {}) {
+        var aggr = [];
+        if(q.createdBy) {
+            aggr.push({
+                $match: {'createdBy': mongoose.Types.ObjectId(q.createdBy)}
+            })
+        }
+        aggr.push(
+        {
+            $lookup: {
+                from: 'likes', 
+                localField: '_id', 
+                foreignField: 'questionOrAnswer', 
+                as: 'like'
+            }
+        },
+        { 
+            $unwind: "$like" 
+        },
+        { 
+            $lookup: {
+                from: 'skycherryusers', 
+                localField: 'like.createdBy', 
+                foreignField: '_id', 
+                as: 'like.createdBy'
+            }
+        },
+        {
+            $unwind: {
+                path: '$like.createdBy',
+                preserveNullAndEmptyArrays: true
+            }
+        },
+        { 
+            $project: { 
+                'title': 1,
+                'like': 1
+            }
+        }
+        )
+        return this.aggregate(aggr)
+        .sort({ 'like.createdAt': -1 })
+        .skip(+skip)
+        .limit(+limit)
+        .exec();
     }
+    
 };
 
 /**
