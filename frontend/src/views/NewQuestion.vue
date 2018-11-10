@@ -148,12 +148,12 @@ export default {
           this.profile = response.data
 
           this.form.age = this.getAge()
-          this.form.occupation = response.data.occupation
-          this.form.familyType = response.data.familyType
-          this.form.interest = response.data.interest
-          this.form.monthlyIncome = response.data.monthlyIncome
-          this.form.assets = response.data.assets
-          this.form.incomeManagement = response.data.incomeManagement
+          this.form.occupation = response.data.occupation ? response.data.occupation : 'administrator'
+          this.form.familyType = response.data.familyType ? response.data.familyType : 'single'
+          this.form.interest = response.data.interest ? response.data.interest : 'myHouse'
+          this.form.monthlyIncome = response.data.monthlyIncome ? response.data.monthlyIncome : 'under100'
+          this.form.assets = response.data.assets ? response.data.assets : 'under1000'
+          this.form.incomeManagement = response.data.incomeManagement ? response.data.incomeManagement : 'saving'
         })
     },
     fetchTokens () {
