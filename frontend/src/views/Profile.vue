@@ -135,8 +135,8 @@
               </b-list-group>
               <b-list-group v-for="question in questions" :key="question.id" flush>
                 <b-list-group-item>
-                  <b-link :to="{ name: '질문 상세', params: { questionId: question._id }}">{{ question.title }}</b-link>
-                  <span class="text-muted">{{ getDescription(question.description) }}<b-link v-show="question.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: question._id }}">more</b-link></span>
+                  <b-link class="text-dark" :to="{ name: '질문 상세', params: { questionId: question._id }}">"{{ question.title }}"</b-link>
+                  <span class="text-muted">{{ getDescription(question.description) }}<b-link class="text-muted" v-show="question.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: question._id }}">more</b-link></span>
                   <span class="text-warning">{{ $moment.utc(question.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
@@ -149,8 +149,8 @@
               </b-list-group>
               <b-list-group v-for="answer in answers" :key="answer.id" flush>
                 <b-list-group-item>
-                  <b-link :to="{ name: '질문 상세', params: { questionId: answer.question._id }}">{{ answer.question.title }}</b-link>
-                  <span class="text-muted">{{ getDescription(answer.description) }}<b-link v-show="answer.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: answer.question._id }}">more</b-link></span>
+                  <b-link class="text-dark" :to="{ name: '질문 상세', params: { questionId: answer.question._id }}">"{{ answer.question.title }}"</b-link>
+                  <span class="text-muted">{{ getDescription(answer.description) }}<b-link class="text-muted" v-show="answer.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: answer.question._id }}">more</b-link></span>
                   <span class="text-warning">{{ $moment.utc(answer.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
@@ -163,15 +163,15 @@
               </b-list-group>
               <b-list-group v-for="like in likes" :key="like.id" flush>
                 <b-list-group-item v-if="like.questionOrAnswerModel === 'Question'">
-                    <span class="text-success">{{ like.questionOrAnswer.createdBy.name }}</span><span class="text-muted">님의 질문을 좋아합니다.</span>
-                    <b-link :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer._id }}">"{{ like.questionOrAnswer.title }}"</b-link>
-                    <span class="text-muted">{{ getDescription(like.questionOrAnswer.description) }}<b-link v-show="like.questionOrAnswer.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer._id }}">more</b-link></span>
+                    <b-link class="text-success" :to="{ name: '프로필', params: { userId: like.questionOrAnswer.createdBy._id }}">{{ like.questionOrAnswer.createdBy.name }}</b-link><span class="text-muted">님의 질문을 좋아합니다.</span>
+                    <b-link class="text-dark" :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer._id }}">"{{ like.questionOrAnswer.title }}"</b-link>
+                    <span class="text-muted">{{ getDescription(like.questionOrAnswer.description) }}<b-link class="text-muted" v-show="like.questionOrAnswer.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer._id }}">more</b-link></span>
                     <span class="text-warning">{{ $moment.utc(like.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
                 <b-list-group-item v-else>
-                    <span class="text-success">{{ like.questionOrAnswer.createdBy.name }}</span><span class="text-muted">님의 답변을 좋아합니다.</span>
-                    <b-link :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer.question._id }}">"{{ like.questionOrAnswer.question.title }}"</b-link>
-                    <span class="text-muted">{{ getDescription(like.questionOrAnswer.description) }}<b-link v-show="like.questionOrAnswer.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer.question._id }}">more</b-link></span>
+                    <b-link class="text-success" :to="{ name: '프로필', params: { userId: like.questionOrAnswer.createdBy._id }}">{{ like.questionOrAnswer.createdBy.name }}</b-link><span class="text-muted">님의 답변을 좋아합니다.</span>
+                    <b-link class="text-dark" :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer.question._id }}">"{{ like.questionOrAnswer.question.title }}"</b-link>
+                    <span class="text-muted">{{ getDescription(like.questionOrAnswer.description) }}<b-link class="text-muted" v-show="like.questionOrAnswer.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer.question._id }}">more</b-link></span>
                     <span class="text-warning">{{ $moment.utc(like.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
