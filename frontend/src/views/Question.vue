@@ -11,7 +11,7 @@
           </div>
         </b-col>
         <b-col>
-          <a class="username-link" v-bind:href="'/profiles/' + question.createdBy._id">
+          <a v-bind:style="{color: '#17BEBB', fontWeight: 'bold'}" v-bind:href="'/profiles/' + question.createdBy._id">
             {{ question.createdBy.name }}
           </a>
           <span v-bind:style="{ color: getLevelColor(question.createdBy.level) }">
@@ -22,7 +22,7 @@
         </b-col>
       </b-row>
     </div>
-    <div class="field">
+    <div class="my-2" v-bind:style="{color: '#0170ba'}">
       ► {{ getMainFieldName() }} | {{ getSubFieldName() }}
     </div>
     <b-row>
@@ -30,7 +30,7 @@
         <h3>{{ question.title }}</h3>
       </b-col>
       <b-col>
-        <h3 class="likes text-right">
+        <h3 class="like text-right">
           <div v-if="question.createdBy._id !== signInUserId" >
             <b-link v-on:click="likeQuestion(question._id)"><i class="fa fa-heart" /> {{ question.likes.length }}</b-link>
           </div>
@@ -41,70 +41,70 @@
       </b-col>
     </b-row>
     <hr>
-    <div class="profile-title">Profile</div>
-    <div class="profile-content">
+    <div class="mb-2" v-bind:style="{color: '#ad2552', fontSize: '18px', fontWeight: 'bold'}">Profile</div>
+    <b-row>
+      <b-col sm="2" cols="6">
+        <label>성별/나이:</label>
+      </b-col>
+      <b-col sm="3" cols="6">
+        <label>{{ "male" === question.createdBy.gender ? "남" : "여"}}/{{ getAge() }}</label>
+      </b-col>
+      <b-col sm="2" cols="6">
+        <label>직업:</label>
+      </b-col>
+      <b-col sm="3" cols="6">
+        <label>{{ getOccupation() }}</label>
+      </b-col>
+    </b-row>
+    <div v-if="this.question.mainField === 'finance'">
       <b-row>
         <b-col sm="2" cols="6">
-          <label>성별/나이:</label>
+          <label>가족형태:</label>
         </b-col>
         <b-col sm="3" cols="6">
-          <label>{{ "male" === question.createdBy.gender ? "남" : "여"}}/{{ getAge() }}</label>
+          <label>{{ getFamilyType() }}</label>
         </b-col>
         <b-col sm="2" cols="6">
-          <label>직업:</label>
+          <label>관심사:</label>
         </b-col>
         <b-col sm="3" cols="6">
-          <label>{{ getOccupation() }}</label>
+          <label>{{ getInterest() }}</label>
         </b-col>
       </b-row>
-      <div v-if="this.question.mainField === 'finance'">
-        <b-row>
-          <b-col sm="2" cols="6">
-            <label>가족형태:</label>
-          </b-col>
-          <b-col sm="3" cols="6">
-            <label>{{ getFamilyType() }}</label>
-          </b-col>
-          <b-col sm="2" cols="6">
-            <label>관심사:</label>
-          </b-col>
-          <b-col sm="3" cols="6">
-            <label>{{ getInterest() }}</label>
-          </b-col>
-        </b-row>
-        <b-row>
-          <b-col sm="2" cols="6">
-            <label>월평균소득:</label>
-          </b-col>
-          <b-col sm="3" cols="6">
-            <label>{{ getMonthlyIncome() }}</label>
-          </b-col>
-          <b-col sm="2" cols="6">
-            <label>보유자산:</label>
-          </b-col>
-          <b-col sm="3" cols="6">
-            <label>{{ getAssets() }}</label>
-          </b-col>
-        </b-row>
-        <div>
-          <b-form-group label="소득운용현황: "
-                        :horizontal="true">
-            <b-form-radio-group v-model="question.incomeManagement" 
-                                :options="$store.state.incomeManagement">
-            </b-form-radio-group>
-          </b-form-group>
-        </div>
+      <b-row>
+        <b-col sm="2" cols="6">
+          <label>월평균소득:</label>
+        </b-col>
+        <b-col sm="3" cols="6">
+          <label>{{ getMonthlyIncome() }}</label>
+        </b-col>
+        <b-col sm="2" cols="6">
+          <label>보유자산:</label>
+        </b-col>
+        <b-col sm="3" cols="6">
+          <label>{{ getAssets() }}</label>
+        </b-col>
+      </b-row>
+      <div>
+        <b-form-group label="소득운용현황: "
+                      :horizontal="true">
+          <b-form-radio-group v-model="question.incomeManagement"
+                              :options="$store.state.incomeManagement">
+          </b-form-radio-group>
+        </b-form-group>
       </div>
     </div>
     <hr>
     <div v-html="question.description"></div>
-    <div class="tags-container">
+    <div class="mb-3">
       <div class="question-tag" v-for="tag in question.tags" :key="tag">
         {{ tag }}
       </div>
     </div>
+    <div>
+    </div>
     <hr>
-    <h2 class="text-center">{{ answers.length }} ANSWERS</h2>
+    <h2 v-if="answers.length > 0" class="text-center mb-3">{{ answers.length }} Answers</h2>
     <b-list-group v-if="answers.length > 0" flush>
       <b-list-group-item v-for="answer in answers" :key="answer._id">
         <b-row>
@@ -117,7 +117,7 @@
             </div>
           </b-col>
           <b-col sm="9" cols="6">
-            <a class="username-link" v-bind:href="'/profiles/' + answer.createdBy._id">
+            <a v-bind:style="{color: '#17BEBB', fontWeight: 'bold'}" v-bind:href="'/profiles/' + answer.createdBy._id">
               {{ answer.createdBy.name}}
             </a>
             <span v-bind:style="{ color: getLevelColor(answer.createdBy.level) }">
@@ -127,7 +127,7 @@
             {{ $moment.utc(answer.createdAt).local().fromNow() }} / SI: {{ answer.createdBy.si}}
           </b-col>
           <b-col>
-            <h3 class="likes text-right">
+            <h3 class="like text-right">
               <div v-if="answer.createdBy._id !== signInUserId" >
                 <b-link v-on:click="likeAnswer(answer._id)"><i class="fa fa-heart" /> {{ answer.likes.length }}</b-link>
               </div>
@@ -137,17 +137,19 @@
             </h3>
           </b-col>
         </b-row>
-        <b-row class="answer-description">
+        <b-row class="mt-3 mx-3">
           <div v-html="answer.description"></div>
         </b-row>
+        <hr v-bind:style="{ borderColor: '#efefef' }">
         <b-row class="rating">
-          <b-col sm="9" cols="6">
-            <div>Cherry Guard's Ratings</div>
+          <b-col sm="9" cols="9">
+            <div class="font-weight-bold">Cherry Guard's Ratings</div>
           </b-col>
           <b-col>
             <div class="text-right">+</div>
           </b-col>
         </b-row>
+        <hr v-bind:style="{ borderColor: '#efefef' }">
         <b-row>
           <b-col sm="1" cols="2">
             <div v-if="question.createdBy.name === ''">
@@ -167,16 +169,15 @@
           </b-col>
         </b-row>
         <div class="float-right">
-          <b-button variant="secondary" class="button-comment">Add comment</b-button>
+          <b-button variant="secondary" class="mt-2" v-bind:style="{ borderRadius: '.3rem' }">Add comment</b-button>
         </div>
       </b-list-group-item>
     </b-list-group>
     <div v-if="question.createdBy._id !== signInUserId" >
-      <hr>
-      <h2 class="text-center">YOUR ANSWER</h2>
-      <vue-editor v-model="form.description"></vue-editor>
+      <h2 class="text-center my-3">Your Answer</h2>
+      <vue-editor v-model="form.description" v-bind:style="{ background: 'white' }"></vue-editor>
       <div class="text-center">
-        <b-button variant="success" class="button-comment" @click="createAnswer()">Post Your Answer</b-button>
+        <b-button variant="success" @click="createAnswer()" class="mt-3" v-bind:style="{ borderRadius: '.3rem' }">Post Your Answer</b-button>
       </div>
     </div>
   </div>
