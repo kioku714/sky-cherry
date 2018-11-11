@@ -300,6 +300,15 @@ export default {
       this.$http.get('/api/notifications')
         .then((response) => {
           this.notifications = response.data
+        }).then(() => {
+          var self = this;
+          this.notifications = this.notifications.slice().sort(function (a, b) {
+            var compare1 = b.answer ? b.answer.createdAt : b.like.createdAt;
+            var compare2 = a.answer ? a.answer.createdAt : a.like.createdAt;
+            return self.$moment(compare1).valueOf() - self.$moment(compare2).valueOf()
+          })
+        }).catch((e) => {
+          console.error(e)
         })
     },
     fetchQuestions () {
