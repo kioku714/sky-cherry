@@ -31,7 +31,7 @@
           <br>
           <div class="form-group row">
             <label class="col-md-2 col-form-label">성별/나이</label>
-            <label class="col-md-2 col-form-label">{{ "male" === profile.gender ? "남" : "여" }} / {{ form.age }}</label>
+            <label class="col-md-2 col-form-label">{{ "male" === profile.gender ? "남" : "여" }} / {{ $moment({}).diff($moment(profile.birthday), 'years') }}</label>
             <label class="col-md-2 col-form-label"></label>
             <label class="col-md-2 col-form-label">직업</label>
             <div class="col-md-2">
@@ -123,7 +123,6 @@ export default {
         description: '',
         mainField: 'style',
         subField: '',
-        age: 0,
         gender: 'female',
         occupation: '',
         familyType: '',
@@ -151,7 +150,6 @@ export default {
         .then((response) => {
           this.profile = response.data
 
-          this.form.age = this.getAge()
           this.form.occupation = response.data.occupation ? response.data.occupation : 'administrator'
           this.form.familyType = response.data.familyType ? response.data.familyType : 'single'
           this.form.interest = response.data.interest ? response.data.interest : 'myHouse'
@@ -171,11 +169,6 @@ export default {
     },
     getTags () {
       return this.tags.map(x => x.text)
-    },
-    getAge () {
-      var ageDifMs = Date.now() - new Date(this.profile.birthday).getTime()
-      var ageDate = new Date(ageDifMs) // miliseconds from epoch
-      return Math.abs(ageDate.getUTCFullYear() - 1970)
     },
     addTagStyle (obj) {
       obj.tag.style = 'font-size: 12px; color: #3c4859; background-color: transparent; border: solid 1px #8894a5; border-radius: .5rem;'

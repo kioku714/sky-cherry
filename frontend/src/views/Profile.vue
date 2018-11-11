@@ -31,7 +31,7 @@
                         label-for="genderAndAge"
                         :label-cols="3"
                         :horizontal="true">
-                        <b-form-input plaintext id="genderAndAge" type="text" v-bind:value="('male' === profile.gender ? '남' : '여') + '/' + age"></b-form-input>
+                        <b-form-input plaintext id="genderAndAge" type="text" v-bind:value="('male' === profile.gender ? '남' : '여') + '/' + $moment({}).diff($moment(profile.birthday), 'years')"></b-form-input>
                       </b-form-group>
                     </b-col>
                     <b-col sm="6">
@@ -261,8 +261,7 @@ export default {
         assets: '',
         incomeManagement: '',
         description: ''
-      },
-      age: 0
+      }
     }
   },
   methods: {
@@ -286,7 +285,6 @@ export default {
           this.form.assets = response.data.assets
           this.form.incomeManagement = response.data.incomeManagement
           this.form.description = response.data.description
-          this.age = this.getAge()
         })
     },
     fetchTokens () {
@@ -300,6 +298,15 @@ export default {
       this.$http.get('/api/notifications')
         .then((response) => {
           this.notifications = response.data
+        }).then(() => {
+          var self = this;
+          this.notifications = this.notifications.slice().sort(function (a, b) {
+            var compare1 = b.answer ? b.answer.createdAt : b.like.createdAt;
+            var compare2 = a.answer ? a.answer.createdAt : a.like.createdAt;
+            return self.$moment(compare1).valueOf() - self.$moment(compare2).valueOf()
+          })
+        }).catch((e) => {
+          console.error(e)
         })
     },
     fetchQuestions () {
@@ -355,16 +362,6 @@ export default {
         .then((response) => {
           this.fetchProfile()
         })
-    },
-    getAge () {
-      var ageDifMs = Date.now() - new Date(this.profile.birthday).getTime()
-      var ageDate = new Date(ageDifMs) // miliseconds from epoch
-      return Math.abs(ageDate.getUTCFullYear() - 1970)
-    },
-    orderedItems(items) {
-        return items.filter(item => {
-            if (item['createdAt']) return item;
-        });     
     }
   }
 }
