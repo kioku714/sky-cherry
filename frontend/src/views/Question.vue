@@ -47,7 +47,7 @@
         <label>성별/나이:</label>
       </b-col>
       <b-col sm="3" cols="6">
-        <label>{{ "male" === question.createdBy.gender ? "남" : "여"}}/{{ getAge() }}</label>
+        <label>{{ "male" === question.createdBy.gender ? "남" : "여"}}/{{ $moment({}).diff($moment(question.createdBy.birthday), 'years') }}</label>
       </b-col>
       <b-col sm="2" cols="6">
         <label>직업:</label>
@@ -328,11 +328,6 @@ export default {
       } else {
         return ''
       }
-    },
-    getAge () {
-      var ageDifMs = Date.now() - new Date(this.question.createdBy.birthday).getTime()
-      var ageDate = new Date(ageDifMs) // miliseconds from epoch
-      return Math.abs(ageDate.getUTCFullYear() - 1970)
     },
     getOccupation () {
       if (this.question.occupation) {
