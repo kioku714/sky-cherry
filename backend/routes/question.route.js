@@ -22,7 +22,7 @@ router.route('/')
     },
     validate({}), questionCtrl.create, 
     validate(paramValidation.sendTokensToSystem), contractCtrl.sendTokensToSystem, 
-    eventCtrl.create,
+    validate(paramValidation.createEvent), eventCtrl.create,
     function(req, res) {
       res.json(req.savedQuestion);
     });
