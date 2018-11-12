@@ -48,7 +48,9 @@ async function sendTokens(req, res, next) {
 	var walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, password);
 	var data = contract.methods.transfer(to, tokens).encodeABI();
 	try {
-		res.send(await _sendTx(walletInfo, config.contractAccount, data, 0));
+		var tx = await _sendTx(walletInfo, config.contractAccount, data, 0);
+		next(tx);
+		// res.send(await _sendTx(walletInfo, config.contractAccount, data, 0));
 	} catch (e) {
 		next(new APIError(e.message, httpStatus.INTERNAL_SERVER_ERROR, true));
 	}
@@ -112,10 +114,15 @@ function getUpdatedNonce(address, systemNonce) {
 	return nonces[address];
 }
 
-function sendTokenToSystem(req, res, next) {
+async function sendTokensToSystem(req, res, next) {
+	req.from = req.decoded._id;
+	req.to = req.decoded.system_id;
+	req.value = req.tokens;
 	try {
-		var data = erc20.methods.transfer(config.system.address, web3.utils.toWei(req.body.token, 'ether')).encodeABI();
-		_sendTx(req.decoded.walletInfo, config.contractAccount, data, 0)
+		var data = erc20.methods.transfer(config.system.address, web3.utils.toWei(req.tokens.toString(), 'ether')).encodeABI();
+		const result = await _sendTx(req.decoded.walletInfo, config.contractAccount, data, 0);
+		req.tx = result.txHash;
+		next();
 	} catch (e) {
 		console.log(e.message)
 	}
