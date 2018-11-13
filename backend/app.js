@@ -61,16 +61,18 @@ app.use((err, req, res, next) => {
 });
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+app.use((req, res, next) => {
+  const err = new APIError('API not found', httpStatus.NOT_FOUND);
+  return next(err);
 });
 
-// error handler
-app.use((err, req, res, next) => 
+// error handler, send stacktrace only during development
+app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+  console.error(err.stack);
   res.status(err.status).json({
     message: err.isPublic ? err.message : httpStatus[err.status],
-    // stack: config.env === 'development' ? err.stack : {}
+    stack: config.env === 'development' ? err.stack : {}
   })
-);
+});
 
 module.exports = app;
