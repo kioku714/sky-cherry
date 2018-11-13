@@ -71,7 +71,7 @@ AnswerSchema.statics = {
             }
         },{
             $lookup: { 
-                from: 'Users', 
+                from: 'users', 
                 localField: 'createdBy', 
                 foreignField: '_id', 
                 as: 'createdBy' 

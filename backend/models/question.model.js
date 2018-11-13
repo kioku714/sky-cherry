@@ -89,7 +89,7 @@ QuestionSchema.statics = {
         }
         aggr.push({ 
             $lookup: { 
-                from: 'Users', 
+                from: 'users', 
                 localField: 'createdBy', 
                 foreignField: '_id', 
                 as: 'createdBy'
@@ -204,7 +204,7 @@ QuestionSchema.statics = {
         },
         { 
             $lookup: {
-                from: 'Users', 
+                from: 'users', 
                 localField: 'answer.createdBy', 
                 foreignField: '_id', 
                 as: 'answer.createdBy'
@@ -256,7 +256,7 @@ QuestionSchema.statics = {
         },
         { 
             $lookup: {
-                from: 'Users', 
+                from: 'users', 
                 localField: 'like.createdBy', 
                 foreignField: '_id', 
                 as: 'like.createdBy'
