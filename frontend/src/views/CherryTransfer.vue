@@ -7,7 +7,7 @@
             <p class="text-center"><strong>{{ profile.name }}</strong></p>
           </div>
           <div>
-            <p class="text-center">LV 1 / SI : <strong>{{ profile.si }}</strong></p>
+            <p class="text-center">LV: <strong>{{ profile.level }}</strong> / SI : <strong>{{ profile.si }}</strong></p>
             <p class="text-center">Cherry : <strong>{{ tokens }}</strong></p>
             <p class="text-center">Questions : <strong>{{ questions.length }}</strong></p>
             <p class="text-center">Answers : <strong>{{ answers.length }}</strong></p>
@@ -16,7 +16,7 @@
           </div>
           <br/>
           <div class="text-center mb-4">
-            <b-button variant="success" :to="{name: 'Cherry Transfer'}" v-bind:style="{ borderRadius: '.3rem' }">Cherry Transfer</b-button>
+            <b-button variant="success" :to="{name: 'Cherry Transfer'}"  v-bind:style="{ borderRadius: '.3rem', backgroundColor: '#4dbd74', borderColor: '#4dbd74' }">Cherry Transfer</b-button>
           </div>
         </b-col>
         <b-col sm="10">
@@ -28,7 +28,7 @@
                   <b-row class="text-center">
                     <b-col sm="4" cols="4">
                       <div>
-                        <b-img src="/static/img/logo-symbol.png" fluid center/>
+                        <b-img src="/static/img/logo-symbol.png" width="95" fluid center/>
                       </div>
                       <div class="mt-3">{{ tokens }} Cherry</div>
                       <div>
@@ -40,7 +40,7 @@
                     </b-col>
                     <b-col sm="4" cols="4">
                       <div>
-                        <b-img src="/static/img/point.png" fluid center/>
+                        <b-img src="/static/img/point.png" width="95" fluid center/>
                       </div>
                       <div class="mt-3">1200 Point</div>
                       <div>
@@ -66,7 +66,7 @@
                   <b-row class="text-center">
                     <b-col sm="4" cols="4">
                       <div>
-                        <b-img src="/static/img/logo-symbol.png" fluid center/>
+                        <b-img src="/static/img/logo-symbol.png" width="95" fluid center/>
                       </div>
                       <div class="mt-3">{{ tokens }} Cherry</div>
                     </b-col>
@@ -80,7 +80,7 @@
                       <div class="mt-3">{{ (tokens / 2200 ).toFixed(3) }} ETH</div>
                     </b-col>
                   </b-row>
-                   <b-row class="mt-4 mb-2">
+                  <b-row class="mt-4 mb-2">
                     <b-col>
                       <b-img src="/static/img/wallet.png" fluid center/>
                     </b-col>
