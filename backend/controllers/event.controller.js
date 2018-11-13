@@ -10,9 +10,11 @@ var Event = require('../models/event.model');
 function list(req, res, next) {
     const { limit = 50, skip = 0, q = {}} = req.query;
     if(req.query.from) {
+      //FIXME
       q.from = req.query.from
     }
     if(req.query.to) {
+      //FIXME
       q.to = req.query.to
     }
     Event.list({ limit, skip, q })
@@ -30,7 +32,7 @@ function list(req, res, next) {
     const actionType = req.actionType;
     const tx = req.tx;
 
-    console.info('Event=>', from, to, tokens, actionType, tx)
+    console.info('New event=> from: %s, to: %s, tokens: %s, actionType: %s, tx: %s', from, to, tokens, actionType, tx);
 
     const event = new Event({
       actionType: actionType,
