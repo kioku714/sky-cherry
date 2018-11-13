@@ -14,7 +14,7 @@ const router = express.Router();
 //   .post(contractCtrl.transfer)
 
 router.route('/tokenExchange')
-  .post(auth, contractCtrl.tokenExchange, function(req, res) {
+  .post(contractCtrl.tokenExchange, function(req, res) {
     res.json(req.response)
   });
 

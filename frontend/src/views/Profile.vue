@@ -278,12 +278,12 @@ export default {
         .then((response) => {
           this.profile = response.data
 
-          this.form.occupation = response.data.occupation
-          this.form.familyType = response.data.familyType
-          this.form.interest = response.data.interest
-          this.form.monthlyIncome = response.data.monthlyIncome
-          this.form.assets = response.data.assets
-          this.form.incomeManagement = response.data.incomeManagement
+          this.form.occupation = response.data.occupation || this.$store.state.occupation[0].value
+          this.form.familyType = response.data.familyType || this.$store.state.familyType[0].value
+          this.form.interest = response.data.interest || this.$store.state.interest[0].value
+          this.form.monthlyIncome = response.data.monthlyIncome || this.$store.state.monthlyIncome[0].value
+          this.form.assets = response.data.assets || this.$store.state.assets[0].value
+          this.form.incomeManagement = response.data.incomeManagement || this.$store.state.incomeManagement[0].value
           this.form.description = response.data.description
         })
     },

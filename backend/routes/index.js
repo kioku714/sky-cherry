@@ -25,12 +25,12 @@ router.use('/auth', authRoutes);
 router.use('/news', newsRoutes);
 
 // mount question routes at /questions
-router.use('/questions', questionRoutes);
+router.use('/questions', auth, questionRoutes);
 
 // mount contract routes at /contracts
-router.use('/contracts', contractRoutes);
+router.use('/contracts', auth, contractRoutes);
 
-// mount auth routes at /users
+// mount user routes at /users
 router.use('/users', auth, userRoutes);
 
 // mount answer routes at /answers
