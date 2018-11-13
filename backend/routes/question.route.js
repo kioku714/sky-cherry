@@ -16,8 +16,7 @@ router.route('/')
   // GET /api/questions - Get list of question
   .get(questionCtrl.list)
   // POST /api/questions - Create new question
-  .post(auth, 
-    function(req, res, next) {
+  .post(function(req, res, next) {
       req.tokens = 4, req.actionType = actionType.QUESTION, next();
     },
     validate({}), questionCtrl.create, 
