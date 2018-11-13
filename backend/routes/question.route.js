@@ -4,28 +4,26 @@ var questionCtrl = require('../controllers/question.controller');
 var answerCtrl = require('../controllers/answer.controller');
 var contractCtrl = require('../controllers/contract.controller');
 var eventCtrl = require('../controllers/event.controller');
-var expressJwt = require('express-jwt');
 var paramValidation = require('../config/param-validation');
-var config = require('../config/config');
 var actionType = require('../helpers/Type').actionType;
 
 const router = express.Router();
-const auth = expressJwt({secret: config.jwtSecret, requestProperty: 'decoded'})
 
 router.route('/')
   // GET /api/questions - Get list of question
   .get(questionCtrl.list)
   // POST /api/questions - Create new question
-  .post(auth, 
-    function(req, res, next) {
-      req.tokens = 4, req.actionType = actionType.QUESTION, next();
+  .post((req, res, next) => {
+      req.actionType = actionType.QUESTION;
+      req.from = req.decoded._id;
+      req.to = req.decoded.system_id;
+      req.tokens = 4;
+      next();
     },
-    validate({}), questionCtrl.create, 
-    validate(paramValidation.sendTokensToSystem), contractCtrl.sendTokensToSystem, 
+    validate(paramValidation.createQuestion), questionCtrl.create, 
+    validate(paramValidation.sendTokens), contractCtrl.sendTokens, 
     validate(paramValidation.createEvent), eventCtrl.create,
-    function(req, res) {
-      res.json(req.savedQuestion);
-    });
+    (req, res) => res.json(req.savedQuestion));
 
 router.route('/:questionId')
   // GET /api/questions/:questionId - Get question

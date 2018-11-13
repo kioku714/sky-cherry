@@ -39,7 +39,8 @@ async function create(req, res, next) {
     });
 
     like.save()
-        .then(() => {
+        .then((savedLike) => {
+            req.savedLike = savedLike;
             next();
         });
 }

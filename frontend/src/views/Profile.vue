@@ -118,11 +118,11 @@
               </b-row>
             </b-tab>
             <b-tab title="알림">
-              <!-- <b-list-group v-if="!notifications.length" flush>
+              <b-list-group v-if="!notifications.length" flush>
                 <b-list-group-item>
                     <span class="text-muted">활동 내역이 없습니다.</span>
                 </b-list-group-item>
-              </b-list-group> -->
+              </b-list-group>
               <b-list-group v-for="notification in notifications" :key="notification.id" flush>
                 <b-list-group-item v-if="notification.answer">
                   <b-link class="text-success" :to="{ name: '프로필', params: { userId: notification.answer.createdBy._id }}">{{ notification.answer.createdBy.name }}</b-link><span class="text-muted">님이 당신의 질문에 답하였습니다.</span>
@@ -135,14 +135,6 @@
                   <span class="text-warning">{{ $moment.utc(notification.like.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
-              <!-- <b-list-group flush>
-                <b-list-group-item>
-                  <span class="text-success">blossommmm</span><span class="text-muted">님이 당신의 질문에 답하였습니다.</span> "제 보험 한번만 봐주세요.." <span class="text-warning">2 hours ago</span>
-                </b-list-group-item>
-                <b-list-group-item>
-                  <span class="text-success">blossommmm</span><span class="text-muted">님이 당신의 질문에 답하였습니다.</span> "제 보험 한번만 봐주세요.." <span class="text-warning">2 hours ago</span>
-                </b-list-group-item>
-              </b-list-group> -->
             </b-tab>
             <b-tab title="질문" >
               <b-list-group v-if="!questions.length" flush>
@@ -206,14 +198,14 @@
               </b-list-group>
             </b-tab>
             <b-tab title="Cherry">
-              <b-list-group v-if="!logs.length" flush>
+              <b-list-group v-if="!events.length" flush>
                 <b-list-group-item>
                     <span class="text-muted">활동 내역이 없습니다.</span>
                 </b-list-group-item>
               </b-list-group>
-              <b-list-group v-for="log in logs" :key="log.id" flush>
+              <b-list-group v-for="event in events" :key="event.id" flush>
                 <b-list-group-item>
-                    // TODO
+                    {{ event }}
                 </b-list-group-item>
               </b-list-group>
             </b-tab>
@@ -242,6 +234,7 @@ export default {
     this.fetchAnswers()
     this.fetchLikes()
     this.fetchComments()
+    this.fetchEvents()
   },
   data () {
     return {
@@ -252,7 +245,7 @@ export default {
       answers: [],
       likes: [],
       comments: [],
-      logs: [],
+      events: [],
       form: {
         occupation: '',
         familyType: '',
@@ -278,12 +271,12 @@ export default {
         .then((response) => {
           this.profile = response.data
 
-          this.form.occupation = response.data.occupation
-          this.form.familyType = response.data.familyType
-          this.form.interest = response.data.interest
-          this.form.monthlyIncome = response.data.monthlyIncome
-          this.form.assets = response.data.assets
-          this.form.incomeManagement = response.data.incomeManagement
+          this.form.occupation = response.data.occupation || this.$store.state.occupation[0].value
+          this.form.familyType = response.data.familyType || this.$store.state.familyType[0].value
+          this.form.interest = response.data.interest || this.$store.state.interest[0].value
+          this.form.monthlyIncome = response.data.monthlyIncome || this.$store.state.monthlyIncome[0].value
+          this.form.assets = response.data.assets || this.$store.state.assets[0].value
+          this.form.incomeManagement = response.data.incomeManagement || this.$store.state.incomeManagement[0].value
           this.form.description = response.data.description
         })
     },
@@ -345,16 +338,16 @@ export default {
     fetchComments () {
       this.comments = []
     },
-    fetchLogs () {
-      this.logs = []
-      this.$http.get('/api/logs', {
+    fetchEvents () {
+      this.events = []
+      this.$http.get('/api/events', {
         params: {
           from: this.$route.params.userId,
           to: this.$route.params.userId
         }
       })
         .then((response) => {
-          this.logs = response.data
+          this.events = response.data
         })
     },
     updateProfile () {
