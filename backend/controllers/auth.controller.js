@@ -15,13 +15,15 @@ var web3 = new Web3(config.web3Provider);
  * @returns {*}
  */
 
-function login(req, res, next) {
+async function login(req, res, next) {
+  const system = await User.getByEmail(config.system.account);
   User.getByEmail(req.body.email)
     .then((user) => {
       var walletInfo = web3.eth.accounts.decrypt(user.keyStore, req.body.password);
       var options = {expiresIn: 60*60*24};
       const token = jwt.sign({
         _id: user._id,
+        system_id: system._id,
         address: walletInfo.address,
         walletInfo: walletInfo
       }, config.jwtSecret, options);

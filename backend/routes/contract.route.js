@@ -6,20 +6,24 @@ const auth = expressJwt({secret: config.jwtSecret, requestProperty: 'decoded'})
 
 const router = express.Router();
 
-router.route('/tokens')
-  .get(contractCtrl.getTotalTokens)
-  .post(contractCtrl.sendTokens)
+// router.route('/tokens')
+//   .get(contractCtrl.getTotalTokens)
+//   .post(contractCtrl.sendTokens)
 
-router.route('/transfer')
-  .post(contractCtrl.transfer)
+// router.route('/transfer')
+//   .post(contractCtrl.transfer)
 
 router.route('/tokenExchange')
-  .post(auth, contractCtrl.tokenExchange)
+  .post(auth, contractCtrl.tokenExchange, function(req, res) {
+    res.json(req.response)
+  });
 
-router.route('/approval')
-  .post(contractCtrl.approval)
+// router.route('/approval')
+//   .post(contractCtrl.approval)
   
 router.route('/receipts')
-  .get(contractCtrl.getReceiptList)
+  .get(contractCtrl.getReceiptList, function(req, res) {
+    res.json(req.response)
+  });
 
 module.exports = router;
