@@ -481,11 +481,11 @@ export default {
     changeSymbol: function (event) {
       var target = JSON.parse(JSON.stringify(event.target))
       console.log(target._prevClass.includes('plus'))
-      if (target._prevClass.includes('plus')) {
-        event.target = '<i class="fa fa-close"/>'
-      } else {
-        event.target = '<i class="fa fa-plus"/>'
-      }
+      // if (target._prevClass.includes('plus')) {
+      //   event.target = '<i class="fa fa-close"/>'
+      // } else {
+      //   event.target = '<i class="fa fa-plus"/>'
+      // }
     }
   }
 }
