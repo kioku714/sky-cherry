@@ -17,6 +17,8 @@ var config = require('./config/config');
 
 var indexRouter = require('./routes/index');
 
+require('./helpers/Initialize');
+
 var app = express();
 
 if (config.env === 'development') {
