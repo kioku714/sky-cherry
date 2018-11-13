@@ -31,7 +31,7 @@
                         label-for="genderAndAge"
                         :label-cols="3"
                         :horizontal="true">
-                        <b-form-input plaintext id="genderAndAge" type="text" v-bind:value="('male' === profile.gender ? '남' : '여') + '/' + age"></b-form-input>
+                        <b-form-input plaintext id="genderAndAge" type="text" v-bind:value="('male' === profile.gender ? '남' : '여') + '/' + $moment({}).diff($moment(profile.birthday), 'years')"></b-form-input>
                       </b-form-group>
                     </b-col>
                     <b-col sm="6">
@@ -118,14 +118,31 @@
               </b-row>
             </b-tab>
             <b-tab title="알림">
-              <b-list-group flush>
+              <!-- <b-list-group v-if="!notifications.length" flush>
                 <b-list-group-item>
-                  <span class="text-success">blossommmm</span><span class="text-muted">님이 당신의 질문에 답하였습니다.</span> "제 보험 한번만 봐주세요.." <span class="text-warning">2 hours ago</span>
+                    <span class="text-muted">활동 내역이 없습니다.</span>
                 </b-list-group-item>
-                <b-list-group-item>
-                  <span class="text-success">blossommmm</span><span class="text-muted">님이 당신의 질문에 답하였습니다.</span> "제 보험 한번만 봐주세요.." <span class="text-warning">2 hours ago</span>
+              </b-list-group> -->
+              <b-list-group v-for="notification in notifications" :key="notification.id" flush>
+                <b-list-group-item v-if="notification.answer">
+                  <b-link class="text-success" :to="{ name: '프로필', params: { userId: notification.answer.createdBy._id }}">{{ notification.answer.createdBy.name }}</b-link><span class="text-muted">님이 당신의 질문에 답하였습니다.</span>
+                  <b-link class="text-dark" :to="{ name: '질문 상세', params: { questionId: notification._id }}">"{{ notification.title }}"</b-link>
+                  <span class="text-warning">{{ $moment.utc(notification.answer.createdAt).local().fromNow() }}</span>
+                </b-list-group-item>
+                <b-list-group-item v-else>
+                  <b-link class="text-success" :to="{ name: '프로필', params: { userId: notification.like.createdBy._id }}">{{ notification.like.createdBy.name }}</b-link><span class="text-muted">님이 당신의 질문을 좋아합니다.</span>
+                  <b-link class="text-dark" :to="{ name: '질문 상세', params: { questionId: notification._id }}">"{{ notification.title }}"</b-link>
+                  <span class="text-warning">{{ $moment.utc(notification.like.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
+              <!-- <b-list-group flush>
+                <b-list-group-item>
+                  <span class="text-success">blossommmm</span><span class="text-muted">님이 당신의 질문에 답하였습니다.</span> "제 보험 한번만 봐주세요.." <span class="text-warning">2 hours ago</span>
+                </b-list-group-item>
+                <b-list-group-item>
+                  <span class="text-success">blossommmm</span><span class="text-muted">님이 당신의 질문에 답하였습니다.</span> "제 보험 한번만 봐주세요.." <span class="text-warning">2 hours ago</span>
+                </b-list-group-item>
+              </b-list-group> -->
             </b-tab>
             <b-tab title="질문" >
               <b-list-group v-if="!questions.length" flush>
@@ -135,8 +152,8 @@
               </b-list-group>
               <b-list-group v-for="question in questions" :key="question.id" flush>
                 <b-list-group-item>
-                  <b-link :to="{ name: '질문 상세', params: { questionId: question._id }}">{{ question.title }}</b-link>
-                  <span class="text-muted">{{ getDescription(question.description) }}<b-link v-show="question.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: question._id }}">more</b-link></span>
+                  <b-link class="text-dark" :to="{ name: '질문 상세', params: { questionId: question._id }}">"{{ question.title }}"</b-link>
+                  <span class="text-muted">{{ getDescription(question.description) }}<b-link class="text-muted" v-show="question.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: question._id }}">more</b-link></span>
                   <span class="text-warning">{{ $moment.utc(question.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
@@ -149,8 +166,8 @@
               </b-list-group>
               <b-list-group v-for="answer in answers" :key="answer.id" flush>
                 <b-list-group-item>
-                  <b-link :to="{ name: '질문 상세', params: { questionId: answer.question._id }}">{{ answer.question.title }}</b-link>
-                  <span class="text-muted">{{ getDescription(answer.description) }}<b-link v-show="answer.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: answer.question._id }}">more</b-link></span>
+                  <b-link class="text-dark" :to="{ name: '질문 상세', params: { questionId: answer.question._id }}">"{{ answer.question.title }}"</b-link>
+                  <span class="text-muted">{{ getDescription(answer.description) }}<b-link class="text-muted" v-show="answer.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: answer.question._id }}">more</b-link></span>
                   <span class="text-warning">{{ $moment.utc(answer.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
@@ -163,15 +180,15 @@
               </b-list-group>
               <b-list-group v-for="like in likes" :key="like.id" flush>
                 <b-list-group-item v-if="like.questionOrAnswerModel === 'Question'">
-                    <span class="text-success">{{ like.questionOrAnswer.createdBy.name }}</span><span class="text-muted">님의 질문을 좋아합니다.</span>
-                    <b-link :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer._id }}">"{{ like.questionOrAnswer.title }}"</b-link>
-                    <span class="text-muted">{{ getDescription(like.questionOrAnswer.description) }}<b-link v-show="like.questionOrAnswer.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer._id }}">more</b-link></span>
+                    <b-link class="text-success" :to="{ name: '프로필', params: { userId: like.questionOrAnswer.createdBy._id }}">{{ like.questionOrAnswer.createdBy.name }}</b-link><span class="text-muted">님의 질문을 좋아합니다.</span>
+                    <b-link class="text-dark" :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer._id }}">"{{ like.questionOrAnswer.title }}"</b-link>
+                    <span class="text-muted">{{ getDescription(like.questionOrAnswer.description) }}<b-link class="text-muted" v-show="like.questionOrAnswer.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer._id }}">more</b-link></span>
                     <span class="text-warning">{{ $moment.utc(like.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
                 <b-list-group-item v-else>
-                    <span class="text-success">{{ like.questionOrAnswer.createdBy.name }}</span><span class="text-muted">님의 답변을 좋아합니다.</span>
-                    <b-link :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer.question._id }}">"{{ like.questionOrAnswer.question.title }}"</b-link>
-                    <span class="text-muted">{{ getDescription(like.questionOrAnswer.description) }}<b-link v-show="like.questionOrAnswer.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer.question._id }}">more</b-link></span>
+                    <b-link class="text-success" :to="{ name: '프로필', params: { userId: like.questionOrAnswer.createdBy._id }}">{{ like.questionOrAnswer.createdBy.name }}</b-link><span class="text-muted">님의 답변을 좋아합니다.</span>
+                    <b-link class="text-dark" :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer.question._id }}">"{{ like.questionOrAnswer.question.title }}"</b-link>
+                    <span class="text-muted">{{ getDescription(like.questionOrAnswer.description) }}<b-link class="text-muted" v-show="like.questionOrAnswer.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer.question._id }}">more</b-link></span>
                     <span class="text-warning">{{ $moment.utc(like.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
@@ -220,6 +237,7 @@ export default {
 
     this.fetchProfile()
     this.fetchTokens()
+    this.fetchNotifications()
     this.fetchQuestions()
     this.fetchAnswers()
     this.fetchLikes()
@@ -243,8 +261,7 @@ export default {
         assets: '',
         incomeManagement: '',
         description: ''
-      },
-      age: 0
+      }
     }
   },
   methods: {
@@ -268,13 +285,28 @@ export default {
           this.form.assets = response.data.assets
           this.form.incomeManagement = response.data.incomeManagement
           this.form.description = response.data.description
-          this.age = this.getAge()
         })
     },
     fetchTokens () {
       this.$http.get('/api/users/' + this.$route.params.userId + '/tokens')
         .then((response) => {
           this.tokens = response.data.tokens
+        })
+    },
+    fetchNotifications () {
+      this.notifications = []
+      this.$http.get('/api/notifications')
+        .then((response) => {
+          this.notifications = response.data
+        }).then(() => {
+          var self = this
+          this.notifications = this.notifications.slice().sort(function (a, b) {
+            var compare1 = b.answer ? b.answer.createdAt : b.like.createdAt
+            var compare2 = a.answer ? a.answer.createdAt : a.like.createdAt
+            return self.$moment(compare1).valueOf() - self.$moment(compare2).valueOf()
+          })
+        }).catch((e) => {
+          console.error(e)
         })
     },
     fetchQuestions () {
@@ -330,11 +362,6 @@ export default {
         .then((response) => {
           this.fetchProfile()
         })
-    },
-    getAge () {
-      var ageDifMs = Date.now() - new Date(this.profile.birthday).getTime()
-      var ageDate = new Date(ageDifMs) // miliseconds from epoch
-      return Math.abs(ageDate.getUTCFullYear() - 1970)
     }
   }
 }

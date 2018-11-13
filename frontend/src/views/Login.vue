@@ -52,6 +52,8 @@ export default {
               this.$session.start()
               this.$session.set('user-token', response.data.token)
               this.$session.set('user-id', response.data._id)
+              this.$session.set('user-name', response.data.name)
+              this.$session.set('user-email', response.data.email)
               this.$http.defaults.headers.common['Authorization'] = response.data.token
               this.$router.push('/')
             }

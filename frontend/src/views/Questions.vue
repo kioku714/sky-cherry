@@ -1,22 +1,22 @@
 <template>
   <div class="animated fadeIn">
-    <b-form-input class="mb-4" type="text" v-model="search" placeholder="Search for questions"></b-form-input>
+    <b-form-input class="border-success mb-4" type="text" v-model="search" placeholder="Search for questions" style="background: url('/static/img/magnifying-glass.png') no-repeat center; background-size: 26px 26px; background-position: right 13px center; padding: 8px 48px 8px 8px;"></b-form-input>
     <div v-for="question in filteredList" :key="question._id">
       <div class="new-question grid-item">
         <div class="content">
           <!-- 사용자 닉네임, 질문 생성 시간  -->
-          <span class="question-owner text-muted">
-            <a class="username-link" v-bind:href="'/profiles/' + question.createdBy[0]._id">{{ question.createdBy[0].name }}</a>
+          <span class="question-owner">
+            <a class="text-success" v-bind:href="'/profiles/' + question.createdBy._id">{{ question.createdBy.name }}</a>
             {{ $moment.utc(question.createdAt).local().fromNow() }}
           </span>
           <!-- 질문 제목 -->
-          <h4 class="mt-2">
-            <a class="text-body" v-bind:href="'/question/' + question._id">{{ question.title }}</a>
-          </h4>
+          <h3 class="mt-2">
+            <a class="text-dark" v-bind:href="'/question/' + question._id">{{ question.title }}</a>
+          </h3>
           <!-- 질문 상세 내용, more 링크 -->
           <div class="mt-2">
             {{ getDescription(question.description) }}
-            <a v-show="question.description.length > maxDescriptionLength" class="more-link" v-bind:href="'/question/' + question._id">more</a>
+            <a v-show="question.description.length > maxDescriptionLength" class="text-info" v-bind:href="'/question/' + question._id">more</a>
           </div>
           <!-- Tags -->
           <div class="d-flex">
@@ -75,7 +75,7 @@ export default {
         return this.listItems
       }
       return this.questions.filter(question => {
-        return question.title.toLowerCase().includes(this.search.toLowerCase()) || striptags(question.description).toLowerCase().includes(this.search.toLowerCase()) || question.createdBy[0].name.toLowerCase().includes(this.search.toLowerCase()) || question.tags.includes(this.search.toLowerCase())
+        return question.title.toLowerCase().includes(this.search.toLowerCase()) || striptags(question.description).toLowerCase().includes(this.search.toLowerCase()) || question.createdBy.name.toLowerCase().includes(this.search.toLowerCase()) || question.tags.includes(this.search.toLowerCase())
       })
     }
   },

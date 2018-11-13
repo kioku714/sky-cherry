@@ -26,12 +26,7 @@ const AnswerSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Question',
         required: true
-    },
-    likes: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Like',
-        required: false
-    }]
+    }
 });
 
 /**
@@ -50,9 +45,51 @@ AnswerSchema.statics = {
      * @param {number} limit - Limit number of answers to be returned.
      * @returns {Promise<Answer[]>}
      */
-    list({ skip = 0, limit = 50 } = {}) {
-      return this.find()
-        .populate('question')
+    list({ skip = 0, limit = 50, q = {} } = {}) {
+        var aggr = [];
+        if(q.createdBy) {
+            aggr.push({
+                $match: {'createdBy': mongoose.Types.ObjectId(q.createdBy)}
+            })
+        }
+        if(q.question) {
+            aggr.push({
+                $match: {'question': mongoose.Types.ObjectId(q.question)}
+            })
+        }
+        aggr.push({
+            $lookup: { 
+                from: 'questions', 
+                localField: 'question', 
+                foreignField: '_id', 
+                as: 'question' 
+            }
+        },{
+            $unwind: {
+                path: '$question',
+                preserveNullAndEmptyArrays: true
+            }
+        },{
+            $lookup: { 
+                from: 'skycherryusers', 
+                localField: 'createdBy', 
+                foreignField: '_id', 
+                as: 'createdBy' 
+            }
+        },{
+            $unwind: {
+                path: '$createdBy',
+                preserveNullAndEmptyArrays: true
+            }
+        },{
+            $lookup: { 
+                from: 'likes', 
+                localField: '_id', 
+                foreignField: 'questionOrAnswer', 
+                as: 'likes' 
+            }
+        })
+        return this.aggregate(aggr)
         .sort({ createdAt: -1 })
         .skip(+skip)
         .limit(+limit)

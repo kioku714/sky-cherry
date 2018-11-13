@@ -1,14 +1,25 @@
-// // Here you can add other styles
+// Here you can add other styles
 body { 
     background-color: #FEFBF4;
 }
 
-// .nav { 
-//     background-color: #FEFBF4;
-// }
+.main {
+    margin-bottom: 30px;
+}
 
+.main .breadcrumb {
+    color: #4c3926;
+}
+
+.app-footer {
+    display: none;
+}
 .app .app-header, .app-header.navbar .navbar-brand {
     background-color: #FEFBF4;
+}
+
+.app-header.navbar .nav-item {
+    min-width: 30px;
 }
 
 .brand-minimized .app-header.navbar .navbar-brand {
@@ -27,17 +38,54 @@ body {
     background-color: #FEFBF4;
 }
 
-// h1, h2, h3, h4 { 
-//     color: #4c3926; 
-// }
+.header-icon-text {
+    border-radius: 100%;
+    color: white;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    text-align: center;
+}
 
-// // .sidebar .nav-link {
-// //     color: #4c3926;
-// // }
+h1, h2, h3, h4 { 
+    color: #4c3926; 
+}
 
-// .sidebar-nav a {
-//     color: #ad2552;
-// }
+.question .like, .live .like {
+    color: #ad2552;
+}
+
+.question .like a:hover {
+    text-decoration: none;
+}
+
+.question .question-tag {
+    border-radius: .25rem;
+    border: solid 1px #8894a5;
+    line-height: .75rem;
+    margin-bottom: 3px;
+    margin-right: 5px;
+    padding: .25rem 1.35rem .25rem 1rem;
+    display: inline-block;
+    position: relative;
+    font-size: 12px;
+    color: #3c4859;
+}
+
+.transfer-button {
+    width: 150px;
+    margin-top: 30px;
+    border: 0px;
+    background-color: #4c3926;
+    color: white;
+    border-radius: .3rem
+}
+
+.word-wrap {
+    word-wrap: break-word;         /* All browsers since IE 5.5+ */
+    overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+    width: 100%;
+}
 
 // .list_p1 .a {
 //     text-decoration: none;
@@ -105,30 +153,8 @@ body {
 //     height: 28px;
 // }
 
-// .photo_info {
-//     padding: 10px 0 0 15px;
-//     font-size: 13px;
-//     text-align: right;
-//     color: #999;
-// }
-
 // .textBody {
 //     margin-top: 30px;
-// }
-
-// .username-link {
-//     font-weight: bold;
-//     color: #17BEBB;
-// }
-
-// .question {
-//     margin: auto;
-// }
-
-// .question-username-link {
-//     font-weight: bold;
-//     color: #17BEBB;
-//     font-size: 18px;
 // }
 
 // .question-owner {
@@ -136,178 +162,4 @@ body {
 //     display: block;
 //     margin-bottom: 5px;
 //     color: #7E8184;
-// }
-
-// .question-header a {
-//     text-decoration: none;
-//     background-color: transparent;
-//     color: #222933;
-// }
-
-// .question-body {
-//     color: #3c4859;
-//     margin-top: 0px;
-//     font-size: 18px;
-//     word-break: break-word;
-//     line-height: 23px;
-// }
-
-// .tags-container, .oq_tags_container {
-//     margin-bottom: 12px;
-// }
-
-// .question-tag {
-//     font-size: 12px;
-//     border-radius: .5rem;
-//     border: solid 1px #8894a5;
-//     padding: .25rem 1.35rem .25rem 1rem;
-//     line-height: .75rem;
-//     margin-right: 5px;
-//     display: inline-block;
-//     position: relative;
-//     color: #3c4859;
-//     margin-bottom: 3px;
-// }
-
-// .questions-tag {
-//     font-size: 12px;
-//     border-radius: .5rem;
-//     line-height: .75rem;
-//     margin-right: 5px;
-//     display: inline-block;
-//     position: relative;
-//     color: #3c4859;
-//     margin-bottom: 3px;
-// }
-
-// .karma-icon-container {
-//     color: #ad2552;
-//     margin-bottom: 12px;
-// }
-
-// .question-icon-container {
-//     margin-right: 16px;
-//     position: relative;
-// }
-
-// .main .breadcrumb {
-//     color: #4c3926;
-// }
-
-// .app-header.navbar .nav-item {
-//     min-width: 30px;
-// }
-
-// hr {
-//     border: 0.5px solid lightgrey;
-//     margin-top: 0px;
-// }
-
-// .field {
-//     margin-top: 5px;
-//     color: #0170ba;
-// }
-
-// .answer-description {
-//     margin: 20px 0px 0px 10px;
-// }
-
-// .likes {
-//     color: #ad2552;
-// }
-
-// .likes a:hover {
-//     text-decoration: none;
-// }
-
-// .rating {
-//     margin: 40px 0px;
-// }
-
-// .list-group-flush .list-group-item {
-//     border: 0;
-// }
-
-// .list-group-item {
-//     background-color: #FEFBF4;
-//     padding: 0px;
-// }
-
-// .button-comment {
-//     margin: 10px 0px 20px 0px;
-//     border-radius: .3rem
-// }
-
-// .quillWrapper {
-//     background-color: white;
-// }
-
-// .profile-title {
-//     font-weight: bold;
-//     font-size: 18px;
-//     color: #ad2552;
-// }
-
-// .profile-content {
-//     padding: 0px 20px;
-// }
-
-// .profile-content .row {
-//     padding: 3px 0px;
-// }
-
-// .transfer-title {
-//     margin-top: 20px;
-// }
-
-// .transfer-content {
-//     margin: auto;
-//     padding-top: 20px;
-// }
-
-// .trasfer-cherry {
-//     width: 70px;
-// }
-
-// .trasfer-arrow {
-//     width: 90px;
-//     margin-top: 15px;
-// }
-
-// .trasfer-money {
-//     width: 80px;
-// }
-
-// .transfer-text {
-//     margin-top: 15px;
-// }
-
-// .transfer-content input {
-//     width: 70px;
-// }
-
-// .transfer-input {
-//     margin-top: 10px;
-//     display: inline-block;
-// }
-
-// .transfer-button {
-//     width: 150px;
-//     margin-top: 30px;
-//     border: 0px;
-//     background-color: #4c3926;
-//     color: white;
-//     border-radius: .3rem
-// }
-
-// .search-input {
-//     width: 100%;
-//     font-size: 20px;
-//     background: url('/static/img/logo-symbol.png') no-repeat center;
-//     background-size: 26px 26px;
-//     background-position: right 13px center;
-//     padding: 8px 48px 8px 8px;
-//     border: solid 2px #17BEBB;
-//     line-height: 23px;
-//     margin-bottom: 20px
 // }
