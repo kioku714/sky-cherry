@@ -1,41 +1,43 @@
 <template>
   <div class="animated fadeIn">
-    <b-form-input class="border-success mb-4" type="text" v-model="search" placeholder="Search for questions" style="background: url('/static/img/magnifying-glass.png') no-repeat center; background-size: 26px 26px; background-position: right 13px center; padding: 8px 48px 8px 8px;"></b-form-input>
+    <b-form-input class="mb-4" type="text" v-model="search" placeholder="Search for questions"  v-bind:style="{borderColor: '#30CE92'}" style="background: url('/static/img/magnifying-glass.png') no-repeat center; background-size: 26px 26px; background-position: right 13px center; padding: 8px 48px 8px 8px; border-color: '#30CE92';"></b-form-input>
     <div v-for="question in filteredList" :key="question._id">
       <div class="new-question grid-item">
         <div class="content">
           <!-- 사용자 닉네임, 질문 생성 시간  -->
-          <span class="question-owner">
-            <a class="text-success" v-bind:href="'/profiles/' + question.createdBy._id">{{ question.createdBy.name }}</a>
-            {{ $moment.utc(question.createdAt).local().fromNow() }}
+          <span>
+            <a v-bind:style="{color: '#30CE92', fontWeight: 'bold'}" v-bind:href="'/profiles/' + question.createdBy._id">{{ question.createdBy.name }}</a>
           </span>
+          <span class="text-muted">{{ $moment.utc(question.createdAt).local().fromNow() }}</span>
           <!-- 질문 제목 -->
-          <h3 class="mt-2">
-            <a class="text-dark" v-bind:href="'/question/' + question._id">{{ question.title }}</a>
-          </h3>
+          <h4 class="mt-2">
+            <a v-bind:href="'/question/' + question._id" v-bind:style="{color: '#4c3926'}">{{ question.title }}</a>
+          </h4>
           <!-- 질문 상세 내용, more 링크 -->
-          <div class="mt-2">
+          <div class="mt-2" v-bind:style="{color: '#4c3926'}">
             {{ getDescription(question.description) }}
-            <a v-show="question.description.length > maxDescriptionLength" class="text-info" v-bind:href="'/question/' + question._id">more</a>
+            <a v-show="question.description.length > maxDescriptionLength" v-bind:href="'/question/' + question._id" v-bind:style="{color: '#0170ba'}">more</a>
           </div>
           <!-- Tags -->
           <div class="d-flex">
-            <div class="mr-1" v-for="tag in question.tags" :key="tag">
+            <div class="mr-1" v-for="tag in question.tags" :key="tag" v-bind:style="{color: '#4c3926'}">
               #{{ tag }}
             </div>
           </div>
           <!-- 좋아요, 코멘트 -->
           <div class="d-flex mt-3">
-            <i class="icon-heart icons font-1xl d-block mr-3 text-danger"> {{ question.likes.length }}</i>
+            <i class="icon-heart icons font-1xl d-block mr-3 like"> {{ question.likes.length }}</i>
             <i class="icon-menu icons font-1xl d-block text-muted"> {{ question.answers.length }}</i>
           </div>
           <hr>
         </div>
       </div>
     </div>
-    <div class="col-6 col-sm-4 col-md mb-3 mb-xl-0 text-center">
-      <button class="btn btn-secondary btn-lg btn-block" type="button" v-show="(distance < questions.length) && (search.length == 0)" @click="manualLoad" >Load more</button>
-    </div>
+    <b-row>
+      <b-col sm="4" v-bind:style="{margin: 'auto'}">
+        <button v-bind:style="{borderRadius: '.3rem'}" class="btn btn-light btn-lg btn-block" type="button" v-show="(distance < questions.length) && (search.length == 0)" @click="manualLoad" >Load more</button>
+      </b-col>
+    </b-row>
     <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading">
         <span slot="no-more"/>
         <span slot="no-results"/>

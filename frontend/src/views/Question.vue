@@ -7,11 +7,11 @@
             <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
           </div>
           <div v-else class="header-icon-text" v-bind:style="{ background: getBgColor(question.createdBy.email) }">
-              {{ question.createdBy.name.substring(0, 1) }}
+              {{ questionUserName }}
           </div>
         </b-col>
         <b-col>
-          <a v-bind:style="{color: '#17BEBB', fontWeight: 'bold'}" v-bind:href="'/profiles/' + question.createdBy._id">
+          <a v-bind:style="{color: '#30CE92', fontWeight: 'bold'}" v-bind:href="'/profiles/' + question.createdBy._id">
             {{ question.createdBy.name }}
           </a>
           <span v-bind:style="{ color: getLevelColor(question.createdBy.level) }">
@@ -27,17 +27,17 @@
     </div>
     <b-row>
       <b-col sm="10" cols="9">
-        <h3>{{ question.title }}</h3>
+        <h4>{{ question.title }}</h4>
       </b-col>
       <b-col>
-        <h3 class="like text-right">
+        <h4 class="like text-right">
           <div v-if="question.createdBy._id !== signInUserId" >
             <b-link v-on:click="likeQuestion(question._id)"><i class="fa fa-heart" /> {{ question.likes.length }}</b-link>
           </div>
           <div v-else>
             <i class="fa fa-heart" /> {{ question.likes.length }}
           </div>
-        </h3>
+        </h4>
       </b-col>
     </b-row>
     <hr>
@@ -117,7 +117,7 @@
             </div>
           </b-col>
           <b-col sm="9" cols="6">
-            <a v-bind:style="{color: '#17BEBB', fontWeight: 'bold'}" v-bind:href="'/profiles/' + answer.createdBy._id">
+            <a v-bind:style="{color: '#30CE92', fontWeight: 'bold'}" v-bind:href="'/profiles/' + answer.createdBy._id">
               {{ answer.createdBy.name}}
             </a>
             <span v-bind:style="{ color: getLevelColor(answer.createdBy.level) }">
@@ -127,14 +127,14 @@
             {{ $moment.utc(answer.createdAt).local().fromNow() }} / SI: {{ answer.createdBy.si}}
           </b-col>
           <b-col>
-            <h3 class="like text-right">
+            <h4 class="like text-right">
               <div v-if="answer.createdBy._id !== signInUserId" >
                 <b-link v-on:click="likeAnswer(answer._id)"><i class="fa fa-heart" /> {{ answer.likes.length }}</b-link>
               </div>
               <div v-else>
                 <i class="fa fa-heart" /> {{ answer.likes.length }}
               </div>
-            </h3>
+            </h4>
           </b-col>
         </b-row>
         <b-row class="mt-3 mx-3">
@@ -219,6 +219,7 @@ export default {
       email: '',
       text: '',
       signInUserId: '',
+      questionUserName: '',
       question: {
         createdBy: [''],
         likes: [],
@@ -240,18 +241,14 @@ export default {
       this.$http.get('/api/questions/' + this.$route.params.questionId)
         .then((response) => {
           this.question = response.data
+          this.questionUserName = (this.question.createdBy.name !== '') ? this.question.createdBy.name.substring(0, 1) : ''
           this.signInUserId = this.$session.get('user-id')
           // console.log(JSON.stringify(this.question))
         })
     },
     fetchAnswers () {
       this.answers = []
-      this.$http.get('/api/questions/' + this.$route.params.questionId + '/answers', {
-      // this.$http.get('/api/answers', {
-        // params: {
-        //   createdBy: this.$route.params.userId
-        // }
-      })
+      this.$http.get('/api/questions/' + this.$route.params.questionId + '/answers')
         .then((response) => {
           this.answers = response.data
         })
