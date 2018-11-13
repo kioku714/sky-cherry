@@ -4,13 +4,10 @@ var questionCtrl = require('../controllers/question.controller');
 var answerCtrl = require('../controllers/answer.controller');
 var contractCtrl = require('../controllers/contract.controller');
 var eventCtrl = require('../controllers/event.controller');
-var expressJwt = require('express-jwt');
 var paramValidation = require('../config/param-validation');
-var config = require('../config/config');
 var actionType = require('../helpers/Type').actionType;
 
 const router = express.Router();
-const auth = expressJwt({secret: config.jwtSecret, requestProperty: 'decoded'})
 
 router.route('/')
   // GET /api/questions - Get list of question
