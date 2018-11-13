@@ -22,7 +22,7 @@ const EventSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    value: {
+    tokens: {
         type: Number,
         required: true
     },

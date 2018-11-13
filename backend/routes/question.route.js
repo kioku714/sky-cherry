@@ -16,15 +16,17 @@ router.route('/')
   // GET /api/questions - Get list of question
   .get(questionCtrl.list)
   // POST /api/questions - Create new question
-  .post(function(req, res, next) {
-      req.tokens = 4, req.actionType = actionType.QUESTION, next();
+  .post((req, res, next) => {
+      req.actionType = actionType.QUESTION;
+      req.from = req.decoded._id;
+      req.to = req.decoded.system_id;
+      req.tokens = 4;
+      next();
     },
-    validate({}), questionCtrl.create, 
-    validate(paramValidation.sendTokensToSystem), contractCtrl.sendTokensToSystem, 
+    validate(paramValidation.createQuestion), questionCtrl.create, 
+    validate(paramValidation.sendTokens), contractCtrl.sendTokens, 
     validate(paramValidation.createEvent), eventCtrl.create,
-    function(req, res) {
-      res.json(req.savedQuestion);
-    });
+    (req, res) => res.json(req.savedQuestion));
 
 router.route('/:questionId')
   // GET /api/questions/:questionId - Get question

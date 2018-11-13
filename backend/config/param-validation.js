@@ -22,12 +22,23 @@ module.exports = {
     }
   },
   createEvent: {
-    // from: Joi.string().required(),
-    // to: Joi.string().required(),
-    // value: Joi.number().required(),
-    // eventType: Joi.string().required()
+    from: Joi.string().required(),
+    to: Joi.string().required(),
+    tokens: Joi.number().required(),
+    eventType: Joi.string().required()
   },
-  sendTokensToSystem: {
+  sendTokens: {
+    from: Joi.string().required(),
+    to: Joi.string().required(),
     tokens: Joi.number().required()
+  },
+  createQuestion: {
+    
+  },
+  createAnswer: {
+    
+  },
+  createLike: {
+    
   }
 };

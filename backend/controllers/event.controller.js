@@ -24,19 +24,19 @@ function list(req, res, next) {
    * Create new event
    */
   function create(req, res, next) {
-    var from = req.from;
-    var to = req.to;
-    var value = req.value;
-    var actionType = req.actionType;
-    var tx = req.tx;
+    const from = req.from;
+    const to = req.to;
+    const tokens = req.tokens;
+    const actionType = req.actionType;
+    const tx = req.tx;
 
-    console.info('Event=>', from, to, value, actionType, tx)
+    console.info('Event=>', from, to, tokens, actionType, tx)
 
     const event = new Event({
       actionType: actionType,
       from: from,
       to: to,
-      value: value,
+      tokens: tokens,
       createdAt: Date.now(),
       createdBy: req.decoded._id,
       tx: tx

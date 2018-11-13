@@ -6,21 +6,21 @@ var APIError = require('../helpers/APIError');
 var httpStatus = require('http-status');
 
 const web3 = new Web3(new Web3.providers.HttpProvider(config.web3Provider));
-const erc20 = new web3.eth.Contract(JSON.parse(config.contractABI), config.contractAccount);
+const contract = new web3.eth.Contract(JSON.parse(config.contractABI), config.contractAccount);
 
 var nonces = {};
 
 function getUserTokens(req, res) {
 	const tokenOwner = req.user.keyStore.address;
 
-	erc20.methods.balanceOf(tokenOwner).call()
+	contract.methods.balanceOf(tokenOwner).call()
 	.then(function (balance) {
 		return res.send({"tokens" : web3.utils.fromWei(balance)});
 	});
 }
 
 function getReceiptList(req, res) {
-	erc20.getPastEvents('Transfer', {
+	contract.getPastEvents('Transfer', {
 		fromBlock: 0,
 		toBlock: 'latest'
 	}, function(error, events){
@@ -40,46 +40,28 @@ function getReceiptList(req, res) {
 }
 
 async function sendTokens(req, res, next) {
-	const contract = erc20;
-	const to = req.body.receiver;
-	const tokens = web3.utils.toWei(req.body.tokens.toString(), 'ether');
-	const password = config.commonPassword;
+	const from = req.from;
+	const to = req.to;
+	const tokens = req.tokens;
 
-	var walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, password);
-	var data = contract.methods.transfer(to, tokens).encodeABI();
+	const fromUser = await User.get(from);
+	const toUser = await User.get(to);
+	console.info('sendTokens => from: %s, to: %s, tokens: %d', fromUser.name, toUser.name, tokens);
+
+	var walletInfo = web3.eth.accounts.decrypt(fromUser.keyStore, config.commonPassword);
+	var data = contract.methods.transfer(toUser.keyStore.address, web3.utils.toWei(tokens.toString(), 'ether')).encodeABI();
 	try {
-		var tx = await _sendTx(walletInfo, config.contractAccount, data, 0);
-		next(tx);
-		// res.send(await _sendTx(walletInfo, config.contractAccount, data, 0));
+		const result = await _sendTx(walletInfo, config.contractAccount, data, 0);
+		req.tx = result.txHash;
+		next();
 	} catch (e) {
-		next(new APIError(e.message, httpStatus.INTERNAL_SERVER_ERROR, true));
-	}
-}
-
-async function sendMultipleTokens(req, res, next) {
-	const contract = erc20;
-	const password = config.commonPassword;
-	// 좋아요를 클릭한 사람 + 1
-    const clickTo = req.decoded.address;
-    const clickTokens = web3.utils.toWei('1', 'ether');
-    const clickData = contract.methods.transfer(clickTo, clickTokens).encodeABI();
-    // 좋아요를 받은 사람 +2
-    const receiveTo = req.body.reqReceiveUser.keyStore.address;
-    const receiveTokens = web3.utils.toWei('2', 'ether');
-	const receiveData = contract.methods.transfer(receiveTo, receiveTokens).encodeABI();
-	var walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, password);
-
-	try {
-		var tx1 = await _sendTx(walletInfo, config.contractAccount, clickData, 0)
-		var tx2 = await _sendTx(walletInfo, config.contractAccount, receiveData, 0);
-		return res.send({'txs': [tx1, tx2]})
-	} catch (e) {
+		console.error(e)
 		next(new APIError(e.message, httpStatus.INTERNAL_SERVER_ERROR, true));
 	}
 }
 
 function transfer(req, res, next) {
-	const contract = erc20;
+	const contract = contract;
 	const to = req.body.receiver;
 	const tokens = web3.utils.toWei(req.body.tokens.toString(), 'ether');
 	const password = req.body.password;
@@ -112,20 +94,6 @@ function getUpdatedNonce(address, systemNonce) {
 		nonces[address] = systemNonce;
 	}
 	return nonces[address];
-}
-
-async function sendTokensToSystem(req, res, next) {
-	req.from = req.decoded._id;
-	req.to = req.decoded.system_id;
-	req.value = req.tokens;
-	try {
-		var data = erc20.methods.transfer(config.system.address, web3.utils.toWei(req.tokens.toString(), 'ether')).encodeABI();
-		const result = await _sendTx(req.decoded.walletInfo, config.contractAccount, data, 0);
-		req.tx = result.txHash;
-		next();
-	} catch (e) {
-		console.log(e.message)
-	}
 }
 
 async function tokenExchange(req, res, next) {
@@ -176,101 +144,4 @@ async function _sendTx(walletInfo, to, data, value) {
 	return result;
 }
 
-module.exports = { getReceiptList, sendTokens, sendMultipleTokens, getUserTokens, getUserCoins, transfer, sendTokensToSystem, tokenExchange };
-
-// function approval(req, res, next) {
-// 	const contract = erc20;
-// 	const spender = req.body.spender;
-// 	const tokens = web3.utils.toWei(req.body.tokens.toString(), 'ether');
-// 	const password = req.body.password;
-
-// 	User.get(req.decoded._id)
-//     .then(async (user) => {
-// 		var walletInfo = web3.eth.accounts.decrypt(user.keyStore, password);
-// 		var data = contract.methods.approve(spender, tokens).encodeABI();
-// 		try{
-// 			res.send(await _sendTx(walletInfo, config.contractAccount, data, 0));
-// 		} catch (e) {
-// 			throw e;
-// 		}
-//     })
-//     .catch((e) => {
-//       next(new APIError(e.message, httpStatus.INTERNAL_SERVER_ERROR, true));
-// 	});
-// }
-
-// function sendCoins(req, res, next) {
-// 	const to = req.user.keyStore.address;
-// 	const coins = web3.utils.toWei(req.body.coins.toString(), 'ether');
-// 	const password = req.body.password;
-
-// 	User.get(req.decoded._id)
-//     .then(async (user) => {
-// 		var walletInfo = web3.eth.accounts.decrypt(user.keyStore, password);
-// 		try {
-// 			res.send(await _sendTx(walletInfo, to, '0x00', coins));
-// 		} catch (e) {
-// 			throw e;
-// 		}
-// 	})
-// 	.catch((e) => {
-// 		next(new APIError(e.message, httpStatus.INTERNAL_SERVER_ERROR, true));
-// 	});
-// }
-
-// async function getUserTokensAllowance(req, res, next) {
-// 	const contract = erc20;
-// 	const me = await User.get(req.decoded._id);
-// 	// const tokenOwner = config.systemAddress;
-// 	const tokenOwner = me.keyStore.address;
-// 	const spender = req.user.keyStore.address;
-	
-// 	contract.methods.allowance(tokenOwner, spender).call()
-// 	.then(function (tokens) {
-// 		return res.send({"allowance" : web3.utils.fromWei(tokens)});
-// 	});
-// }
-
-// function sendTokens(req, res, next) {
-// 	const contract = erc20;
-// 	const from = config.systemAddress;
-// 	const to = req.body.receiver;
-// 	const tokens = web3.utils.toWei(req.body.tokens.toString(), 'ether');
-// 	const password = req.body.password;
-
-// 	User.get(req.decoded._id)
-//     .then(async (user) => {
-// 		var walletInfo = web3.eth.accounts.decrypt(user.keyStore, password);
-// 		var data = contract.methods.transferFrom(from, to, tokens).encodeABI();
-// 		try{
-// 			res.send(await _sendTx(walletInfo, config.contractAccount, data, 0));
-// 		} catch (e) {
-// 			throw e;
-// 		}
-//     })
-//     .catch((e) => {
-//       next(new APIError(e.message, httpStatus.INTERNAL_SERVER_ERROR, true));
-//     });
-// }
-
-// console.log(tx.serialize().toString('hex'))
-// web3.eth.sendSignedTransaction('0x' + tx.serialize().toString('hex'))
-// .on('transactionHash', function(hash){
-// 	console.log('transactionHash', hash)
-// })
-// .on('receipt', function(receipt){
-// 	console.log('receipt', receipt)
-// })
-// .on('confirmation', function(confirmationNumber, receipt){
-// 	console.log('confirmation', confirmationNumber, receipt)
-// })
-// .on('error', function(e){
-// 	console.log('error', e)
-// });
-
-// async function getTotalTokens(req, res) {
-// 	erc20.methods.totalSupply().call()
-// 	.then(function (balance) {
-// 		return res.send({"tokens" : web3.utils.fromWei(balance)});
-// 	});
-// }
+module.exports = { getReceiptList, sendTokens, getUserTokens, getUserCoins, transfer, tokenExchange };
