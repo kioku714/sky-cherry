@@ -87,6 +87,10 @@ h1, h2, h3, h4 {
     width: 100%;
 }
 
+.btn-secondary:focus, .btn-secondary.focus {
+    box-shadow: none;
+}
+
 // .list_p1 .a {
 //     text-decoration: none;
 //     text-decoration-line: none;

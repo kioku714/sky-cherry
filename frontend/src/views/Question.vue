@@ -141,14 +141,96 @@
           <div v-html="answer.description"></div>
         </b-row>
         <hr v-bind:style="{ borderColor: '#efefef' }">
-        <b-row class="rating">
+        <b-row>
           <b-col sm="9" cols="9">
-            <div class="font-weight-bold">Cherry Guard's Ratings</div>
+            <div class="mt-1">
+              <span class="font-weight-bold" v-bind:style="{color: '#4c3926'}">Cherry Guard's Ratings</span>
+              <span v-bind:style="{color: '#0170ba'}">(Average: <i class="fa fa-star" /> {{ getRandomNum() }})</span>
+            </div>
           </b-col>
           <b-col>
-            <div class="text-right">+</div>
+            <div class="text-right">
+              <b-btn v-b-toggle="answer._id" v-bind:style="{backgroundColor: 'transparent', borderColor: 'transparent'}" v-on:click="changeSymbol">
+                <i class="fa fa-plus"/>
+              </b-btn>
+            </div>
           </b-col>
         </b-row>
+        <b-collapse :id=answer._id class="mt-2">
+          <b-row>
+            <b-col sm="3">
+              • 올바른 정보만을 이야기 하는가?
+            </b-col>
+            <b-col>
+              <star-rating inactive-color="#F9D6E2"
+                           active-color="#E16D90"
+                           :star-size="20"
+                           :show-rating="false"
+                           :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
+              </star-rating>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col sm="3">
+              • 의도적인 홍보성 답변은 아닌가?
+            </b-col>
+            <b-col>
+              <star-rating inactive-color="#F9D6E2"
+                           active-color="#E16D90"
+                           :star-size="20"
+                           :show-rating="false"
+                           :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
+              </star-rating>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col sm="3">
+              • 질문에 맞는 답변인가?
+            </b-col>
+            <b-col>
+              <star-rating inactive-color="#F9D6E2"
+                           active-color="#E16D90"
+                           :star-size="20"
+                           :show-rating="false"
+                           :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
+              </star-rating>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col sm="3">
+              • 다른 답변을 모방하지 않았는가?
+            </b-col>
+            <b-col>
+              <star-rating inactive-color="#F9D6E2"
+                           active-color="#E16D90"
+                           :star-size="20"
+                           :show-rating="false"
+                           :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
+              </star-rating>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col sm="3">
+              • 실용적인 답변으로 보여지는가?
+            </b-col>
+            <b-col>
+              <star-rating inactive-color="#F9D6E2"
+                           active-color="#E16D90"
+                           :star-size="20"
+                           :show-rating="false"
+                           :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]">
+              </star-rating>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col sm="3" class="my-2">
+              <small class="text-muted">아직 평가에 참여하지 않으셨습니다.</small>
+            </b-col>
+            <b-col class="mt-1">
+              <b-button variant="secondary" v-bind:style="{ border: 'none', borderRadius: '.3rem', fontSize: '12px', backgroundColor: '#D8D8D8' }">submit score</b-button>
+            </b-col>
+          </b-row>
+        </b-collapse>
         <hr v-bind:style="{ borderColor: '#efefef' }">
         <b-row>
           <b-col sm="1" cols="2">
@@ -169,7 +251,7 @@
           </b-col>
         </b-row>
         <div class="float-right">
-          <b-button variant="secondary" class="mt-2" v-bind:style="{ borderRadius: '.3rem' }">Add comment</b-button>
+          <b-button variant="secondary" class="mt-2" v-bind:style="{ border: 'none', borderRadius: '.3rem', backgroundColor: '#D8D8D8' }">Add comment</b-button>
         </div>
       </b-list-group-item>
     </b-list-group>
@@ -390,6 +472,20 @@ export default {
           this.fetchQuestion()
           this.fetchAnswers()
         })
+    },
+    getRandomNum () {
+      // 3 ~ 5 사이의 랜덤 소수
+      const num = Math.random() * (5 - 2) + 2
+      return num.toFixed(2)
+    },
+    changeSymbol: function (event) {
+      var target = JSON.parse(JSON.stringify(event.target))
+      console.log(target._prevClass.includes('plus'))
+      if (target._prevClass.includes('plus')) {
+        event.target = '<i class="fa fa-close"/>'
+      } else {
+        event.target = '<i class="fa fa-plus"/>'
+      }
     }
   }
 }
