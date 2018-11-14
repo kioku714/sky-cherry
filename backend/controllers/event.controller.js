@@ -8,16 +8,8 @@ var Event = require('../models/event.model');
  * @returns {Event[]}
  */
 function list(req, res, next) {
-    const { limit = 50, skip = 0, q = {}} = req.query;
-    if(req.query.from) {
-      //FIXME
-      q.from = req.query.from
-    }
-    if(req.query.to) {
-      //FIXME
-      q.to = req.query.to
-    }
-    Event.list({ limit, skip, q })
+    const { limit = 50, skip = 0, q = { $or: [ {from: req.decoded._id}, {to: req.decoded._id} ] }} = req.query;
+    Event.list({ skip, limit, q })
       .then(events => res.json(events))
       .catch(e => next(e));
   }
