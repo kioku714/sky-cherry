@@ -15,8 +15,8 @@
             <p class="text-center">Comments : <strong>{{ comments.length }}</strong></p>
           </div>
           <br/>
-          <div class="text-center">
-            <b-button variant="success" :to="{name: 'Cherry Transfer'}">Cherry Transfer</b-button>
+          <div class="text-center mb-4">
+            <b-button variant="success" :to="{name: 'Cherry Transfer'}" v-bind:style="{ borderRadius: '.3rem' }">Cherry Transfer</b-button>
           </div>
         </b-col>
         <b-col sm="10">

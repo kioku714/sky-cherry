@@ -51,7 +51,7 @@ h1, h2, h3, h4 {
     color: #4c3926; 
 }
 
-.question .like, .live .like {
+.new-question .like, .question .like, .live .like {
     color: #ad2552;
 }
 
@@ -85,6 +85,10 @@ h1, h2, h3, h4 {
     word-wrap: break-word;         /* All browsers since IE 5.5+ */
     overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
     width: 100%;
+}
+
+.btn-secondary:focus, .btn-secondary.focus {
+    box-shadow: none;
 }
 
 // .list_p1 .a {
@@ -155,11 +159,4 @@ h1, h2, h3, h4 {
 
 // .textBody {
 //     margin-top: 30px;
-// }
-
-// .question-owner {
-//     font-size: 14px;
-//     display: block;
-//     margin-bottom: 5px;
-//     color: #7E8184;
 // }

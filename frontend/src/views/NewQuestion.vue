@@ -20,8 +20,10 @@
               </b-form-select>
             </div>
           </div>
-          <div class="form-group row">
-            <label class="col-md-12 col-form-label" for="text-input"><h1>Ask a question...</h1></label>
+          <div class="row">
+            <label class="col-md-12 col-form-label" for="text-input">
+              <h2>Ask a question...</h2>
+            </label>
           </div>
           <div class="from-group row">
             <div class="col-md-12">
@@ -92,7 +94,7 @@
           </div>
           <div class="form-group row">
             <div class="col-md-12 text-center">
-              <b-button class="button-comment" variant="success" v-on:click="createQuestion">Post Your Question</b-button>
+              <b-button class="button-comment" variant="success" v-on:click="createQuestion" v-bind:style="{ borderRadius: '.3rem' }">Post Your Question</b-button>
             </div>
           </div>
         </form>
