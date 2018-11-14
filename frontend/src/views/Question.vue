@@ -150,8 +150,9 @@
           </b-col>
           <b-col>
             <div class="text-right">
-              <b-btn v-b-toggle="answer._id" v-bind:style="{backgroundColor: 'transparent', borderColor: 'transparent'}" v-on:click="changeSymbol">
-                <i class="fa fa-plus"/>
+              <b-btn v-b-toggle="answer._id" v-bind:style="{backgroundColor: 'transparent', borderColor: 'transparent'}">
+                <i class="when-opened fa fa-times"/>
+                <i class="when-closed fa fa-plus"/>
               </b-btn>
             </div>
           </b-col>
@@ -477,15 +478,6 @@ export default {
       // 3 ~ 5 사이의 랜덤 소수
       const num = Math.random() * (5 - 2) + 2
       return num.toFixed(2)
-    },
-    changeSymbol: function (event) {
-      var target = JSON.parse(JSON.stringify(event.target))
-      console.log(target._prevClass.includes('plus'))
-      // if (target._prevClass.includes('plus')) {
-      //   event.target = '<i class="fa fa-close"/>'
-      // } else {
-      //   event.target = '<i class="fa fa-plus"/>'
-      // }
     }
   }
 }

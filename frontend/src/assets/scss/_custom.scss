@@ -91,6 +91,10 @@ h1, h2, h3, h4 {
     box-shadow: none;
 }
 
+.collapsed > .when-opened,
+:not(.collapsed) > .when-closed {
+  display: none;
+}
 // .list_p1 .a {
 //     text-decoration: none;
 //     text-decoration-line: none;
