@@ -204,8 +204,33 @@
                 </b-list-group-item>
               </b-list-group>
               <b-list-group v-for="event in events" :key="event.id" flush>
-                <b-list-group-item>
-                    {{ event }}
+                <b-list-group-item v-if="event.actionType === 'likeMyQuestion'">
+                    <span class="text-muted">Wow~ 당신의 질문에 like가 발생해 <span class="text-danger" ><strong>{{ event.tokens }} Cherry</strong></span>를 받았어요!</span>
+                    <span class="text-warning">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
+                </b-list-group-item>
+                <b-list-group-item v-else-if="event.actionType === 'likeMyAnswer'">
+                    <span class="text-muted">Wow~ 당신의 답변에 like가 발생해 <span class="text-danger" ><strong>{{ event.tokens }} Cherry</strong></span>를 받았어요.</span>
+                    <span class="text-warning">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
+                </b-list-group-item>
+                <b-list-group-item v-else-if="event.actionType === 'question'">
+                    <span class="text-muted">질문을 올리고 <span class="text-danger" ><strong>{{ event.tokens }} Cherry</strong></span>를 사용했어요.</span>
+                    <span class="text-warning">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
+                </b-list-group-item>
+                <b-list-group-item v-else-if="event.actionType === 'answer'">
+                    <span class="text-muted">Wow~ 답변을 등록하고 <span class="text-danger" ><strong>{{ event.tokens }} Cherry</strong></span>를 받았어요!</span>
+                    <span class="text-warning">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
+                </b-list-group-item>
+                <b-list-group-item v-else-if="event.actionType === 'signup'">
+                    <span class="text-muted">Wow~ 회원 가입을 축하합니다! 환영 선물로 <span class="text-danger" ><strong>{{ event.tokens }} Cherry</strong></span>를 받았어요.</span>
+                    <span class="text-warning">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
+                </b-list-group-item>
+                <b-list-group-item v-else-if="event.actionType === 'profile'">
+                    <span class="text-muted">Wow~ 프로필을 업데이트하고 <span class="text-danger" ><strong>{{ event.tokens }} Cherry</strong></span>를 받았어요.</span>
+                    <span class="text-warning">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
+                </b-list-group-item>
+                <b-list-group-item v-else>
+                    <span class="text-muted">Wow~ Like을 누르고 <span class="text-danger" ><strong>{{ event.tokens }} Cherry</strong></span>를 받았어요!</span>
+                    <span class="text-warning">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
             </b-tab>
