@@ -8,14 +8,8 @@ var Event = require('../models/event.model');
  * @returns {Event[]}
  */
 function list(req, res, next) {
-    const { limit = 50, skip = 0, q = {}} = req.query;
-    if(req.query.from) {
-      q.from = req.query.from
-    }
-    if(req.query.to) {
-      q.to = req.query.to
-    }
-    Event.list({ limit, skip, q })
+    const { limit = 50, skip = 0, q = { $or: [ {from: req.decoded._id}, {to: req.decoded._id} ] }} = req.query;
+    Event.list({ skip, limit, q })
       .then(events => res.json(events))
       .catch(e => next(e));
   }
@@ -24,19 +18,19 @@ function list(req, res, next) {
    * Create new event
    */
   function create(req, res, next) {
-    var from = req.from;
-    var to = req.to;
-    var value = req.value;
-    var actionType = req.actionType;
-    var tx = req.tx;
+    const from = req.from;
+    const to = req.to;
+    const tokens = req.tokens;
+    const actionType = req.actionType;
+    const tx = req.tx;
 
-    console.info('Event=>', from, to, value, actionType, tx)
+    console.info('New event=> from: %s, to: %s, tokens: %s, actionType: %s, tx: %s', from, to, tokens, actionType, tx);
 
     const event = new Event({
       actionType: actionType,
       from: from,
       to: to,
-      value: value,
+      tokens: tokens,
       createdAt: Date.now(),
       createdBy: req.decoded._id,
       tx: tx

@@ -19,7 +19,7 @@ const AnswerSchema = new mongoose.Schema({
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'SkyCherryUser',
+        ref: 'User',
         required: true
     },
     question: {
@@ -71,7 +71,7 @@ AnswerSchema.statics = {
             }
         },{
             $lookup: { 
-                from: 'skycherryusers', 
+                from: 'users', 
                 localField: 'createdBy', 
                 foreignField: '_id', 
                 as: 'createdBy' 

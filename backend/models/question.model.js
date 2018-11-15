@@ -32,7 +32,7 @@ const QuestionSchema = new mongoose.Schema({
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'SkyCherryUser',
+        ref: 'User',
         required: true
     },
     occupation: {
@@ -89,7 +89,7 @@ QuestionSchema.statics = {
         }
         aggr.push({ 
             $lookup: { 
-                from: 'skycherryusers', 
+                from: 'users', 
                 localField: 'createdBy', 
                 foreignField: '_id', 
                 as: 'createdBy'
@@ -138,7 +138,7 @@ QuestionSchema.statics = {
             },
             { 
                 $lookup: { 
-                    from: 'skycherryusers', 
+                    from: 'users', 
                     localField: 'createdBy', 
                     foreignField: '_id', 
                     as: 'createdBy' 
@@ -204,7 +204,7 @@ QuestionSchema.statics = {
         },
         { 
             $lookup: {
-                from: 'skycherryusers', 
+                from: 'users', 
                 localField: 'answer.createdBy', 
                 foreignField: '_id', 
                 as: 'answer.createdBy'
@@ -256,7 +256,7 @@ QuestionSchema.statics = {
         },
         { 
             $lookup: {
-                from: 'skycherryusers', 
+                from: 'users', 
                 localField: 'like.createdBy', 
                 foreignField: '_id', 
                 as: 'like.createdBy'

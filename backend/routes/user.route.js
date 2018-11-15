@@ -1,6 +1,10 @@
 var express = require('express');
+var validate = require('express-validation');
 var userCtrl = require('../controllers/user.controller');
 var contractCtrl = require('../controllers/contract.controller');
+var eventCtrl = require('../controllers/event.controller');
+var paramValidation = require('../config/param-validation');
+var actionType = require('../helpers/Type').actionType;
 
 const router = express.Router();
 
@@ -13,10 +17,15 @@ router.route('/:userId')
   .get(userCtrl.get)
   /** PUT /api/users/:userId - Update user */
   .put(userCtrl.update, function(req, res, next) {
-    req.body.receiver = req.user.keyStore.address;
-    req.body.tokens = 10;
+    req.actionType = actionType.PORFILE
+    req.from = req.decoded.system_id;
+    req.to = req.decoded._id
+    req.tokens = 10;
     next();
-  }, contractCtrl.sendTokens);
+  }, 
+  validate(paramValidation.sendTokens), contractCtrl.sendTokens, 
+  validate(paramValidation.createEvent), eventCtrl.create,
+  (req, res) => res.json(req.savedUser));
   
 router.route('/:userId/tokens')
   // GET /api/users/:userId/tokens - Get user tokens
