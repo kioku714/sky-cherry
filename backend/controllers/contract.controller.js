@@ -54,30 +54,8 @@ async function sendTokens(req, res, next) {
 		req.tx = result.txHash;
 		next();
 	} catch (e) {
-		console.error(e)
 		next(new APIError(e.message, httpStatus.INTERNAL_SERVER_ERROR, true));
 	}
-}
-
-function transfer(req, res, next) {
-	const contract = contract;
-	const to = req.body.receiver;
-	const tokens = web3.utils.toWei(req.body.tokens.toString(), 'ether');
-	const password = req.body.password;
-
-	User.get(req.decoded._id)
-    .then(async (user) => {
-		var walletInfo = web3.eth.accounts.decrypt(user.keyStore, password);
-		var data = contract.methods.transfer(to, tokens).encodeABI();
-		try{
-			res.send(await Contract.sendTx(walletInfo, config.contractAccount, data, 0));
-		} catch (e) {
-			throw e;
-		}
-    })
-    .catch((e) => {
-      next(new APIError(e.message, httpStatus.INTERNAL_SERVER_ERROR, true));
-    });
 }
 
 function getUserCoins(req, res, next) {
@@ -86,16 +64,23 @@ function getUserCoins(req, res, next) {
 	});
 }
 
-async function tokenExchange(req, res, next) {
-	try {
-		var ether = String(req.body.token / 2200)
-		await sendTokensToSystem(req, res, next);
+async function sendCoins(req, res, next) {
+	const from = req.from;
+	const to = req.to;
+	const coins = req.coins;
 
-		var walletInfo = web3.eth.accounts.decrypt(config.system.keyStore, config.commonPassword);
-		res.send(await Contract.sendTx(walletInfo, req.decoded.walletInfo.address, '0x00', web3.utils.toWei(ether, 'ether')))
+	const fromUser = await User.get(from);
+	const toUser = await User.get(to);
+	console.info('sendCoins => from: %s, to: %s, coins: %d', fromUser.name, toUser.name, coins);
+
+	var walletInfo = web3.eth.accounts.decrypt(fromUser.keyStore, config.commonPassword);
+	try {
+		const result = await Contract.sendTx(walletInfo, toUser.keyStore.address, '0x00', web3.utils.toWei(coins.toString(), 'ether'));
+		req.tx = result.txHash;
+		next();
 	} catch (e) {
 		next(new APIError(e.message, httpStatus.INTERNAL_SERVER_ERROR, true));
 	}
 }
 
-module.exports = { getReceiptList, sendTokens, getUserTokens, getUserCoins, transfer, tokenExchange };
+module.exports = { getReceiptList, sendTokens, getUserTokens, getUserCoins, sendCoins };
