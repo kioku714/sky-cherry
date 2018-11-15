@@ -9,7 +9,6 @@ import VueSession from 'vue-session'
 import HttpStatus from 'http-status'
 import moment from 'moment'
 import { store } from './store'
-import StarRating from 'vue-star-rating'
 
 axios.defaults.baseURL = 'http://localhost:3000'
 
@@ -20,7 +19,6 @@ Vue.use(BootstrapVue)
 Vue.use(VueSession, {persist: true})
 moment.locale('ko')
 Vue.use(require('vue-moment'), {moment})
-Vue.component('star-rating', StarRating)
 
 /* eslint-disable no-new */
 new Vue({

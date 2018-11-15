@@ -268,11 +268,13 @@
 
 <script>
 import { VueEditor } from 'vue2-editor'
+import StarRating from 'vue-star-rating'
 
 export default {
   name: 'Question',
   components: {
-    VueEditor
+    VueEditor,
+    StarRating
   },
   created () {
     this.name = (this.$session.get('user-name') !== undefined) ? this.$session.get('user-name') : ''
