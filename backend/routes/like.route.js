@@ -31,11 +31,10 @@ router.route('/')
     (req, res, next) => {
       // 좋아요를 받은 사람 +2
       if(req.savedLike.questionOrAnswerModel == 'Question') {
-        req.actionType = actionType.LIKE_ANSWER;
+        req.actionType = actionType.LIKE_MY_QUESTION;
       } else {
         req.actionType = actionType.LIKE_MY_ANSWER;
       }
-      req.actionType = actionType.LIKE_MY_ANSWER;
       req.from = req.decoded.system_id;
       req.to = req.body.reqReceiveUser._id;
       req.tokens = 2;
