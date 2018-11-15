@@ -106,7 +106,7 @@
     <hr>
     <h2 v-if="answers.length > 0" class="text-center mb-3">{{ answers.length }} Answers</h2>
     <b-list-group v-if="answers.length > 0" flush>
-      <b-list-group-item v-for="answer in answers" :key="answer._id">
+      <b-list-group-item v-for="answer in answers" :key="answer._id" v-bind:style="{ background: '#FEFBF4' }">
         <b-row>
           <b-col sm="1" cols="2">
             <div v-if="answer.createdBy.name === ''">
