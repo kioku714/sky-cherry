@@ -380,6 +380,7 @@ export default {
     },
     createAnswer () {
       if (this.form.description) {
+        let loader = this.$loading.show()
         this.$http.post('/api/answers', {
           questionId: this.question._id,
           description: this.form.description
@@ -388,6 +389,7 @@ export default {
             this.form.description = ''
             this.fetchQuestion()
             this.fetchAnswers()
+            loader.hide()
           })
       } else {
         alert('답변을 입력해주세요.')
@@ -455,9 +457,11 @@ export default {
         alert('이미 좋아요를 누르셨어요.')
         return
       }
+      let loader = this.$loading.show()
       this.$http.post('/api/likes', {questionId: questionId})
         .then((response) => {
           this.fetchQuestion()
+          loader.hide()
         })
     },
     likeAnswer (answerId) {
@@ -470,10 +474,12 @@ export default {
         alert('이미 좋아요를 누르셨어요.')
         return
       }
+      let loader = this.$loading.show()
       this.$http.post('/api/likes', {answerId: answerId})
         .then((response) => {
           this.fetchQuestion()
           this.fetchAnswers()
+          loader.hide()
         })
     },
     getRandomNum () {

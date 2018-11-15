@@ -9,6 +9,8 @@ import VueSession from 'vue-session'
 import HttpStatus from 'http-status'
 import moment from 'moment'
 import { store } from './store'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
 
 axios.defaults.baseURL = 'http://localhost:3000'
 
@@ -19,6 +21,11 @@ Vue.use(BootstrapVue)
 Vue.use(VueSession, {persist: true})
 moment.locale('ko')
 Vue.use(require('vue-moment'), {moment})
+Vue.use(Loading, {
+  canCancel: false,
+  color: '#ad2552',
+  loader: 'spinner' // spinner or dots or bars
+})
 
 /* eslint-disable no-new */
 new Vue({
