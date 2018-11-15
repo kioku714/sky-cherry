@@ -32,6 +32,11 @@ module.exports = {
     to: Joi.string().required(),
     tokens: Joi.number().required()
   },
+  sendCoins: {
+    from: Joi.string().required(),
+    to: Joi.string().required(),
+    coins: Joi.number().required()
+  },
   createQuestion: {
     
   },

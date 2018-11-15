@@ -225,7 +225,7 @@ export default {
     },
     sendTokenExchange () {
       var request = {
-        token: this.tokens
+        tokens: this.tokens
       }
       this.$http.post('/api/contracts/tokenExchange', request)
         .then((response) => {
