@@ -21,7 +21,7 @@
         </b-col>
         <b-col sm="10">
           <b-tabs>
-            <b-tab title="정보" active>
+            <b-tab title="정보" :active="$route.query.tab==='info'" v-if="$route.params.userId===$session.get('user-id')">
               <b-row>
                 <b-col sm="12">
                   <b-row>
@@ -117,7 +117,7 @@
                 </b-col>
               </b-row>
             </b-tab>
-            <b-tab title="알림">
+            <b-tab title="알림" :active="$route.query.tab==='notification'" v-if="$route.params.userId===$session.get('user-id')">
               <b-list-group v-if="!notifications.length" flush>
                 <b-list-group-item>
                     <span class="text-muted">활동 내역이 없습니다.</span>
@@ -136,7 +136,7 @@
                 </b-list-group-item>
               </b-list-group>
             </b-tab>
-            <b-tab title="질문" >
+            <b-tab title="질문">
               <b-list-group v-if="!questions.length" flush>
                 <b-list-group-item>
                     <span class="text-muted">활동 내역이 없습니다.</span>
@@ -197,7 +197,7 @@
                 </b-list-group-item>
               </b-list-group>
             </b-tab>
-            <b-tab title="Cherry">
+            <b-tab title="Cherry" v-if="$route.params.userId===$session.get('user-id')">
               <b-list-group v-if="!events.length" flush>
                 <b-list-group-item>
                     <span class="text-muted">활동 내역이 없습니다.</span>
@@ -260,6 +260,16 @@ export default {
     this.fetchLikes()
     this.fetchComments()
     this.fetchEvents()
+  },
+  watch:{
+    $route (to, from){
+      if(from.params.userId !== to.params.userId) {
+        this.fetchProfile()
+      }
+      if(from.query.tab !== to.query.tab) {
+        location.reload()
+      }
+    }
   },
   data () {
     return {

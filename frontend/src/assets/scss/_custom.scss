@@ -95,72 +95,7 @@ h1, h2, h3, h4 {
 :not(.collapsed) > .when-closed {
   display: none;
 }
-// .list_p1 .a {
-//     text-decoration: none;
-//     text-decoration-line: none;
-//     text-decoration-style: initial;
-//     text-decoration-color: initial;
-//     border: none;
-//     color: #1a1a1a;
-// }
 
-// ul {
-//     list-style:none;
-//     margin: 0;
-//     padding: 0;
-// }
-
-// .list_p1 .li {
-//     display: list-item;
-//     text-align: -webkit-match-parent;
-// }
-
-// .list_p1 .bundle .tit {
-//     height: 60px;
-// }
-
-// .list_p1 .bundle a {
-//     padding-bottom: 37px;
-//     display: block;
-//     width: 100%;
-//     height: 100%;
-//     color: #1a1a1a;
-//     background: #ffffff;
-// }
-
-// .list_p1 .bundle .tit {
-//     display: block;
-//     height: 46px;
-//     overflow: hidden;
-//     font-weight: 400;
-//     font-size: 18px;
-//     line-height: 23px;
-// }
-
-// .list_p1 .bundle .cont {
-//     padding: 20px 0 0 15px;
-//     display: block;
-//     position: relative;
-// }
-
-// .list_p1 .bundle .cont:before {
-//     content: '';
-//     position: absolute;
-//     top: -7px;
-//     left: 15px;
-//     width: 14px;
-//     height: 14px;
-//     background: url(http://menu.mt.co.kr/ttimes/images/renew/bg_diamond.png) no-repeat 0 0;
-//     background-size: 100%;
-// }
-
-// .list_p1 .bundle a .cont:before, .list_p1 .bundle a .cont:before {
-//     top: -14px;
-//     left: 29px;
-//     width: 28px;
-//     height: 28px;
-// }
-
-// .textBody {
-//     margin-top: 30px;
-// }
+.ql-toolbar.ql-snow+.ql-container.ql-snow {
+    min-height: 350px;
+}

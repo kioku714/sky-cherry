@@ -24,12 +24,12 @@
         </router-link>
       </li>
       <li class="nav-item d-md-down-none">
-        <router-link :to="{name: '프로필', query: { tab: 'notification' }}">
+        <router-link :to="{name: '프로필', params: { userId: $session.get('user-id')}, query: { tab: 'notification' }}" replace>
           <span class="fa fa-bell-o"></span>
         </router-link>
       </li>
       <li class="nav-item d-md-down-none">
-        <router-link :to="{name: '프로필', query: { tab: 'info' }}">
+        <router-link :to="{name: '프로필', params: { userId: $session.get('user-id')}, query: { tab: 'info' }}" replace>
           <span class="fa fa-user-o"></span>
         </router-link>
       </li>
