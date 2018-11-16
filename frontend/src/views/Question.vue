@@ -388,8 +388,8 @@ export default {
             this.form.description = ''
             this.fetchQuestion()
             this.fetchAnswers()
-            loader.hide()
           })
+          .finally(() => loader.hide())
       } else {
         alert('답변을 입력해주세요.')
       }
@@ -460,8 +460,8 @@ export default {
       this.$http.post('/api/likes', {questionId: questionId})
         .then((response) => {
           this.fetchQuestion()
-          loader.hide()
         })
+        .finally(() => loader.hide())
     },
     likeAnswer (answerId) {
       var answer = this.answers.find(x => x._id === answerId)
@@ -478,8 +478,8 @@ export default {
         .then((response) => {
           this.fetchQuestion()
           this.fetchAnswers()
-          loader.hide()
         })
+        .finally(() => loader.hide())
     },
     getRandomNum () {
       // 3 ~ 5 사이의 랜덤 소수
