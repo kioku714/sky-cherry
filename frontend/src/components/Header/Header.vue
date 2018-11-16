@@ -24,18 +24,21 @@
         </router-link>
       </li>
       <li class="nav-item d-md-down-none">
-        <router-link :to="{name: '프로필', params: { userId: $session.get('user-id')}, query: { tab: 'notification' }}" replace>
+        <router-link :to="{name: '프로필', params: { userId: $session.get('user-id')}, query: { tab: 'notification' }}">
           <span class="fa fa-bell-o"></span>
         </router-link>
       </li>
       <li class="nav-item d-md-down-none">
-        <router-link :to="{name: '프로필', params: { userId: $session.get('user-id')}, query: { tab: 'info' }}" replace>
+        <router-link :to="{name: '프로필', params: { userId: $session.get('user-id')}, query: { tab: 'info' }}">
           <span class="fa fa-user-o"></span>
         </router-link>
       </li>
       <li class="nav-item d-md-down-none">
-        <b-link @click="logout">
-          <span class="fa fa-lock"></span>
+        <b-link v-if="$session.get('user-id')" @click="signout">
+          <span class="fa fa-sign-out"></span>
+        </b-link>
+        <b-link v-else :to="{name: 'Login'}">
+          <span class="fa fa-sign-in"></span>
         </b-link>
       </li>
       <li class="nav-item dropdown d-lg-none">
@@ -72,10 +75,10 @@ export default {
       e.preventDefault()
       document.body.classList.toggle('aside-menu-hidden')
     },
-    logout (e) {
+    signout (e) {
       e.preventDefault()
       this.$session.destroy()
-      this.$router.push('/login')
+      location.reload()
     }
   }
 }

@@ -20,13 +20,15 @@
       </b-dropdown-item>
       <b-dropdown-item :to="{name: '프로필', params: { userId: $session.get('user-id')}, query: { tab: 'notification' }}" exact>
         <i class="fa fa-bell-o" /> 알림
-        <!-- <b-badge variant="info">10</b-badge> -->
       </b-dropdown-item>
       <b-dropdown-item :to="{name: '프로필', params: { userId: $session.get('user-id')}, query: { tab: 'info' }}" exact>
         <i class="fa fa-user-o" /> 프로필
       </b-dropdown-item>
-      <b-dropdown-item @click="logout">
-        <i class="fa fa-lock" /> 로그아웃
+      <b-dropdown-item v-if="$session.get('user-id')" @click="signout">
+        <i class="fa fa-sign-out" /> 로그아웃
+      </b-dropdown-item>
+      <b-dropdown-item v-else :to="{name: 'Login'}">
+        <i class="fa fa-sign-in" /> 로그인
       </b-dropdown-item>
     </template>
   </AppHeaderDropdown>
@@ -73,10 +75,10 @@ export default {
       }
       return color
     },
-    logout (e) {
+    signout (e) {
       e.preventDefault()
       this.$session.destroy()
-      this.$router.push('/login')
+      location.reload()
     }
   }
 }

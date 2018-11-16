@@ -328,7 +328,6 @@ export default {
           this.question = response.data
           this.questionUserName = (this.question.createdBy.name !== '') ? this.question.createdBy.name.substring(0, 1) : ''
           this.signInUserId = this.$session.get('user-id')
-          // console.log(JSON.stringify(this.question))
         })
     },
     fetchAnswers () {
