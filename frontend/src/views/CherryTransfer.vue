@@ -154,7 +154,7 @@ export default {
   },
   methods: {
     fetchProfile () {
-      this.profile = []
+      this.profile = {}
       this.$http.get('/api/users/' + this.$route.params.userId)
         .then((response) => {
           this.profile = response.data

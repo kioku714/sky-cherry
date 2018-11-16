@@ -4,7 +4,6 @@ var newsJson = require('../static_json/news.json');
 
 router.get('/:category', function (req, res, next) {
   var category = req.params.category;
-  console.log(category);
   var newsList = newsJson.filter(function (news) {
     return news.category === category;
   });
