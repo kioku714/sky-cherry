@@ -91,7 +91,6 @@ export default {
       this.distance = 0
       this.$http.get('/api/questions')
         .then((response) => {
-          console.log(response.data)
           this.questions = response.data
         })
         .then(() => {
