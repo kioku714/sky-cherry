@@ -261,12 +261,9 @@ export default {
     this.fetchComments()
     this.fetchEvents()
   },
-  watch:{
-    $route (to, from){
-      if(from.params.userId !== to.params.userId) {
-        this.fetchProfile()
-      }
-      if(from.query.tab !== to.query.tab) {
+  watch: {
+    $route (to, from) {
+      if (from.params.userId !== to.params.userId || from.query.tab !== to.query.tab) {
         location.reload()
       }
     }
