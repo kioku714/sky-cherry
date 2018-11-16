@@ -106,7 +106,7 @@
     <hr>
     <h2 v-if="answers.length > 0" class="text-center mb-3">{{ answers.length }} Answers</h2>
     <b-list-group v-if="answers.length > 0" flush>
-      <b-list-group-item v-for="answer in answers" :key="answer._id">
+      <b-list-group-item v-for="answer in answers" :key="answer._id" v-bind:style="{ background: '#FEFBF4' }">
         <b-row>
           <b-col sm="1" cols="2">
             <div v-if="answer.createdBy.name === ''">
@@ -268,11 +268,13 @@
 
 <script>
 import { VueEditor } from 'vue2-editor'
+import StarRating from 'vue-star-rating'
 
 export default {
   name: 'Question',
   components: {
-    VueEditor
+    VueEditor,
+    StarRating
   },
   created () {
     this.name = (this.$session.get('user-name') !== undefined) ? this.$session.get('user-name') : ''
@@ -378,6 +380,7 @@ export default {
     },
     createAnswer () {
       if (this.form.description) {
+        let loader = this.$loading.show()
         this.$http.post('/api/answers', {
           questionId: this.question._id,
           description: this.form.description
@@ -386,6 +389,7 @@ export default {
             this.form.description = ''
             this.fetchQuestion()
             this.fetchAnswers()
+            loader.hide()
           })
       } else {
         alert('답변을 입력해주세요.')
@@ -453,9 +457,11 @@ export default {
         alert('이미 좋아요를 누르셨어요.')
         return
       }
+      let loader = this.$loading.show()
       this.$http.post('/api/likes', {questionId: questionId})
         .then((response) => {
           this.fetchQuestion()
+          loader.hide()
         })
     },
     likeAnswer (answerId) {
@@ -468,10 +474,12 @@ export default {
         alert('이미 좋아요를 누르셨어요.')
         return
       }
+      let loader = this.$loading.show()
       this.$http.post('/api/likes', {answerId: answerId})
         .then((response) => {
           this.fetchQuestion()
           this.fetchAnswers()
+          loader.hide()
         })
     },
     getRandomNum () {
