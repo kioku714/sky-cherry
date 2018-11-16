@@ -146,10 +146,12 @@ export default {
   methods: {
     createQuestion () {
       this.form.tags = this.getTags()
+      let loader = this.$loading.show()
       this.$http.post('/api/questions', this.form)
         .then((response) => {
           this.$router.push('/question/' + response.data._id)
         })
+        .finally(() => loader.hide())
     },
     fetchProfile () {
       this.profile = []

@@ -383,10 +383,12 @@ export default {
         })
     },
     updateProfile () {
+      let loader = this.$loading.show()
       this.$http.put('/api/users/' + this.$route.params.userId, this.form)
         .then((response) => {
           this.fetchProfile()
         })
+        .finally(() => loader.hide())
     },
     getLevelColor (level) {
       var color = ''
