@@ -7,7 +7,7 @@
             <p class="text-center"><strong>{{ profile.name }}</strong></p>
           </div>
           <div>
-            <p class="text-center">LV: <strong>{{ profile.level }}</strong> / SI : <strong>{{ profile.si }}</strong></p>
+            <p class="text-center">LV: <strong v-bind:style="{ color: getLevelColor(profile.level) }">{{ profile.level }}</strong> / SI : <strong>{{ profile.si }}</strong></p>
             <p class="text-center">Cherry : <strong>{{ tokens }}</strong></p>
             <p class="text-center">Questions : <strong>{{ questions.length }}</strong></p>
             <p class="text-center">Answers : <strong>{{ answers.length }}</strong></p>
@@ -87,7 +87,7 @@
                   <b-row>
                     <b-col sm="12">
                       <b-form-group
-                        label="소득운영현황"
+                        label="소득운영현황 :"
                         label-for="incomeManagement"
                         :horizontal="true">
                         <b-form-radio-group v-model="form.incomeManagement"
@@ -125,14 +125,14 @@
               </b-list-group>
               <b-list-group v-for="notification in notifications" :key="notification.id" flush>
                 <b-list-group-item v-if="notification.answer">
-                  <b-link class="text-success" :to="{ name: '프로필', params: { userId: notification.answer.createdBy._id }}">{{ notification.answer.createdBy.name }}</b-link><span class="text-muted">님이 당신의 질문에 답하였습니다.</span>
+                  <b-link v-bind:style="{color: '#30CE92'}" :to="{ name: '프로필', params: { userId: notification.answer.createdBy._id }}">{{ notification.answer.createdBy.name }}</b-link><span class="text-muted">님이 당신의 질문에 답하였습니다.</span>
                   <b-link class="text-dark" :to="{ name: '질문 상세', params: { questionId: notification._id }}">"{{ notification.title }}"</b-link>
-                  <span class="text-warning">{{ $moment.utc(notification.answer.createdAt).local().fromNow() }}</span>
+                  <span v-bind:style="{color: '#EAA240'}">{{ $moment.utc(notification.answer.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
                 <b-list-group-item v-else>
-                  <b-link class="text-success" :to="{ name: '프로필', params: { userId: notification.like.createdBy._id }}">{{ notification.like.createdBy.name }}</b-link><span class="text-muted">님이 당신의 질문을 좋아합니다.</span>
+                  <b-link v-bind:style="{color: '#30CE92'}" :to="{ name: '프로필', params: { userId: notification.like.createdBy._id }}">{{ notification.like.createdBy.name }}</b-link><span class="text-muted">님이 당신의 질문을 좋아합니다.</span>
                   <b-link class="text-dark" :to="{ name: '질문 상세', params: { questionId: notification._id }}">"{{ notification.title }}"</b-link>
-                  <span class="text-warning">{{ $moment.utc(notification.like.createdAt).local().fromNow() }}</span>
+                  <span v-bind:style="{color: '#EAA240'}">{{ $moment.utc(notification.like.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
             </b-tab>
@@ -146,7 +146,7 @@
                 <b-list-group-item>
                   <b-link class="text-dark" :to="{ name: '질문 상세', params: { questionId: question._id }}">"{{ question.title }}"</b-link>
                   <span class="text-muted">{{ getDescription(question.description) }}<b-link class="text-muted" v-show="question.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: question._id }}">more</b-link></span>
-                  <span class="text-warning">{{ $moment.utc(question.createdAt).local().fromNow() }}</span>
+                  <span v-bind:style="{color: '#EAA240'}">{{ $moment.utc(question.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
             </b-tab>
@@ -160,7 +160,7 @@
                 <b-list-group-item>
                   <b-link class="text-dark" :to="{ name: '질문 상세', params: { questionId: answer.question._id }}">"{{ answer.question.title }}"</b-link>
                   <span class="text-muted">{{ getDescription(answer.description) }}<b-link class="text-muted" v-show="answer.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: answer.question._id }}">more</b-link></span>
-                  <span class="text-warning">{{ $moment.utc(answer.createdAt).local().fromNow() }}</span>
+                  <span v-bind:style="{color: '#EAA240'}">{{ $moment.utc(answer.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
             </b-tab>
@@ -172,16 +172,16 @@
               </b-list-group>
               <b-list-group v-for="like in likes" :key="like.id" flush>
                 <b-list-group-item v-if="like.questionOrAnswerModel === 'Question'">
-                    <b-link class="text-success" :to="{ name: '프로필', params: { userId: like.questionOrAnswer.createdBy._id }}">{{ like.questionOrAnswer.createdBy.name }}</b-link><span class="text-muted">님의 질문을 좋아합니다.</span>
+                    <b-link v-bind:style="{color: '#30CE92'}" :to="{ name: '프로필', params: { userId: like.questionOrAnswer.createdBy._id }}">{{ like.questionOrAnswer.createdBy.name }}</b-link><span class="text-muted">님의 질문을 좋아합니다.</span>
                     <b-link class="text-dark" :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer._id }}">"{{ like.questionOrAnswer.title }}"</b-link>
                     <span class="text-muted">{{ getDescription(like.questionOrAnswer.description) }}<b-link class="text-muted" v-show="like.questionOrAnswer.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer._id }}">more</b-link></span>
-                    <span class="text-warning">{{ $moment.utc(like.createdAt).local().fromNow() }}</span>
+                    <span v-bind:style="{color: '#EAA240'}">{{ $moment.utc(like.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
                 <b-list-group-item v-else>
-                    <b-link class="text-success" :to="{ name: '프로필', params: { userId: like.questionOrAnswer.createdBy._id }}">{{ like.questionOrAnswer.createdBy.name }}</b-link><span class="text-muted">님의 답변을 좋아합니다.</span>
+                    <b-link v-bind:style="{color: '#30CE92'}" :to="{ name: '프로필', params: { userId: like.questionOrAnswer.createdBy._id }}">{{ like.questionOrAnswer.createdBy.name }}</b-link><span class="text-muted">님의 답변을 좋아합니다.</span>
                     <b-link class="text-dark" :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer.question._id }}">"{{ like.questionOrAnswer.question.title }}"</b-link>
                     <span class="text-muted">{{ getDescription(like.questionOrAnswer.description) }}<b-link class="text-muted" v-show="like.questionOrAnswer.description.length > maxDescriptionLength" :to="{ name: '질문 상세', params: { questionId: like.questionOrAnswer.question._id }}">more</b-link></span>
-                    <span class="text-warning">{{ $moment.utc(like.createdAt).local().fromNow() }}</span>
+                    <span v-bind:style="{color: '#EAA240'}">{{ $moment.utc(like.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
             </b-tab>
@@ -193,7 +193,7 @@
               </b-list-group>
               <b-list-group v-for="comment in comments" :key="comment.id" flush>
                 <b-list-group-item>
-                    "{{ comment.question.title }}" <span class="text-muted" v-readMore:50="comment.description"></span> <span class="text-warning">{{ $moment.utc(comment.createdAt).local().fromNow() }}</span>
+                    "{{ comment.question.title }}" <span class="text-muted" v-readMore:50="comment.description"></span> <span v-bind:style="{color: '#EAA240'}">{{ $moment.utc(comment.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
             </b-tab>
@@ -205,32 +205,32 @@
               </b-list-group>
               <b-list-group v-for="event in events" :key="event.id" flush>
                 <b-list-group-item v-if="event.actionType === 'likeMyQuestion'">
-                    <span class="text-muted">Wow~ 당신의 질문에 like가 발생해 <span class="text-danger" ><strong>{{ event.tokens }} Cherry</strong></span>를 받았어요!</span>
-                    <span class="text-warning">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
+                    <span class="text-muted">Wow~ 당신의 질문에 like가 발생해 <span v-bind:style="{color: '#ad2552'}"><strong>{{ event.tokens }} Cherry</strong></span>를 받았어요!</span>
+                    <span v-bind:style="{color: '#EAA240'}">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
                 <b-list-group-item v-else-if="event.actionType === 'likeMyAnswer'">
-                    <span class="text-muted">Wow~ 당신의 답변에 like가 발생해 <span class="text-danger" ><strong>{{ event.tokens }} Cherry</strong></span>를 받았어요.</span>
-                    <span class="text-warning">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
+                    <span class="text-muted">Wow~ 당신의 답변에 like가 발생해 <span v-bind:style="{color: '#ad2552'}"><strong>{{ event.tokens }} Cherry</strong></span>를 받았어요.</span>
+                    <span v-bind:style="{color: '#EAA240'}">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
                 <b-list-group-item v-else-if="event.actionType === 'question'">
-                    <span class="text-muted">질문을 올리고 <span class="text-danger" ><strong>{{ event.tokens }} Cherry</strong></span>를 사용했어요.</span>
-                    <span class="text-warning">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
+                    <span class="text-muted">질문을 올리고 <span v-bind:style="{color: '#30CE92'}"><strong>{{ event.tokens }} Cherry</strong></span>를 사용했어요.</span>
+                    <span v-bind:style="{color: '#EAA240'}">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
                 <b-list-group-item v-else-if="event.actionType === 'answer'">
-                    <span class="text-muted">Wow~ 답변을 등록하고 <span class="text-danger" ><strong>{{ event.tokens }} Cherry</strong></span>를 받았어요!</span>
-                    <span class="text-warning">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
+                    <span class="text-muted">Wow~ 답변을 등록하고 <span v-bind:style="{color: '#ad2552'}"><strong>{{ event.tokens }} Cherry</strong></span>를 받았어요!</span>
+                    <span v-bind:style="{color: '#EAA240'}">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
                 <b-list-group-item v-else-if="event.actionType === 'signup'">
-                    <span class="text-muted">Wow~ 회원 가입을 축하합니다! 환영 선물로 <span class="text-danger" ><strong>{{ event.tokens }} Cherry</strong></span>를 받았어요.</span>
-                    <span class="text-warning">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
+                    <span class="text-muted">Wow~ 회원 가입을 축하합니다! 환영 선물로 <span v-bind:style="{color: '#ad2552'}"><strong>{{ event.tokens }} Cherry</strong></span>를 받았어요.</span>
+                    <span v-bind:style="{color: '#EAA240'}">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
                 <b-list-group-item v-else-if="event.actionType === 'profile'">
-                    <span class="text-muted">Wow~ 프로필을 업데이트하고 <span class="text-danger" ><strong>{{ event.tokens }} Cherry</strong></span>를 받았어요.</span>
-                    <span class="text-warning">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
+                    <span class="text-muted">Wow~ 프로필을 업데이트하고 <span v-bind:style="{color: '#ad2552'}"><strong>{{ event.tokens }} Cherry</strong></span>를 받았어요.</span>
+                    <span v-bind:style="{color: '#EAA240'}">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
                 <b-list-group-item v-else>
-                    <span class="text-muted">Wow~ Like을 누르고 <span class="text-danger" ><strong>{{ event.tokens }} Cherry</strong></span>를 받았어요!</span>
-                    <span class="text-warning">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
+                    <span class="text-muted">Wow~ Like을 누르고 <span v-bind:style="{color: '#ad2552'}"><strong>{{ event.tokens }} Cherry</strong></span>를 받았어요!</span>
+                    <span v-bind:style="{color: '#EAA240'}">{{ $moment.utc(event.createdAt).local().fromNow() }}</span>
                 </b-list-group-item>
               </b-list-group>
             </b-tab>
@@ -387,6 +387,23 @@ export default {
         .then((response) => {
           this.fetchProfile()
         })
+    },
+    getLevelColor (level) {
+      var color = ''
+      switch (level) {
+        case 'Black':
+          color = 'black'
+          break
+        case 'Red':
+          color = 'red'
+          break
+        case 'Green':
+          color = 'green'
+          break
+        default:
+          color = 'blue'
+      }
+      return color
     }
   }
 }
