@@ -5,7 +5,7 @@
         <a v-bind:href="$route.params.category + '/' + item.id">
           <img class="w-100" :src="item.mainImage">
           <div style="position: relative; top: -10px; left: 15px; width: 20px; height: 20px; background: url(http://menu.mt.co.kr/ttimes/images/renew/bg_diamond.png) no-repeat 0 0; background-size: 100%;"/>
-          <div class="text-body pl-3 pb-4 pr-3" style="color:#1a1a1a; text-decoration: none; font-size: 18px;">
+          <div class="pl-3 pb-4 pr-3" style="color:#4c3926; text-decoration: none; font-size: 16px;">
             {{ item.title }}
           </div>
         </a>
