@@ -18,11 +18,11 @@
       <b-dropdown-item :to="{name: 'Cherry Transfer'}">
         <i class="fa fa-dollar" /> Cherry Transfer
       </b-dropdown-item>
-      <b-dropdown-item :to="{name: '프로필', params: { userId: $session.get('user-id')}, query: { tab: 'notification' }}">
+      <b-dropdown-item :to="{name: '프로필', params: { userId: $session.get('user-id')}, query: { tab: 'notification' }}" exact>
         <i class="fa fa-bell-o" /> 알림
         <!-- <b-badge variant="info">10</b-badge> -->
       </b-dropdown-item>
-      <b-dropdown-item :to="{name: '프로필', params: { userId: $session.get('user-id')}, query: { tab: 'info' }}">
+      <b-dropdown-item :to="{name: '프로필', params: { userId: $session.get('user-id')}, query: { tab: 'info' }}" exact>
         <i class="fa fa-user-o" /> 프로필
       </b-dropdown-item>
       <b-dropdown-item @click="logout">
