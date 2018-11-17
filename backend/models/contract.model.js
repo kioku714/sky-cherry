@@ -1,6 +1,7 @@
 var config = require('../config/config');
 var Web3 = require('web3');
 var Tx = require('ethereumjs-tx');
+var APIError = require('../helpers/APIError');
 
 const web3 = new Web3(new Web3.providers.HttpProvider(config.web3Provider));
 
@@ -30,7 +31,7 @@ async function sendTx(walletInfo, to, data, value) {
 
 	await web3.eth.sendSignedTransaction('0x' + tx.serialize().toString('hex'), function(error, hash) {
 		if (!error) {
-			console.info('tx=>', hash)
+			console.info('tx=>', hash);
 			result.txHash = hash;
 		} else {
 			throw new APIError('Transaction error: ' + error);
