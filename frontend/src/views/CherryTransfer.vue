@@ -224,6 +224,7 @@ export default {
         })
     },
     sendTokenExchange () {
+      let loader = this.$loading.show()
       var request = {
         tokens: this.tokens
       }
@@ -233,6 +234,7 @@ export default {
           this.fetchTokens()
           this.fetchCoins()
         })
+        .finally(() => loader.hide())
     }
   }
 }
