@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: 내용이 상세할수록 Bug는 더 빠르게 해결될 수 있습니다.
 labels: 
 
 ---
