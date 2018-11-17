@@ -30,20 +30,16 @@
           </div>
         </div>
         <br>
-        <b-row class="form-group">
-          <b-col sm="2" cols="4">
-            <label class="col-form-label">성별/나이 :</label>
-          </b-col>
-          <b-col sm="3" cols="8">
-            <label class="col-form-label">{{ "male" === profile.gender ? "남" : "여" }} / {{ $moment({}).diff($moment(profile.birthday), 'years') }}</label>
-          </b-col>
-          <b-col sm="2" cols="4">
-            <label class="col-form-label">직업 :</label>
-          </b-col>
-          <b-col sm="3" cols="8">
+        <div class="form-group row">
+          <label class="col-md-2 col-form-label">성별/나이 :</label>
+          <label class="col-md-2 col-form-label">{{ "male" === profile.gender ? "남" : "여" }} / {{ $moment({}).diff($moment(profile.birthday), 'years') }}</label>
+          <label class="col-md-2 col-form-label"></label>
+          <label class="col-md-2 col-form-label">직업 :</label>
+          <div class="col-md-2">
             <b-form-select class="form-control" v-model="form.occupation" :options="$store.state.occupation" />
-          </b-col>
-        </b-row>
+          </div>
+        </div>
+
         <div class="form-group row" v-if="form.mainField === 'finance'">
           <label class="col-md-2 col-form-label">가족형태 :</label>
           <div class="col-md-2">
