@@ -21,18 +21,13 @@
             <h4>{{ cherryCard.title }}</h4>
             <div class="mb-4">{{ cherryCard.content }}</div>
             <div class="mb-3">김성은 기자 {{ $moment(new Date()).format('YYYY.MM.DD HH:mm') }}</div>
-            <b-row>
-              <b-col>
-                <img src="/static/img/sns/facebook.png" class="mr-1" v-bind:style="{ width: '30px' }"/>
-                <img src="/static/img/sns/twitter.png" class="mr-1" v-bind:style="{ width: '30px' }"/>
-                <img src="/static/img/sns/kakao_story.png" class="mr-1" v-bind:style="{ width: '30px' }"/>
-                <img src="/static/img/sns/google-plus.png" class="mr-1" v-bind:style="{ width: '30px' }"/>
-                <img src="/static/img/sns/instagram.png" class="mr-1" v-bind:style="{ width: '30px' }"/>
-              </b-col>
-              <b-col>
-                <div class="text-right mt-1"><i class="fa fa-heart-o" /> 220</div>
-              </b-col>
-            </b-row>
+            <div>
+              <img src="/static/img/sns/facebook.png" class="mr-1" v-bind:style="{ width: '30px' }"/>
+              <img src="/static/img/sns/twitter.png" class="mr-1" v-bind:style="{ width: '30px' }"/>
+              <img src="/static/img/sns/kakao_story.png" class="mr-1" v-bind:style="{ width: '30px' }"/>
+              <img src="/static/img/sns/google-plus.png" class="mr-1" v-bind:style="{ width: '30px' }"/>
+              <img src="/static/img/sns/instagram.png" class="mr-1" v-bind:style="{ width: '30px' }"/>
+            </div>
         </div>
       </div>
     </div>
