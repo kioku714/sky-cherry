@@ -17,8 +17,8 @@
         </b-carousel>
       </div>
       <div class="row">
-        <div class="textBody">
-            <h1 class="tit">{{ cherryCard.title }}</h1>
+        <div class="mt-4 col-sm-8" v-bind:style="{ margin: 'auto' }">
+            <h4 class="tit">{{ cherryCard.title }}</h4>
             <p class="cont">{{ cherryCard.content }}</p>
             <br><br><br>
         </div>

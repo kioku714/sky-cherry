@@ -44,13 +44,13 @@
     <div class="mb-2" v-bind:style="{color: '#ad2552', fontSize: '18px', fontWeight: 'bold'}">Profile</div>
     <b-row>
       <b-col sm="2" cols="6">
-        <label>성별/나이:</label>
+        <label>성별/나이 :</label>
       </b-col>
       <b-col sm="3" cols="6">
         <label>{{ "male" === question.createdBy.gender ? "남" : "여"}}/{{ $moment({}).diff($moment(question.createdBy.birthday), 'years') }}</label>
       </b-col>
       <b-col sm="2" cols="6">
-        <label>직업:</label>
+        <label>직업 :</label>
       </b-col>
       <b-col sm="3" cols="6">
         <label>{{ getOccupation() }}</label>
@@ -59,13 +59,13 @@
     <div v-if="this.question.mainField === 'finance'">
       <b-row>
         <b-col sm="2" cols="6">
-          <label>가족형태:</label>
+          <label>가족형태 :</label>
         </b-col>
         <b-col sm="3" cols="6">
           <label>{{ getFamilyType() }}</label>
         </b-col>
         <b-col sm="2" cols="6">
-          <label>관심사:</label>
+          <label>관심사 :</label>
         </b-col>
         <b-col sm="3" cols="6">
           <label>{{ getInterest() }}</label>
@@ -73,20 +73,20 @@
       </b-row>
       <b-row>
         <b-col sm="2" cols="6">
-          <label>월평균소득:</label>
+          <label>월평균소득 :</label>
         </b-col>
         <b-col sm="3" cols="6">
           <label>{{ getMonthlyIncome() }}</label>
         </b-col>
         <b-col sm="2" cols="6">
-          <label>보유자산:</label>
+          <label>보유자산 :</label>
         </b-col>
         <b-col sm="3" cols="6">
           <label>{{ getAssets() }}</label>
         </b-col>
       </b-row>
       <div>
-        <b-form-group label="소득운용현황: "
+        <b-form-group label="소득운용현황 : "
                       :horizontal="true">
           <b-form-radio-group v-model="question.incomeManagement"
                               :options="$store.state.incomeManagement">
@@ -388,8 +388,8 @@ export default {
             this.form.description = ''
             this.fetchQuestion()
             this.fetchAnswers()
-            loader.hide()
           })
+          .finally(() => loader.hide())
       } else {
         alert('답변을 입력해주세요.')
       }
@@ -460,8 +460,8 @@ export default {
       this.$http.post('/api/likes', {questionId: questionId})
         .then((response) => {
           this.fetchQuestion()
-          loader.hide()
         })
+        .finally(() => loader.hide())
     },
     likeAnswer (answerId) {
       var answer = this.answers.find(x => x._id === answerId)
@@ -478,8 +478,8 @@ export default {
         .then((response) => {
           this.fetchQuestion()
           this.fetchAnswers()
-          loader.hide()
         })
+        .finally(() => loader.hide())
     },
     getRandomNum () {
       // 3 ~ 5 사이의 랜덤 소수

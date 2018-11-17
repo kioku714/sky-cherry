@@ -41,7 +41,8 @@ module.exports = {
     
   },
   createAnswer: {
-    
+    questionId: Joi.string().required(),
+    description: Joi.string().required()
   },
   createLike: {
     
