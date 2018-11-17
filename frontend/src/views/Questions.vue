@@ -19,7 +19,7 @@
             <a v-show="question.description.length > maxDescriptionLength" v-bind:href="'/question/' + question._id" v-bind:style="{color: '#0170ba'}">more</a>
           </div>
           <!-- Tags -->
-          <div class="d-flex">
+          <div class="d-flex flex-wrap">
             <div class="mr-1" v-for="tag in question.tags" :key="tag" v-bind:style="{color: '#4c3926'}">
               #{{ tag }}
             </div>
