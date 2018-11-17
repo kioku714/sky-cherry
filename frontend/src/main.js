@@ -48,7 +48,6 @@ new Vue({
     }, function (error) {
       if (error.response && error.response.status === HttpStatus.UNAUTHORIZED) {
         if (!error.config.url.endsWith('/api/auth/login')) {
-          console.error(error)
           location.href = '/login'
           return
         }
