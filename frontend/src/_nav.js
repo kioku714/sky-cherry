@@ -6,47 +6,47 @@ export default {
       icon: 'fa fa-newspaper-o',
       children: [
         {
-          name: 'SKY\'s Pick',
+          name: 'SKY’S PICK',
           url: '/news/pick'
         },
         {
-          name: '뷰티',
+          name: 'BEAUTY',
           url: '/news/beauty'
         },
         {
-          name: '고메',
+          name: 'FOOD',
           url: '/news/gourmet'
         },
         {
-          name: '영화',
+          name: 'CULTURE',
           url: '/news/movie'
         },
         {
-          name: '재태크',
-          url: '/news/financial-technology'
+          name: 'FINANCE',
+          url: '/news/financial'
         },
         {
-          name: '트렌드',
+          name: 'LIFE STYLE',
           url: '/news/trend'
         }
       ]
     },
     {
       name: '질문하기',
-      url: '/question',
+      url: '/questions',
       icon: 'fa fa-quora',
       children: [
         {
           name: '인기',
-          url: '/question?sort=like'
+          url: '/questions?sort=like'
         },
         {
           name: '최신',
-          url: '/question?sort=new'
+          url: '/questions?sort=new'
         },
         {
           name: 'Top',
-          url: '/question?sort=top'
+          url: '/questions?sort=top'
         }
       ]
     },
