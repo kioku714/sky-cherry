@@ -38,13 +38,15 @@ module.exports = {
     coins: Joi.number().required()
   },
   createQuestion: {
-    
+    title: Joi.string().required(),
+    description: Joi.string().required()
   },
   createAnswer: {
     questionId: Joi.string().required(),
     description: Joi.string().required()
   },
   createLike: {
-    
+    questionId: Joi.string(),
+    answerId: Joi.string()
   }
 };
