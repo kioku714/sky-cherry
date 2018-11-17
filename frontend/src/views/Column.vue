@@ -6,7 +6,7 @@
         <b-col sm="6">
           <b-row class="py-2">
             <b-col sm="12">
-              <span class="pr-2"><u><b>Style</b></u></span>
+              <span class="pr-2" style="font-size: 17px;"><u><b>Style</b></u></span>
               <span><small>More</small></span>
             </b-col>
           </b-row>
@@ -42,7 +42,7 @@
         <b-col sm="6">
           <b-row class="py-2">
             <b-col sm="12">
-              <span class="pr-2"><u><b>Place</b></u></span>
+              <span class="pr-2" style="font-size: 17px;"><u><b>Place</b></u></span>
               <span><small>More</small></span>
             </b-col>
           </b-row>
@@ -80,7 +80,7 @@
         <b-col sm="6">
           <b-row class="py-2">
             <b-col sm="12">
-              <span class="pr-2"><u><b>Culture</b></u></span>
+              <span class="pr-2" style="font-size: 17px;"><u><b>Culture</b></u></span>
               <span><small>More</small></span>
             </b-col>
           </b-row>
@@ -116,7 +116,7 @@
         <b-col sm="6">
           <b-row class="py-2">
             <b-col sm="12">
-              <span class="pr-2"><u><b>Finance</b></u></span>
+              <span class="pr-2" style="font-size: 17px;"><u><b>Finance</b></u></span>
               <span><small>More</small></span>
             </b-col>
           </b-row>

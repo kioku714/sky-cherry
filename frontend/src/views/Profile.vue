@@ -3,7 +3,12 @@
       <b-row>
         <b-col sm="2">
           <div>
-            <b-img center rounded="circle" blank fluid width="175" height="175" blank-color="#777" alt="img" class="m-1" />
+            <div v-if="profile.name === ''">
+              <img src="/static/img/avatars/profile_thumbnail.jpg" class="img-avatar" />
+            </div>
+            <div v-else class="header-icon-text mb-2" v-bind:style="{ background: getBgColor(profile.email), width: '100px', height: '100px', margin: 'auto', fontSize: '60px'}">
+                {{ profileName }}
+            </div>
             <p class="text-center"><strong>{{ profile.name }}</strong></p>
           </div>
           <div>
@@ -272,6 +277,7 @@ export default {
     return {
       maxDescriptionLength: 50,
       profile: {},
+      profileName: '',
       tokens: 0,
       questions: [],
       answers: [],
@@ -302,6 +308,7 @@ export default {
       this.$http.get('/api/users/' + this.$route.params.userId)
         .then((response) => {
           this.profile = response.data
+          this.profileName = (this.profile.name !== '') ? this.profile.name.substring(0, 1) : ''
 
           this.form.occupation = response.data.occupation || this.$store.state.occupation[0].value
           this.form.familyType = response.data.familyType || this.$store.state.familyType[0].value
@@ -389,6 +396,29 @@ export default {
           this.fetchProfile()
         })
         .finally(() => loader.hide())
+    },
+    getBgColor (email) {
+      var color = ''
+      switch (email) {
+        case 'test01@cj.net':
+          color = '#6d0592'
+          break
+        case 'test02@cj.net':
+          color = '#026466'
+          break
+        case 'test03@cj.net':
+          color = '#d34836'
+          break
+        case 'test04@cj.net':
+          color = '#ff0084'
+          break
+        case 'test05@cj.net':
+          color = '#1769ff'
+          break
+        default:
+          color = '#ad2552'
+      }
+      return color
     },
     getLevelColor (level) {
       var color = ''
