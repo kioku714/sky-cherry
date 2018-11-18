@@ -5,6 +5,9 @@ labels:
 
 ---
 
+**Level**
+Critical/Major/Normal/Minor
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
