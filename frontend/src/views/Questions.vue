@@ -1,6 +1,12 @@
 <template>
   <div class="animated fadeIn">
     <b-form-input class="mb-4" type="text" v-model="search" placeholder="Search for questions"  v-bind:style="{borderColor: '#30CE92'}" style="background: url('/static/img/magnifying-glass.png') no-repeat center; background-size: 26px 26px; background-position: right 13px center; padding: 8px 48px 8px 8px; border-color: '#30CE92';"></b-form-input>
+    <b-row v-show="(filteredList.length == 0) || (search.length != 0)">
+      <div class="text-center" v-bind:style="{margin: 'auto'}">
+        <h3>찾는 질문이 없을 시 직접 질문을 등록해보세요!</h3>
+        <b-button :to="{name: '질문 등록'}" variant="success" class="mt-3" v-bind:style="{ borderRadius: '.3rem' }">Add a Question</b-button>
+      </div>
+    </b-row>
     <div v-for="question in filteredList" :key="question._id">
       <div class="new-question grid-item">
         <div class="content">
