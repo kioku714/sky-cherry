@@ -11,23 +11,23 @@ export default {
         },
         {
           name: 'STYLE',
-          url: '/news/beauty'
+          url: '/news/style'
         },
         {
           name: 'PLACE',
-          url: '/news/gourmet'
+          url: '/news/place'
         },
         {
           name: 'CULTURE',
-          url: '/news/movie'
+          url: '/news/culture'
         },
         {
           name: 'FINANCE',
-          url: '/news/financial'
+          url: '/news/finance'
         },
         {
           name: 'LIFE',
-          url: '/news/trend'
+          url: '/news/life'
         }
       ]
     },
