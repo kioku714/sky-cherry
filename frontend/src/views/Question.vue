@@ -228,7 +228,7 @@
               <small class="text-muted">아직 평가에 참여하지 않으셨습니다.</small>
             </b-col>
             <b-col class="mt-1">
-              <b-button variant="secondary" v-bind:style="{ border: 'none', borderRadius: '.3rem', fontSize: '12px', backgroundColor: '#D8D8D8' }">submit score</b-button>
+              <b-button variant="secondary" v-bind:style="{ border: 'none', borderRadius: '.3rem', fontSize: '12px', backgroundColor: '#D8D8D8' }">Submit</b-button>
             </b-col>
           </b-row>
         </b-collapse>
