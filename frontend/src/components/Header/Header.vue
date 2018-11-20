@@ -45,9 +45,6 @@
         <HeaderDropdown/>
       </li>
     </ul>
-    <button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" @click="asideToggle">
-      <span class="navbar-toggler-icon"></span>
-    </button>
   </header>
 </template>
 <script>
@@ -70,10 +67,6 @@ export default {
     mobileSidebarToggle (e) {
       e.preventDefault()
       document.body.classList.toggle('sidebar-mobile-show')
-    },
-    asideToggle (e) {
-      e.preventDefault()
-      document.body.classList.toggle('aside-menu-hidden')
     },
     signout (e) {
       e.preventDefault()
