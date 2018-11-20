@@ -18,16 +18,7 @@
       </div>
       <div class="row">
         <div class="mt-4 col-sm-8" v-bind:style="{ margin: 'auto' }">
-            <h4>{{ cherryCard.title }}</h4>
-            <div class="mb-4">{{ cherryCard.content }}</div>
-            <div class="mb-3">김성은 기자 {{ $moment(new Date()).format('YYYY.MM.DD HH:mm') }}</div>
-            <div>
-              <img src="/static/img/sns/facebook.png" class="mr-1" v-bind:style="{ width: '30px' }"/>
-              <img src="/static/img/sns/twitter.png" class="mr-1" v-bind:style="{ width: '30px' }"/>
-              <img src="/static/img/sns/kakao_story.png" class="mr-1" v-bind:style="{ width: '30px' }"/>
-              <img src="/static/img/sns/google-plus.png" class="mr-1" v-bind:style="{ width: '30px' }"/>
-              <img src="/static/img/sns/instagram.png" class="mr-1" v-bind:style="{ width: '30px' }"/>
-            </div>
+            <h4>고양이 대신 화초에 빠진 밀레니얼세대</h4>
         </div>
       </div>
     </div>
