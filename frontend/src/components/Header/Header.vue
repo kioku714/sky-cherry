@@ -10,41 +10,42 @@
     <ul class="nav navbar-nav ml-auto">
       <li class="nav-item d-md-down-none">
         <router-link :to="{name: '질문하기', query: { sort: 'like' }}">
-          <span class="fa fa-search"></span>
+          <span class="fa fa-search fa-lg"></span>
         </router-link>
       </li>
       <li class="nav-item d-md-down-none">
         <router-link :to="{name: '질문 등록'}">
-          <span class="fa fa-quora"></span>
+          <span class="fa fa-quora fa-lg"></span>
         </router-link>
       </li>
       <li class="nav-item d-md-down-none">
         <router-link :to="{name: 'Cherry Transfer'}">
-          <span class="fa fa-dollar"></span>
+          <span class="fa fa-dollar fa-lg"></span>
         </router-link>
       </li>
       <li class="nav-item d-md-down-none">
         <router-link :to="{name: '프로필', params: { userId: $session.get('user-id')}, query: { tab: 'notification' }}">
-          <span class="fa fa-bell-o"></span>
+          <span class="fa fa-bell-o fa-lg"></span>
         </router-link>
       </li>
       <li class="nav-item d-md-down-none">
         <router-link :to="{name: '프로필', params: { userId: $session.get('user-id')}, query: { tab: 'info' }}">
-          <span class="fa fa-user-o"></span>
+          <span class="fa fa-user-o fa-lg"></span>
         </router-link>
       </li>
       <li class="nav-item d-md-down-none">
         <b-link v-if="$session.get('user-id')" @click="signout">
-          <span class="fa fa-sign-out"></span>
+          <span class="fa fa-sign-out fa-lg"></span>
         </b-link>
         <b-link v-else :to="{name: 'Login'}">
-          <span class="fa fa-sign-in"></span>
+          <span class="fa fa-sign-in fa-lg"></span>
         </b-link>
       </li>
       <li class="nav-item dropdown d-lg-none">
         <HeaderDropdown/>
       </li>
     </ul>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   </header>
 </template>
 <script>
