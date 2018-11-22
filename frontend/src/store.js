@@ -60,6 +60,7 @@ export const store = new Vuex.Store({
       { text: '예/적금', value: 'saving' },
       { text: '주식', value: 'stock' },
       { text: '펀드', value: 'fund' },
+      { text: '보험', value: 'insurance' },
       { text: '부동산', value: 'realestate' },
       { text: '기타', value: 'etc' }
     ],

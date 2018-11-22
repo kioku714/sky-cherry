@@ -63,15 +63,15 @@
           </div>
         </div>
         <div class="form-group row" v-if="form.mainField === 'finance'">
-            <label class="col-md-2 col-form-label">소득운용현황 :</label>
-            <div class="col-md-10 col-form-label">
-              <b-form-radio-group
-                :options="$store.state.incomeManagement"
-                checked="deposit"
-                v-model="form.incomeManagement" @change="form.incomeManagement = ''">
-              </b-form-radio-group>
-            </div>
+          <label class="col-md-2 col-form-label">소득운용현황 :</label>
+          <div class="col-md-10 col-form-label">
+            <b-form-radio-group
+              :options="$store.state.incomeManagement"
+              checked="deposit"
+              v-model="form.incomeManagement" @change="form.incomeManagement = ''">
+            </b-form-radio-group>
           </div>
+        </div>
         <div class="form-group row">
           <div class="col-md-12">
             <vue-editor v-model="form.description" rows="9" placeholder="질문을 입력하세요.

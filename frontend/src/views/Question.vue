@@ -85,13 +85,15 @@
           <label>{{ getAssets() }}</label>
         </b-col>
       </b-row>
-      <div>
-        <b-form-group label="소득운용현황 : "
-                      :horizontal="true">
-          <b-form-radio-group v-model="question.incomeManagement"
-                              :options="$store.state.incomeManagement">
+      <div class="form-group row">
+        <label class="col-md-2 col-form-label">소득운용현황 :</label>
+        <div class="col-md-10 col-form-label">
+          <b-form-radio-group
+            :options="$store.state.incomeManagement"
+            v-model="question.incomeManagement"
+            :disabled="true">
           </b-form-radio-group>
-        </b-form-group>
+        </div>
       </div>
     </div>
     <hr>
