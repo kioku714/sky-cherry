@@ -139,13 +139,17 @@ export default {
   },
   methods: {
     createQuestion () {
-      this.form.tags = this.getTags()
-      let loader = this.$loading.show()
-      this.$http.post('/api/questions', this.form)
-        .then((response) => {
-          this.$router.push('/question/' + response.data._id)
-        })
-        .finally(() => loader.hide())
+      if (this.checkFieldItems()) {
+        this.form.tags = this.getTags()
+        let loader = this.$loading.show()
+        this.$http.post('/api/questions', this.form)
+          .then((response) => {
+            this.$router.push('/question/' + response.data._id)
+          })
+          .finally(() => loader.hide())
+      } else {
+        alert('입력 필드를 확인해주세요.')
+      }
     },
     fetchProfile () {
       this.profile = []
@@ -153,12 +157,12 @@ export default {
         .then((response) => {
           this.profile = response.data
 
-          this.form.occupation = response.data.occupation ? response.data.occupation : 'administrator'
-          this.form.familyType = response.data.familyType ? response.data.familyType : 'single'
-          this.form.interest = response.data.interest ? response.data.interest : 'myHouse'
-          this.form.monthlyIncome = response.data.monthlyIncome ? response.data.monthlyIncome : 'under100'
-          this.form.assets = response.data.assets ? response.data.assets : 'under1000'
-          this.form.incomeManagement = response.data.incomeManagement ? response.data.incomeManagement : 'saving'
+          this.form.occupation = response.data.occupation ? response.data.occupation : ''
+          this.form.familyType = response.data.familyType ? response.data.familyType : ''
+          this.form.interest = response.data.interest ? response.data.interest : ''
+          this.form.monthlyIncome = response.data.monthlyIncome ? response.data.monthlyIncome : ''
+          this.form.assets = response.data.assets ? response.data.assets : ''
+          this.form.incomeManagement = response.data.incomeManagement ? response.data.incomeManagement : ''
         })
     },
     fetchTokens () {
@@ -181,6 +185,14 @@ export default {
       var subFields = this.$store.state.fieldItems.find(x => x.mainFieldValue === mainField).subFields
       this.form.subField = subFields[0].value
       return subFields
+    },
+    checkFieldItems () {
+      if (this.form.mainField === 'finance') {
+        if (this.form.occupation === '' || this.form.familyType === '' || this.form.interest === '' || this.form.monthlyIncome === '' || this.form.assets === '' || this.form.incomeManagement === '') {
+          return false
+        }
+      }
+      return true
     }
   }
 }
