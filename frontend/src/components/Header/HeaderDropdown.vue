@@ -15,7 +15,7 @@
       <b-dropdown-item :to="{name: '질문 등록'}">
         <i class="fa fa-quora" /> 질문하기
       </b-dropdown-item>
-      <b-dropdown-item :to="{name: 'Cherry Transfer'}">
+      <b-dropdown-item :to="{name: 'Cherry Transfer', params: { userId: $session.get('user-id')}}">
         <i class="fa fa-dollar" /> Cherry Transfer
       </b-dropdown-item>
       <b-dropdown-item :to="{name: '프로필', params: { userId: $session.get('user-id')}, query: { tab: 'notification' }}" exact>
