@@ -15,7 +15,7 @@
       <b-dropdown-item :to="{name: '질문 등록'}">
         <i class="fa fa-quora" /> 질문하기
       </b-dropdown-item>
-      <b-dropdown-item :to="{name: 'Cherry Transfer'}">
+      <b-dropdown-item :to="{name: 'Cherry Transfer', params: { userId: $session.get('user-id')}}">
         <i class="fa fa-dollar" /> Cherry Transfer
       </b-dropdown-item>
       <b-dropdown-item :to="{name: '프로필', params: { userId: $session.get('user-id')}, query: { tab: 'notification' }}" exact>
@@ -53,27 +53,19 @@ export default {
   },
   methods: {
     getBgColor () {
-      var color = ''
-      switch (this.email) {
-        case 'test01@cj.net':
-          color = '#6d0592'
-          break
-        case 'test02@cj.net':
-          color = '#026466'
-          break
-        case 'test03@cj.net':
-          color = '#d34836'
-          break
-        case 'test04@cj.net':
-          color = '#ff0084'
-          break
-        case 'test05@cj.net':
-          color = '#1769ff'
-          break
-        default:
-          color = '#ad2552'
+      if (this.email === 'test01@cj.net' || this.email === 'bittermoon@cj.net') {
+        return '#6d0592'
+      } else if (this.email === 'test02@cj.net' || this.email === 'chris@cj.net') {
+        return '#026466'
+      } else if (this.email === 'test03@cj.net' || this.email === 'miin_dong@cj.net') {
+        return '#d34836'
+      } else if (this.email === 'test04@cj.net' || this.email === 'hyungn11@cj.net') {
+        return '#ff0084'
+      } else if (this.email === 'test05@cj.net' || this.email === 'autumn091@cj.net') {
+        return '#1769ff'
+      } else {
+        return '#ad2552'
       }
-      return color
     },
     signout (e) {
       e.preventDefault()
