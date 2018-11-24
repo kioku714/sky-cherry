@@ -5,7 +5,8 @@
         <div class="form-group row">
           <label class="col-md-2 col-form-label">* 분야 : </label>
           <div class="col-md-2 mb-1">
-            <b-form-select class="form-control" v-model="form.mainField">
+            <b-form-select class="form-control" v-model="form.mainField" @change.native="changeMainField">
+              <option :value="null" disabled>-- 선택 --</option>
               <option v-for="option in $store.state.fieldItems" v-bind:value="option.mainFieldValue" :key="option.mainFieldValue">
                 {{ option.mainFieldName }}
               </option>
@@ -13,7 +14,8 @@
           </div>
           <div class="col-md-2">
             <b-form-select class="form-control" v-model="form.subField">
-              <option v-for="option in getSubFieldItems(form.mainField)" v-bind:value="option.value" :key="option.value">
+              <option :value="null" disabled>-- 선택 --</option>
+              <option v-for="option in getSubFieldItems(form.mainField)" v-bind:value="option.value" :key="option.value" :disabled="option.disabled">
                 {{ option.text }}
               </option>
             </b-form-select>
@@ -122,8 +124,8 @@ export default {
       form: {
         title: '',
         description: '',
-        mainField: 'style',
-        subField: '',
+        mainField: null,
+        subField: null,
         gender: 'female',
         occupation: '',
         familyType: '',
@@ -182,17 +184,28 @@ export default {
       obj.addTag()
     },
     getSubFieldItems (mainField) {
+      if (mainField === null) {
+        return []
+      }
       var subFields = this.$store.state.fieldItems.find(x => x.mainFieldValue === mainField).subFields
-      this.form.subField = subFields[0].value
       return subFields
     },
     checkFieldItems () {
-      if (this.form.mainField === 'finance') {
+      if (this.form.mainField === null) {
+        return false
+      } else if (this.form.mainField === 'finance') {
         if (this.form.occupation === '' || this.form.familyType === '' || this.form.interest === '' || this.form.monthlyIncome === '' || this.form.assets === '' || this.form.incomeManagement === '') {
+          return false
+        }
+      } else {
+        if (this.form.subField === null) {
           return false
         }
       }
       return true
+    },
+    changeMainField (evt) {
+      this.form.subField = null
     }
   }
 }
