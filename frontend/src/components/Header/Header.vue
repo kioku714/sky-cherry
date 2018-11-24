@@ -19,7 +19,7 @@
         </router-link>
       </li>
       <li class="nav-item d-md-down-none">
-        <router-link :to="{name: 'Cherry Transfer'}">
+        <router-link :to="{name: 'Cherry Transfer', params: { userId: $session.get('user-id')}}">
           <span class="fa fa-dollar fa-lg"></span>
         </router-link>
       </li>
