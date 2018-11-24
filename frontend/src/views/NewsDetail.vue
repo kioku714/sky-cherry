@@ -43,7 +43,9 @@ export default {
   },
   data () {
     return {
-      cherryCard: {},
+      cherryCard: {
+        coverflow: []
+      },
       slide: 0,
       sliding: null
     }
