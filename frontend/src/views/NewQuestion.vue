@@ -5,7 +5,8 @@
         <div class="form-group row">
           <label class="col-md-2 col-form-label">* 분야 : </label>
           <div class="col-md-2 mb-1">
-            <b-form-select class="form-control" v-model="form.mainField">
+            <b-form-select class="form-control" v-model="form.mainField" @change.native="changeMainField">
+              <option :value="null" disabled>-- 선택 --</option>
               <option v-for="option in $store.state.fieldItems" v-bind:value="option.mainFieldValue" :key="option.mainFieldValue">
                 {{ option.mainFieldName }}
               </option>
@@ -13,7 +14,8 @@
           </div>
           <div class="col-md-2">
             <b-form-select class="form-control" v-model="form.subField">
-              <option v-for="option in getSubFieldItems(form.mainField)" v-bind:value="option.value" :key="option.value">
+              <option :value="null" disabled>-- 선택 --</option>
+              <option v-for="option in getSubFieldItems(form.mainField)" v-bind:value="option.value" :key="option.value" :disabled="option.disabled">
                 {{ option.text }}
               </option>
             </b-form-select>
@@ -63,15 +65,15 @@
           </div>
         </div>
         <div class="form-group row" v-if="form.mainField === 'finance'">
-            <label class="col-md-2 col-form-label">소득운용현황 :</label>
-            <div class="col-md-10 col-form-label">
-              <b-form-radio-group
-                :options="$store.state.incomeManagement"
-                checked="deposit"
-                v-model="form.incomeManagement" @change="form.incomeManagement = ''">
-              </b-form-radio-group>
-            </div>
+          <label class="col-md-2 col-form-label">소득운용현황 :</label>
+          <div class="col-md-10 col-form-label">
+            <b-form-radio-group
+              :options="$store.state.incomeManagement"
+              checked="deposit"
+              v-model="form.incomeManagement" @change="form.incomeManagement = ''">
+            </b-form-radio-group>
           </div>
+        </div>
         <div class="form-group row">
           <div class="col-md-12">
             <vue-editor v-model="form.description" rows="9" placeholder="질문을 입력하세요.
@@ -122,8 +124,8 @@ export default {
       form: {
         title: '',
         description: '',
-        mainField: 'style',
-        subField: '',
+        mainField: null,
+        subField: null,
         gender: 'female',
         occupation: '',
         familyType: '',
@@ -139,13 +141,17 @@ export default {
   },
   methods: {
     createQuestion () {
-      this.form.tags = this.getTags()
-      let loader = this.$loading.show()
-      this.$http.post('/api/questions', this.form)
-        .then((response) => {
-          this.$router.push('/question/' + response.data._id)
-        })
-        .finally(() => loader.hide())
+      if (this.checkFieldItems()) {
+        this.form.tags = this.getTags()
+        let loader = this.$loading.show()
+        this.$http.post('/api/questions', this.form)
+          .then((response) => {
+            this.$router.push('/question/' + response.data._id)
+          })
+          .finally(() => loader.hide())
+      } else {
+        alert('입력 필드를 확인해주세요.')
+      }
     },
     fetchProfile () {
       this.profile = []
@@ -153,12 +159,12 @@ export default {
         .then((response) => {
           this.profile = response.data
 
-          this.form.occupation = response.data.occupation ? response.data.occupation : 'administrator'
-          this.form.familyType = response.data.familyType ? response.data.familyType : 'single'
-          this.form.interest = response.data.interest ? response.data.interest : 'myHouse'
-          this.form.monthlyIncome = response.data.monthlyIncome ? response.data.monthlyIncome : 'under100'
-          this.form.assets = response.data.assets ? response.data.assets : 'under1000'
-          this.form.incomeManagement = response.data.incomeManagement ? response.data.incomeManagement : 'saving'
+          this.form.occupation = response.data.occupation ? response.data.occupation : ''
+          this.form.familyType = response.data.familyType ? response.data.familyType : ''
+          this.form.interest = response.data.interest ? response.data.interest : ''
+          this.form.monthlyIncome = response.data.monthlyIncome ? response.data.monthlyIncome : ''
+          this.form.assets = response.data.assets ? response.data.assets : ''
+          this.form.incomeManagement = response.data.incomeManagement ? response.data.incomeManagement : ''
         })
     },
     fetchTokens () {
@@ -178,9 +184,28 @@ export default {
       obj.addTag()
     },
     getSubFieldItems (mainField) {
+      if (mainField === null) {
+        return []
+      }
       var subFields = this.$store.state.fieldItems.find(x => x.mainFieldValue === mainField).subFields
-      this.form.subField = subFields[0].value
       return subFields
+    },
+    checkFieldItems () {
+      if (this.form.mainField === null) {
+        return false
+      } else if (this.form.mainField === 'finance') {
+        if (this.form.occupation === '' || this.form.familyType === '' || this.form.interest === '' || this.form.monthlyIncome === '' || this.form.assets === '' || this.form.incomeManagement === '') {
+          return false
+        }
+      } else {
+        if (this.form.subField === null) {
+          return false
+        }
+      }
+      return true
+    },
+    changeMainField (evt) {
+      this.form.subField = null
     }
   }
 }

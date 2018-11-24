@@ -85,13 +85,15 @@
           <label>{{ getAssets() }}</label>
         </b-col>
       </b-row>
-      <div>
-        <b-form-group label="소득운용현황 : "
-                      :horizontal="true">
-          <b-form-radio-group v-model="question.incomeManagement"
-                              :options="$store.state.incomeManagement">
+      <div class="form-group row">
+        <label class="col-md-2 col-form-label">소득운용현황 :</label>
+        <div class="col-md-10 col-form-label">
+          <b-form-radio-group
+            :options="$store.state.incomeManagement"
+            v-model="question.incomeManagement"
+            :disabled="true">
           </b-form-radio-group>
-        </b-form-group>
+        </div>
       </div>
     </div>
     <hr>
@@ -228,7 +230,7 @@
               <small class="text-muted">아직 평가에 참여하지 않으셨습니다.</small>
             </b-col>
             <b-col class="mt-1">
-              <b-button variant="secondary" v-bind:style="{ border: 'none', borderRadius: '.3rem', fontSize: '12px', backgroundColor: '#D8D8D8' }">submit score</b-button>
+              <b-button variant="secondary" v-bind:style="{ border: 'none', borderRadius: '.3rem', fontSize: '12px', backgroundColor: '#D8D8D8' }">Submit</b-button>
             </b-col>
           </b-row>
         </b-collapse>
@@ -338,27 +340,19 @@ export default {
         })
     },
     getBgColor (email) {
-      var color = ''
-      switch (email) {
-        case 'test01@cj.net':
-          color = '#6d0592'
-          break
-        case 'test02@cj.net':
-          color = '#026466'
-          break
-        case 'test03@cj.net':
-          color = '#d34836'
-          break
-        case 'test04@cj.net':
-          color = '#ff0084'
-          break
-        case 'test05@cj.net':
-          color = '#1769ff'
-          break
-        default:
-          color = '#ad2552'
+      if (email === 'test01@cj.net' || email === 'bittermoon@cj.net') {
+        return '#6d0592'
+      } else if (email === 'test02@cj.net' || email === 'chris@cj.net') {
+        return '#026466'
+      } else if (email === 'test03@cj.net' || email === 'miin_dong@cj.net') {
+        return '#d34836'
+      } else if (email === 'test04@cj.net' || email === 'hyungn11@cj.net') {
+        return '#ff0084'
+      } else if (email === 'test05@cj.net' || email === 'autumn091@cj.net') {
+        return '#1769ff'
+      } else {
+        return '#ad2552'
       }
-      return color
     },
     getLevelColor (level) {
       var color = ''

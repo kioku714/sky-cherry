@@ -315,7 +315,7 @@ export default {
           this.form.interest = response.data.interest || this.$store.state.interest[0].value
           this.form.monthlyIncome = response.data.monthlyIncome || this.$store.state.monthlyIncome[0].value
           this.form.assets = response.data.assets || this.$store.state.assets[0].value
-          this.form.incomeManagement = response.data.incomeManagement || this.$store.state.incomeManagement[0].value
+          this.form.incomeManagement = response.data.incomeManagement || ''
           this.form.description = response.data.description
         })
     },
@@ -398,27 +398,19 @@ export default {
         .finally(() => loader.hide())
     },
     getBgColor (email) {
-      var color = ''
-      switch (email) {
-        case 'test01@cj.net':
-          color = '#6d0592'
-          break
-        case 'test02@cj.net':
-          color = '#026466'
-          break
-        case 'test03@cj.net':
-          color = '#d34836'
-          break
-        case 'test04@cj.net':
-          color = '#ff0084'
-          break
-        case 'test05@cj.net':
-          color = '#1769ff'
-          break
-        default:
-          color = '#ad2552'
+      if (email === 'test01@cj.net' || email === 'bittermoon@cj.net') {
+        return '#6d0592'
+      } else if (email === 'test02@cj.net' || email === 'chris@cj.net') {
+        return '#026466'
+      } else if (email === 'test03@cj.net' || email === 'miin_dong@cj.net') {
+        return '#d34836'
+      } else if (email === 'test04@cj.net' || email === 'hyungn11@cj.net') {
+        return '#ff0084'
+      } else if (email === 'test05@cj.net' || email === 'autumn091@cj.net') {
+        return '#1769ff'
+      } else {
+        return '#ad2552'
       }
-      return color
     },
     getLevelColor (level) {
       var color = ''

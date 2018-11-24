@@ -10,24 +10,24 @@ export default {
           url: '/news/pick'
         },
         {
-          name: 'BEAUTY',
-          url: '/news/beauty'
+          name: 'STYLE',
+          url: '/news/style'
         },
         {
-          name: 'FOOD',
-          url: '/news/gourmet'
+          name: 'PLACE',
+          url: '/news/place'
         },
         {
           name: 'CULTURE',
-          url: '/news/movie'
+          url: '/news/culture'
         },
         {
           name: 'FINANCE',
-          url: '/news/financial'
+          url: '/news/finance'
         },
         {
-          name: 'LIFE STYLE',
-          url: '/news/trend'
+          name: 'LIFE',
+          url: '/news/life'
         }
       ]
     },
@@ -51,7 +51,7 @@ export default {
       ]
     },
     {
-      name: '컬럼&Live',
+      name: '컬럼&라이브',
       url: '/serial',
       icon: 'fa fa-film',
       children: [
@@ -60,13 +60,13 @@ export default {
           url: '/serial/column'
         },
         {
-          name: 'Live',
+          name: '라이브',
           url: '/serial/live'
         }
       ]
     },
     {
-      name: 'Tags',
+      name: '태그',
       url: '/tags',
       icon: 'fa fa-hashtag'
     }
