@@ -7,7 +7,7 @@ export const store = new Vuex.Store({
   state: {
     version: 'v0.1',
     occupation: [
-      {text: '-- 선택 --', value: ''},
+      {text: '-- 선택 --', value: '', disabled: true},
       {text: '관리자', value: 'administrator'},
       {text: '전문가 및 관련', value: 'expert'},
       {text: '사무', value: 'office'},
@@ -20,7 +20,7 @@ export const store = new Vuex.Store({
       {text: '전, 현직 군인', value: 'soldier'}
     ],
     familyType: [
-      {text: '-- 선택 --', value: ''},
+      {text: '-- 선택 --', value: '', disabled: true},
       {text: '미혼-1인가구', value: 'single'},
       {text: '미혼-가족과 거주', value: 'family'},
       {text: '미혼-기타형태 거주', value: 'others'},
@@ -30,7 +30,7 @@ export const store = new Vuex.Store({
       {text: '기혼-3자녀 이상', value: 'manyChild'}
     ],
     interest: [
-      {text: '-- 선택 --', value: ''},
+      {text: '-- 선택 --', value: '', disabled: true},
       { text: '내집마련', value: 'myHouse' },
       { text: '결혼자금', value: 'weddingMoney' },
       { text: '목돈모으기', value: 'savingMoney' },
@@ -38,7 +38,7 @@ export const store = new Vuex.Store({
       { text: '건물구입', value: 'buildingPurchase' }
     ],
     monthlyIncome: [
-      {text: '-- 선택 --', value: ''},
+      {text: '-- 선택 --', value: '', disabled: true},
       {text: '100 이하', value: 'under100'},
       {text: '100~150', value: '100To150'},
       {text: '150~200', value: '150To200'},
@@ -51,7 +51,7 @@ export const store = new Vuex.Store({
       {text: '600 이상', value: 'over600'}
     ],
     assets: [
-      {text: '-- 선택 --', value: ''},
+      {text: '-- 선택 --', value: '', disabled: true},
       {text: '1000 이하', value: 'under1000'},
       {text: '1000~3000', value: '1000to3000'},
       {text: '3000~5000', value: '3000to5000'},
