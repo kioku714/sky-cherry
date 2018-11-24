@@ -340,15 +340,15 @@ export default {
         })
     },
     getBgColor (email) {
-      if (this.email === 'test01@cj.net' || this.email === 'bittermoon@cj.net') {
+      if (email === 'test01@cj.net' || email === 'bittermoon@cj.net') {
         return '#6d0592'
-      } else if (this.email === 'test02@cj.net' || this.email === 'chris@cj.net') {
+      } else if (email === 'test02@cj.net' || email === 'chris@cj.net') {
         return '#026466'
-      } else if (this.email === 'test03@cj.net' || this.email === 'miin_dong@cj.net') {
+      } else if (email === 'test03@cj.net' || email === 'miin_dong@cj.net') {
         return '#d34836'
-      } else if (this.email === 'test04@cj.net' || this.email === 'hyungn11@cj.net') {
+      } else if (email === 'test04@cj.net' || email === 'hyungn11@cj.net') {
         return '#ff0084'
-      } else if (this.email === 'test05@cj.net' || this.email === 'autumn091@cj.net') {
+      } else if (email === 'test05@cj.net' || email === 'autumn091@cj.net') {
         return '#1769ff'
       } else {
         return '#ad2552'
