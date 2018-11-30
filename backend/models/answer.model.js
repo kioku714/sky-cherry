@@ -90,7 +90,7 @@ AnswerSchema.statics = {
             }
         })
         return this.aggregate(aggr)
-        .sort({ createdAt: -1 })
+        .sort({ createdAt: 1 })
         .skip(+skip)
         .limit(+limit)
         .exec();
