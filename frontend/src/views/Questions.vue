@@ -67,7 +67,7 @@ export default {
     return {
       questions: [],
       listItems: [],
-      pageCount: 3,
+      pageCount: 15,
       distance: 0,
       maxDescriptionLength: 50,
       search: ''
