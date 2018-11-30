@@ -54,7 +54,7 @@
                     </b-col>
                   </b-row>
                   <div class="text-center">
-                    <b-button class="transfer-button">Got it!</b-button>
+                    <b-button class="transfer-button">Transfer</b-button>
                   </div>
                   <b-row class="mt-4">
                     <b-col>
@@ -100,7 +100,7 @@
                     <b-col cols="9" sm="9" class="text-left">{{ coins }}</b-col>
                   </b-row>
                   <div class="text-center">
-                    <b-button class="transfer-button" @click="sendTokenExchange()">Preview</b-button>
+                    <b-button class="transfer-button" @click="sendTokenExchange()">Transfer</b-button>
                   </div>
                 </b-col>
               </b-row>
