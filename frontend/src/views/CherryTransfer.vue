@@ -26,45 +26,7 @@
         </b-col>
         <b-col sm="10">
           <b-tabs>
-            <b-tab title="CJONE" active>
-              <h4 class="text-center">Transfer Gateway</h4>
-              <b-row>
-                <b-col sm="6" class="pt-3" v-bind:style="{ margin: 'auto' }">
-                  <b-row class="text-center">
-                    <b-col sm="4" cols="4">
-                      <div>
-                        <b-img src="/static/img/logo-symbol.png" width="95" fluid center/>
-                      </div>
-                      <div class="mt-3">{{ tokens }} Cherry</div>
-                      <div>
-                        <b-form-input type="text" class="text-center mt-2" value="11"></b-form-input>
-                      </div>
-                    </b-col>
-                    <b-col sm="4" cols="4">
-                      <b-img src="/static/img/exchange.png" width="40" class="mt-4" fluid center/>
-                    </b-col>
-                    <b-col sm="4" cols="4">
-                      <div>
-                        <b-img src="/static/img/point.png" width="95" fluid center/>
-                      </div>
-                      <div class="mt-3">1200 Point</div>
-                      <div>
-                        <b-form-input type="text" class="text-center mt-2" value="1100"></b-form-input>
-                      </div>
-                    </b-col>
-                  </b-row>
-                  <div class="text-center">
-                    <b-button class="transfer-button">Transfer</b-button>
-                  </div>
-                  <b-row class="mt-4">
-                    <b-col>
-                      <b-img src="/static/img/cherry-transfer-comment.png" fluid center/>
-                    </b-col>
-                  </b-row>
-                </b-col>
-              </b-row>
-            </b-tab>
-            <b-tab title="Transfer">
+            <b-tab title="Transfer" active>
               <h4 class="text-center">Transfer Gateway</h4>
               <b-row>
                 <b-col sm="6" class="pt-3" v-bind:style="{ margin: 'auto' }">
@@ -108,6 +70,44 @@
             <b-tab title="History">
               <h4 class="text-center">Transfer Result</h4>
               <c-table sm="9" ref="table" v-if="receipts.length > 0" striped :rows="receipts" :columns="receiptFields" caption=""></c-table>
+            </b-tab>
+            <b-tab title="CJ ONE">
+              <h4 class="text-center">Transfer Gateway</h4>
+              <b-row>
+                <b-col sm="6" class="pt-3" v-bind:style="{ margin: 'auto' }">
+                  <b-row class="text-center">
+                    <b-col sm="4" cols="4">
+                      <div>
+                        <b-img src="/static/img/logo-symbol.png" width="95" fluid center/>
+                      </div>
+                      <div class="mt-3">{{ tokens }} Cherry</div>
+                      <div>
+                        <b-form-input type="text" class="text-center mt-2" value="11"></b-form-input>
+                      </div>
+                    </b-col>
+                    <b-col sm="4" cols="4">
+                      <b-img src="/static/img/exchange.png" width="40" class="mt-4" fluid center/>
+                    </b-col>
+                    <b-col sm="4" cols="4">
+                      <div>
+                        <b-img src="/static/img/point.png" width="95" fluid center/>
+                      </div>
+                      <div class="mt-3">1200 Point</div>
+                      <div>
+                        <b-form-input type="text" class="text-center mt-2" value="1100"></b-form-input>
+                      </div>
+                    </b-col>
+                  </b-row>
+                  <div class="text-center">
+                    <b-button class="transfer-button">Transfer</b-button>
+                  </div>
+                  <b-row class="mt-4">
+                    <b-col>
+                      <b-img src="/static/img/cherry-transfer-comment.png" fluid center/>
+                    </b-col>
+                  </b-row>
+                </b-col>
+              </b-row>
             </b-tab>
           </b-tabs>
         </b-col>
