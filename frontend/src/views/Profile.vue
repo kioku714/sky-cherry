@@ -356,7 +356,8 @@ export default {
       this.answers = []
       this.$http.get('/api/answers', {
         params: {
-          createdBy: this.$route.params.userId
+          createdBy: this.$route.params.userId,
+          sort: 'desc'
         }
       })
         .then((response) => {

@@ -334,7 +334,11 @@ export default {
     },
     fetchAnswers () {
       this.answers = []
-      this.$http.get('/api/questions/' + this.$route.params.questionId + '/answers')
+      this.$http.get('/api/questions/' + this.$route.params.questionId + '/answers', {
+        params: {
+          sort: 'asc'
+        }
+      })
         .then((response) => {
           this.answers = response.data
         })
