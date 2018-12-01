@@ -89,11 +89,13 @@ AnswerSchema.statics = {
                 as: 'likes' 
             }
         })
-        return this.aggregate(aggr)
-        .sort({ createdAt: -1 })
-        .skip(+skip)
-        .limit(+limit)
-        .exec();
+
+        var aggregate = this.aggregate(aggr);
+        aggregate.skip(+skip).limit(+limit).sort({ createdAt: 1 });
+        if(q.sort && q.sort === 'desc') { 
+            aggregate.sort({ createdAt: -1 })
+        }
+        return aggregate.exec();
     },
   
     /**

@@ -57,6 +57,9 @@ function list(req, res, next) {
     if(req.query.createdBy) {
       q.createdBy = req.query.createdBy
     }
+    if(req.query.sort) {
+      q.sort = req.query.sort
+    }
     if(req.query.question) {
       q.question = req.query.question
     }
