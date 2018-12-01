@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    version: 'v0.2',
+    version: 'v1.0',
     occupation: [
       {text: '-- 선택 --', value: '', disabled: true},
       {text: '관리자', value: 'administrator'},
