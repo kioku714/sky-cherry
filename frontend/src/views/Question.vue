@@ -140,7 +140,7 @@
           </b-col>
         </b-row>
         <b-row class="mt-3 mx-3">
-          <div v-html="answer.description"></div>
+          <div class="answer" v-html="answer.description"></div>
         </b-row>
         <hr v-bind:style="{ borderColor: '#efefef' }">
         <b-row>
